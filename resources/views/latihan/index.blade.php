@@ -1,0 +1,64 @@
+@extends('layouts.app')
+@section('title')
+Jenis Latihan
+@endsection
+@section('css')
+
+@endsection
+@section('content')
+<section class="section">
+  <div class="section-header">
+    <h3 class="page__heading">Jenis Latihan</h3>
+
+  </div>
+  <div class="section-body">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <a href="{{ url('/latihan/create')}}" class="btn btn-info btn-lg pull-right">Create Jenis Latihan</a>
+        <div class="card">
+          <div class="card-body">
+
+            <div style="width: 100%;">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered table-condensed dtt">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Jenis Latihan</th>
+                      <th>Keterangan</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if(!empty($data))
+                    @foreach($data as $d)
+                    <tr>
+                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ $d->jenis_latihan }}</td>
+                      <td>{{ $d->keterangan }}</td>
+                      <td>
+                        <div class="button btn-group">
+                        <a href="{{ url('/latihan/edit',$d->id) }}" class="btn btn-success btn-sm">Edit</a>
+                        <a href="{{ url('/latihan/delete',$d->id)}}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onclick="return confirm('Delete This Data ?');"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  @endforeach
+                  @endif
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+@endsection
+
+@section('scripts')
+
+@endsection
