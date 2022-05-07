@@ -184,9 +184,17 @@ Route::get('staff/corpus/delete/{id}','FinalReportStaffController@delete')->midd
 
 
 // fendy
+//semester
 Route::get('/semester', 'MasterSemester@index')->middleware(['auth:teacher']);
 Route::get('/semester/create', 'MasterSemester@create')->middleware(['auth:teacher']);
 Route::post('/semester/store', 'MasterSemester@store')->middleware(['auth:teacher']);
 Route::get('/semester/edit/{id}', 'MasterSemester@edit')->middleware(['auth:teacher']);
 Route::post('/semester/update', 'MasterSemester@update')->middleware(['auth:teacher']);
 Route::get('/semester/delete/{id}', 'MasterSemester@destroy')->middleware(['auth:teacher']);
+//project_tipe
+Route::get('/project_tipe', 'ProjectTipeController@index')->middleware(['auth:teacher']);
+Route::get('/project_tipe/create', 'ProjectTipeController@create')->middleware(['auth:teacher']);
+Route::post('/project_tipe/store', 'ProjectTipeController@store')->middleware(['auth:teacher']);
+Route::get('/project_tipe/edit/{id}', 'ProjectTipeController@edit') ->middleware(['auth:teacher']);
+Route::post('/project_tipe/update', 'ProjectTipe@update')->middleware(['auth:teacher']);
+Route::get('/project_tipe/delete/{id}', 'ProjectTipe@destroy')->middleware(['auth:teacher']);

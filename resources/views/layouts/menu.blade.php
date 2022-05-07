@@ -165,6 +165,12 @@
       </a>
     </li>
 
+    <li class="side-menus {{ Request::is('/project_tipe*') ? 'active' : '' }}">
+      <a class="nav-link" href="/project_tipe">
+        <i class=" fas fa-building"></i><span>Master Project Tipe</span>
+      </a>
+    </li>
+
   </ul>
 </li>
 @endif
