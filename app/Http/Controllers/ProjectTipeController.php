@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProjectTipe;
+use Illuminate\Support\Facades\DB;
 
 class ProjectTipeController extends Controller
 {

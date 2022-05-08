@@ -25,23 +25,19 @@ Creativity
               <div class="table-responsive">
                 <table class="table table-hover table-striped table-bordered table-condensed">
                   <thead>
-                    @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB' || $kelas->grade == '1' || $kelas->grade == '2')
+                    @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                     <tr>
                       <th>#</th>
                       <th>Nama Murid</th>
                       <th>Kelas</th>
-                      <th>Idea Generation</th>
-                      <th>Creative Production</th>
+                      <th>Performing Art</th>
                     </tr>
-                    @elseif($kelas->grade >= 3 && $kelas->grade <= 6)
+                    @elseif($kelas->grade >= 1 && $kelas->grade <= 6)
                     <tr>
                       <th>#</th>
                       <th>Nama Murid</th>
                       <th>Kelas</th>
-                      <th>Idea Generation</th>
-                      <th>Openness and Courage to Explore</th>
-                      <th>Work Creatively with others</th>
-                      <th>Creative Production</th>
+                      <th>Performing Art</th>
                     </tr>
                     @else
                     <tr>
@@ -62,7 +58,7 @@ Creativity
                   </thead>
                   <tbody>
                     @foreach($data as $d)
-                    @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB' || $kelas->grade == '1' || $kelas->grade == '2')
+                    @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                     <tr>
                       <td>{{ $loop->iteration }}
                         <input type="hidden" name="user_id[]" value="{{ $d->id}}">
@@ -78,8 +74,11 @@ Creativity
                       </td>
                       <td>{{ $d->name }}</td>
                       <td>{{ $d->kelas }}</td>
-                      <td><input type="text" class="form-control" id="creativity_1" name="creativity_1[]" value="2"></td>
-                      <td><input type="text" class="form-control" id="creativity_2" name="creativity_2[]" value="2"></td>
+                      <td>
+                        <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
+                          Performing Art
+                        </button>
+                      </td>
                     </tr>
 
                     @elseif($kelas->grade >= 3 && $kelas->grade <= 6)
@@ -99,10 +98,11 @@ Creativity
                       </td>
                       <td>{{ $d->name }}</td>
                       <td>{{ $d->kelas }}</td>
-                      <td><input type="text" class="form-control" id="creativity_1" name="creativity_1[]" value="2"></td>
-                      <td><input type="text" class="form-control" id="creativity_2" name="creativity_2[]" value="2"></td>
-                      <td><input type="text" class="form-control" id="creativity_3" name="creativity_3[]" value="2"></td>
-                      <td><input type="text" class="form-control" id="creativity_4" name="creativity_4[]" value="2"></td>
+                      <td>
+                        <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
+                          Performing Art
+                        </button>
+                      </td>
                     </tr>
                     @else
                     <tr>
@@ -127,14 +127,14 @@ Creativity
                       <td><input type="text" class="form-control" id="creativity_5" name="creativity_5[]" value="2"></td>
                       <td><input type="text" class="form-control" id="creativity_6" name="creativity_6[]" value="2"></td> --}}
                       <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                           Performing Art
-                        </button>
+                          <button type="button" id="performing{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
+                            Performing Art
+                          </button>
                       </td>
                       <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                           Container
-                        </button>
+                          <button type="button" id="container{{$d->id}}" name="Container" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
+                            Container
+                          </button>
                       </td>
                     </tr>
                     @endif
@@ -154,130 +154,8 @@ Creativity
   </div>
 </section>
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Performing Art</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-          <form>
-              <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Kategori</label>
-                <div class="col-sm-10">
-                  <select name="" id="" class="form-control">
-                      <option value="">Art</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-6">Idea Generation</div>
-                <div class="col-sm-3">
-                    <input type="number" name="" id=""  class="form-control" value="" disabled>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Choose
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-6">Idea Design and Refinement</div>
-                <div class="col-sm-3">
-                    <input type="number" name="" id=""  class="form-control" value="" disabled>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Choose
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-6">Openness and Courage to Explore</div>
-                <div class="col-sm-3">
-                    <input type="number" name="" id=""  class="form-control" value="2">
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Choose
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-6">Work Creatively with others</div>
-                <div class="col-sm-3">
-                    <input type="number" name="" id=""  class="form-control" value="2">
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Choose
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-6">Creative Production and Innovation</div>
-                <div class="col-sm-3">
-                    <input type="number" name="" id=""  class="form-control" value="2">
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Choose
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-6">Reflection </div>
-                <div class="col-sm-3">
-                    <input type="number" name="" id=""  class="form-control" value="2">
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Choose
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-            </form>
-
-
-
-
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
+@endsection
+@include('creativity.partials.secondary-hs-detail')
+@section('scripts')
+<script src="{{ asset('js/modal.js') }}"></script>
 @endsection

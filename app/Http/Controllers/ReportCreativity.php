@@ -8,6 +8,7 @@ use App\Models\FitTime;
 use App\Models\Custom;
 use App\Models\CreativityStudent;
 use App\Models\CreativityType;
+use App\Models\ProjectTipe;
 use DB;
 use Auth;
 
@@ -219,5 +220,19 @@ class ReportCreativity extends Controller
       DB::rollback();
       return $e;
     }
+  }
+
+  public function showModal($kelas, $id)
+  {
+    $query = $_GET['tipe'];
+    if($query == "Container") {
+      $tipe_projek = ProjectTipe::where('tipe', 2)->get();
+    }else{
+      $tipe_projek = ProjectTipe::where('tipe', 1)->get();
+    }
+    $check_kelas = Syskelas::find($kelas);
+
+    return ['id'=>$id, 'grade' => $check_kelas, 'tipe' => $tipe_projek];
+    //return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
   }
 }

@@ -17,6 +17,7 @@ Edit Project Tipe (Container / Performing Art)
           <div class="card-body">
             <form class="row" action="{{ url('/project_tipe/update') }}" method="post">
               @csrf
+              <input type="hidden" name="id" value="{{$d->id}}"  class="form-control ">
               <div class="form-group col-sm-6">
                 <label for="">Nama</label>
                 <input type="text" name="nama" value="{{$d->nama}}"  class="form-control " required>

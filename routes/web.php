@@ -170,9 +170,9 @@ Route::post('/creativity/store','ReportCreativity@store')->middleware(['auth:tea
 Route::get('/creativity/edit/{id}','ReportCreativity@edit')->middleware(['auth:teacher']);
 Route::post('/creativity/update','ReportCreativity@update')->middleware(['auth:teacher']);
 Route::get('creativity/delete/{id}','ReportCreativity@delete')->middleware(['auth:teacher']);
+Route::get('creativity/show/{kelas}/{id}','ReportCreativity@showModal')->middleware(['auth:teacher']);
 Route::get('/persenDaily','ReportPersenDailyController@index')->middleware(['auth:teacher']);
 Route::get('/persenDaily/{time}/{kls}','ReportPersenDailyController@show')->middleware(['auth:teacher']);
-
 
 Route::get('/staff/final/report','FinalReportStaffController@index')->middleware(['auth:teacher']);;
 Route::get('/staff/final/report/show/{time}/{kelas}','FinalReportStaffController@show')->middleware(['auth:teacher']);;
