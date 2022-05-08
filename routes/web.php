@@ -196,5 +196,5 @@ Route::get('/project_tipe', 'ProjectTipeController@index')->middleware(['auth:te
 Route::get('/project_tipe/create', 'ProjectTipeController@create')->middleware(['auth:teacher']);
 Route::post('/project_tipe/store', 'ProjectTipeController@store')->middleware(['auth:teacher']);
 Route::get('/project_tipe/edit/{id}', 'ProjectTipeController@edit') ->middleware(['auth:teacher']);
-Route::post('/project_tipe/update', 'ProjectTipe@update')->middleware(['auth:teacher']);
-Route::get('/project_tipe/delete/{id}', 'ProjectTipe@destroy')->middleware(['auth:teacher']);
+Route::post('/project_tipe/update', 'ProjectTipeController@update')->middleware(['auth:teacher']);
+Route::get('/project_tipe/delete/{id}', 'ProjectTipeController@destroy')->middleware(['auth:teacher']);
