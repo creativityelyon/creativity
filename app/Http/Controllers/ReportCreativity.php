@@ -11,6 +11,7 @@ use App\Models\CreativityType;
 use App\Models\ProjectTipe;
 use DB;
 use Auth;
+use TempContainer;
 
 class ReportCreativity extends Controller
 {
@@ -234,5 +235,127 @@ class ReportCreativity extends Controller
 
     return ['id'=>$id, 'grade' => $check_kelas, 'tipe' => $tipe_projek];
     //return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
+  }
+
+
+
+
+   //fendy
+   public function store_penilaian(Request $request){
+    // $tipe = $request->input('tipe');
+    // $nilai_1 = $request->input('nilai_1');
+    // $nilai_2 = $request->input('nilai_2');
+    // $nilai_3 = $request->input('nilai_3');
+    // $nilai_4 = $request->input('nilai_4');
+    // $nilai_5 = $request->input('nilai_5');
+    // $nilai_6 = $request->input('nilai_6');
+    // $user_id = $request->input('user_id');
+    // $kelas = $request -> input('kelas');
+
+    $data = $request->all();
+
+
+    $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'])
+    ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
+    $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'])
+    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+    $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'])
+    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+    $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'])
+    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+    $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'])
+    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+    $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'])
+    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+
+    $keterangan =array();
+    $keterangan['cr1'] = (empty($cr1)) ? '' : $cr1->text;
+    $keterangan['cr2'] = (empty($cr2)) ? '' : $cr2->text;
+    $keterangan['cr3'] = (empty($cr3)) ? '' : $cr3->text;
+    $keterangan['cr4'] = (empty($cr4)) ? '' : $cr4->text;
+    $keterangan['cr5'] = (empty($cr5)) ? '' : $cr5->text;
+    $keterangan['cr6'] = (empty($cr6)) ? '' : $cr6->text;
+    $level = 1;
+
+    if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'
+    || $data['grade'] == '1' || $data['grade'] == '2'){
+      if ($data['nilai_1'] == 2 && $data['nilai_2'] == 1) {
+        $data['description'] = $data['nama'].' '.$keterangan['cr1'].' but '.(($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2']));
+      }elseif ($data['nilai_1'] == 1 && $data['nilai_2'] == 2) {
+        $data['description'] = $data['nama'].' '.$keterangan['cr2'].'but'.(($data['gender'] == 1) ? 'She' : 'He').' '.($data['gender'] == 1) ? str_replace("his/her","her",$keterangan['cr1']) : str_replace("his/her","his",$keterangan['cr1']);
+      }else {
+        $level = 2;
+        $data['description'] =
+        $data['nama'].' '.$keterangan['cr1'].' '.(($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2']));
+      }
+    }elseif ($data['grade'] >= 3 && $data['grade'] <= 6) {
+      if ($data['nilai_1'] + $data['nilai_2'] + $data['nilai_3'] + $data['nilai_4'] == 8) {
+        $level = 2;
+        $data['description'] = $data['nama'].' '.
+        (($data['nilai_1'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr1']) : 'he '.str_replace("his/her","his",$keterangan['cr1'])).' ' : '').
+        (($data['nilai_2'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2'])).' ' : '').
+        (($data['nilai_3'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr3']) : 'he '.str_replace("his/her","his",$keterangan['cr3'])).' ' : '').
+        (($data['nilai_4'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr4']) : 'he '.str_replace("his/her","his",$keterangan['cr4'])).' ' : '');
+
+      }else {
+        $data['description'] = $data['nama'].' '.
+        (($data['nilai_1'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr1']) : 'he '.str_replace("his/her","his",$keterangan['cr1'])).' ' : '').
+        (($data['nilai_2'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2'])).' ' : '').
+        (($data['nilai_3'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr3']) : 'he '.str_replace("his/her","his",$keterangan['cr3'])).' ' : '').
+        (($data['nilai_4'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr4']) : 'he '.str_replace("his/her","his",$keterangan['cr4'])).' ' : '').
+        'but '.
+        (($data['nilai_1'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr1']) : 'he '.str_replace("his/her","his",$keterangan['cr1'])).' ' : '').
+        (($data['nilai_2'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2'])).' ' : '').
+        (($data['nilai_3'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr3']) : 'he '.str_replace("his/her","his",$keterangan['cr3'])).' ' : '').
+        (($data['nilai_4'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr4']) : 'he '.str_replace("his/her","his",$keterangan['cr4'])).' ' : '');
+
+      }
+    }else {
+      if ($data['nilai_1'] + $data['nilai_2'] + $data['nilai_3'] + $data['nilai_4'] + $data['nilai_5'] + $data['nilai_6'] == 12) {
+        $level = 2;
+        $data['description'] = $data['nama'].
+        (($data['nilai_1'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr1']) : 'he '.str_replace("his/her","his",$keterangan['cr1'])).' ' : '').
+        (($data['nilai_2'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2'])).' ' : '').
+        (($data['nilai_3'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr3']) : 'he '.str_replace("his/her","his",$keterangan['cr3'])).' ' : '').
+        (($data['nilai_4'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr4']) : 'he '.str_replace("his/her","his",$keterangan['cr4'])).' ' : '').
+        (($data['nilai_5'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr5']) : 'he '.str_replace("his/her","his",$keterangan['cr5'])).' ' : '').
+        (($data['nilai_6'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr6']) : 'he '.str_replace("his/her","his",$keterangan['cr6'])).' ' : '');
+      }else {
+        $data['description'] = $data['nama'].
+        (($data['nilai_1'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr1']) : 'he '.str_replace("his/her","his",$keterangan['cr1'])).' ' : '').
+        (($data['nilai_2'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2'])).' ' : '').
+        (($data['nilai_3'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr3']) : 'he '.str_replace("his/her","his",$keterangan['cr3'])).' ' : '').
+        (($data['nilai_4'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr4']) : 'he '.str_replace("his/her","his",$keterangan['cr4'])).' ' : '').
+        (($data['nilai_5'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr5']) : 'he '.str_replace("his/her","his",$keterangan['cr5'])).' ' : '').
+        (($data['nilai_6'] == 2) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr6']) : 'he '.str_replace("his/her","his",$keterangan['cr6'])).' ' : '').
+        'but '.
+        (($data['nilai_1'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr1']) : 'he '.str_replace("his/her","his",$keterangan['cr1'])).' ' : '').
+        (($data['nilai_2'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr2']) : 'he '.str_replace("his/her","his",$keterangan['cr2'])).' ' : '').
+        (($data['nilai_3'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr3']) : 'he '.str_replace("his/her","his",$keterangan['cr3'])).' ' : '').
+        (($data['nilai_4'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr4']) : 'he '.str_replace("his/her","his",$keterangan['cr4'])).' ' : '').
+        (($data['nilai_5'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr5']) : 'he '.str_replace("his/her","his",$keterangan['cr5'])).' ' : '').
+        (($data['nilai_6'] == 1) ?  (($data['gender'] == 1) ? 'she '.str_replace("his/her","her",$keterangan['cr6']) : 'he '.str_replace("his/her","his",$d->cr6)).' ' : '');
+      }
+    }
+
+
+    $row = array(
+      "id_user" => $data['id_user'],
+      "kelas" => $data['kelas'],
+      "grade" => $data['grade'],
+      "nilai_1" => $data['nilai_1'],
+      "nilai_2" => $data['nilai_2'],
+      "nilai_3" => $data['nilai_3'],
+      "nilai_4" => $data['nilai_4'],
+      "nilai_5" => $data['nilai_5'],
+      "nilai_6" => $data['nilai_6'],
+      "description" => $data['description'],
+      "nama_project" => $data['nama_project'],
+      "master_project_tipe" => $data['kategori'],
+      "level" => $level,
+    );
+
+    $temp = TempContainer::create($row);
+ 
   }
 }
