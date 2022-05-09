@@ -10,6 +10,7 @@ $(document).ready(function() {
                 url: '/creativity/show/'+sizeUrl[6]+'/'+id+'?tipe='+name,
                 dataType: 'json',
                 success: function(result) {
+                    console.log(result);
                     if(result.grade.grade == 'KGA' || result.grade.grade == 'KGB' || result.grade.grade == 'PGB'){
                         $("#aspect2").hide();$("#aspect3").hide();
                         $("#aspect4").hide();$("#aspect6").hide();
@@ -26,7 +27,12 @@ $(document).ready(function() {
                     $('input[type="checkbox"]').each(function() {
                         $(this).prop('checked',false);
                     });
-
+                    $("#id").val(result.murid.id);
+                    $("#nama").val(result.murid.name);
+                    $("#gender").val(result.murid.gender);
+                    $("#tipe").val(result.tipe[0].tipe);
+                    $("#kelas").val(result.grade.kode_kelas);
+                    $("#grade").val(result.grade.grade);
                     $("#subjects").html("");
                     result.tipe.forEach(element => {
                         $('#subjects').append(

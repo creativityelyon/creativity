@@ -81,7 +81,7 @@ Creativity
                       </td>
                     </tr>
 
-                    @elseif($kelas->grade >= 3 && $kelas->grade <= 6)
+                    @elseif($kelas->grade >= 1 && $kelas->grade <= 6)
                     <tr>
                       <td>{{ $loop->iteration }}
                         <input type="hidden" name="user_id[]" value="{{ $d->id}}">
@@ -139,7 +139,7 @@ Creativity
                     </tr>
                     @endif
                     @endforeach
-
+                    
                   </tbody>
                 </table>
               </div>
@@ -156,6 +156,7 @@ Creativity
 
 @endsection
 @include('creativity.partials.secondary-hs-detail')
+
 @section('scripts')
 <script src="{{ asset('js/modal.js') }}"></script>
 @endsection

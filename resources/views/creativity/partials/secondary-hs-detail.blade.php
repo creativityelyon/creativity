@@ -4,7 +4,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Performing Art</h5>
-          <h2 id="haha"></h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -12,6 +11,12 @@
         <div class="modal-body">
             <form>
                 <div class="form-group row">
+                  <input type="hidden" name="" id="id" value="">
+                  <input type="hidden" name="" id="nama" value="">
+                  <input type="hidden" name="" id="gender" value="">
+                  <input type="hidden" name="" id="tipe" value="">
+                  <input type="hidden" name="" id="kelas" value="">
+                  <input type="hidden" name="" id="grade" value="">
                   <label for="inputEmail3" class="col-sm-2 col-form-label">Kategori</label>
                   <div class="col-sm-10">
                     <select name="" id="subjects" class="form-control">

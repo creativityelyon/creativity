@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActiveStudent;
+use App\Models\ActiveStudentSuto;
 use Illuminate\Http\Request;
 use App\Models\Syskelas;
 use App\Models\FitTime;
@@ -232,8 +234,12 @@ class ReportCreativity extends Controller
       $tipe_projek = ProjectTipe::where('tipe', 1)->get();
     }
     $check_kelas = Syskelas::find($kelas);
-
-    return ['id'=>$id, 'grade' => $check_kelas, 'tipe' => $tipe_projek];
+    if ($check_kelas->lokasi == 'Sutorejo') {
+      $murid = ActiveStudentSuto::select('id', 'name', 'gender')->where('id', $id)->get();
+    }else {
+      $murid = ActiveStudent::select('id', 'name', 'gender')->where('id', $id)->get();
+    }
+    return ['murid'=>$murid, 'grade' => $check_kelas, 'tipe' => $tipe_projek];
     //return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
   }
 
