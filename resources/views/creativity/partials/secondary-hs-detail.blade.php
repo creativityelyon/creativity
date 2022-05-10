@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" id="as">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Performing Art</h5>
@@ -38,7 +38,7 @@
                       <div class="form-group row">
                         <div class="col-sm-6">Nama Proyek</div>
                         <div class="col-sm-6">
-                            <input type="text" id="namapro1" name="namapro1" class="form-control" value="">
+                            <input type="text" id="namapro1" name="namapro[0]" class="form-control" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect11">
@@ -100,7 +100,7 @@
                       <div class="form-group row" id="aspect51">
                         <div class="col-sm-6">Creative Production and Innovation</div>
                         <div class="col-sm-3">
-                            <input type="number"  id="input5" class="form-control" name="nilai_1[4]" value="">
+                            <input type="number" id="input5" class="form-control" name="nilai_1[4]" value="">
                         </div>
                         <div class="col-sm-3">
                           <div class="form-check">
@@ -132,7 +132,7 @@
                       <div class="form-group row">
                         <div class="col-sm-6">Nama Proyek</div>
                         <div class="col-sm-6">
-                            <input type="text" id="namapro2" name="namapro2" class="form-control" value="">
+                            <input type="text" id="namapro2" name="namapro[1]" class="form-control" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect12">
