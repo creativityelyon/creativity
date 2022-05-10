@@ -570,18 +570,26 @@ class FinalReportController extends Controller
             "nama_kepala_sekolah" => $nama_kepala_sekolah,
             "tt_kepala_sekolah" => $filename
         ]);
-
+        
         $id_inserted = DB::getPdo()->lastInsertId();
-        for($i=0; $i<count($class); $i++){
-            DB::connection('mysql')->table('class_setting_report')->insert([
-                'id_setting_report' => $id_inserted,
-                'id_class' => $class[$i]
-            ]);
+        if($class != null){
+          for($i=0; $i<count($class); $i++){
+              DB::connection('mysql')->table('class_setting_report')->insert([
+                  'id_setting_report' => $id_inserted,
+                  'id_class' => $class[$i]
+              ]);
+          }
         }
       }
       return redirect('corpus/indexsetting');
   }
 
+  public function destroy($id)
+  {
+    DB::connection('mysql')->table('class_setting_report')->where('id', $id)->delete();
+    DB::connection('mysql')->table('setting_report')->where('id', $id)->delete();
+    return redirect('corpus/indexsetting');
+  }
  
 
 }
