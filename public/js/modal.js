@@ -19,7 +19,11 @@ $(document).ready(function() {
                     else if(result.grade.grade >= 1 && result.grade.grade <= 6){
                         $("#aspect21").hide();$("#aspect61").hide();
                         $("#aspect22").hide();$("#aspect62").hide();
-                    } 
+                    }else{
+                        if(result.grade.grade >= 13){
+                            $("#subjects").hide();
+                        }
+                    }
 
                     $('#exampleModalLabel').html(name);
                     $('input[type="number"]').each(function() {
@@ -46,6 +50,13 @@ $(document).ready(function() {
         });
     });
     $("#form2").hide();
+    
+    $('#exampleModal').on('hidden.bs.modal', function () {
+        $(".modal-dialog").removeClass("modal-lg");
+        $(".aspectForm").removeClass("col-sm-6");
+        $("#form2").hide();
+    });
+
     $("#add").click(function(){
         $(".modal-dialog").toggleClass("modal-lg");
         $(".aspectForm").toggleClass("col-sm-6");
@@ -61,5 +72,14 @@ $(document).ready(function() {
             $("#input"+id).attr('disabled',true);
         }
     });
+
+    $('input[type="number"]').keyup(function() {
+        if($('#txtNumber').val()<-10 || $('#txtNumber').val()>10 ){
+            $('#errorMsg').show();
+        }
+        else{
+          $('#errorMsg').hide();
+        }
+      });
 });
 
