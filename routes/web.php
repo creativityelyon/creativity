@@ -128,8 +128,9 @@ Route::get('corpus/delete/{id}','FinalReportController@delete')->middleware(['au
 //fendy
 Route::get('corpus/indexsetting', 'FinalReportController@indexSetting')->middleware(['auth:teacher']);
 Route::get('corpus/settingPrinting/{id}', 'FinalReportController@reportSetting')->middleware(['auth:teacher']);
+// Route::post('/final/delete','FinalReportController@delete')->middleware(['auth:teacher']);;
 Route::post('corpus/settingPrinting', 'FinalReportController@storeReportSetting')->middleware(['auth:teacher']);
-
+Route::get('/corpus/delete/{id}', 'FinalReportController@destroy');
 // /Auth::routes();
 
 Route::get('/fit_staff','FitStaffController@index')->middleware(['auth:teacher']);

@@ -10,13 +10,15 @@ $(document).ready(function() {
                 url: '/creativity/show/'+sizeUrl[6]+'/'+id+'?tipe='+name,
                 dataType: 'json',
                 success: function(result) {
-                    console.log(result);
                     if(result.grade.grade == 'KGA' || result.grade.grade == 'KGB' || result.grade.grade == 'PGB'){
-                        $("#aspect2").hide();$("#aspect3").hide();
-                        $("#aspect4").hide();$("#aspect6").hide();
+                        $("#aspect21").hide();$("#aspect31").hide();
+                        $("#aspect22").hide();$("#aspect32").hide();
+                        $("#aspect41").hide();$("#aspect61").hide();
+                        $("#aspect42").hide();$("#aspect62").hide();
                     } 
                     else if(result.grade.grade >= 1 && result.grade.grade <= 6){
-                        $("#aspect2").hide();$("#aspect6").hide();
+                        $("#aspect21").hide();$("#aspect61").hide();
+                        $("#aspect22").hide();$("#aspect62").hide();
                     } 
 
                     $('#exampleModalLabel').html(name);
@@ -33,6 +35,7 @@ $(document).ready(function() {
                     $("#tipe").val(result.tipe[0].tipe);
                     $("#kelas").val(result.grade.kode_kelas);
                     $("#grade").val(result.grade.grade);
+                    $("#fit_time_id").val(sizeUrl[5]);
                     $("#subjects").html("");
                     result.tipe.forEach(element => {
                         $('#subjects').append(
@@ -41,6 +44,12 @@ $(document).ready(function() {
                 }
             });
         });
+    });
+    $("#form2").hide();
+    $("#add").click(function(){
+        $(".modal-dialog").toggleClass("modal-lg");
+        $(".aspectForm").toggleClass("col-sm-6");
+        $("#form2").toggle();
     });
 
     $('input[type="checkbox"]').click(function(){

@@ -37,8 +37,8 @@ Setting Print Final Report
                                 </td>
                                 <td>
                                     <a href="{{url('/corpus/settingPrinting/'.$data[$i]['id'])}}" class="btn btn-sm btn-success"><i class="fas fa-pen"></i></a>
-                                    <a href="" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onclick="return confirm('Delete This Data ?');"><i class="fas fa-trash"></i></a>
-                                </td>
+                                    <a href="{{url('/corpus/delete/'.$data[$i]['id'])}}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onclick="return confirm('Ingin menghapus data?');"><i class="fas fa-trash"></i></a>
+                                  </td>
                             </tr>
                         @endfor
                     </tbody>
