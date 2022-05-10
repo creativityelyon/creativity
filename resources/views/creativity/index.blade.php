@@ -83,7 +83,10 @@ Creativity
                       <th>Nama Murid</th>
                       <th>Kelas</th>
                       <th>Lokasi</th>
-                      <th>Description</th>
+                      <th>Level Container</th>
+                      <th>Description Container</th>
+                      <th>Level Performing Art</th>
+                      <th>Description Performing Art</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -91,14 +94,21 @@ Creativity
                     @foreach($data as $d)
                     <tr>
                       <td>
-                        <a href="{{ url('/creativity/edit',$d->id)}}" class="btn btn-sm btn-success">Edit</a>
+                      
                         <a href="{{ url('/creativity/delete',$d->id)}}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onclick="return confirm('Delete This Data ?');"><i class="fas fa-trash"></i></a>
                       </td>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $d->nama }}</td>
                       <td>{{ $d->kelas }}</td>
                       <td>{{ $d->lokasi }}</td>
-                      <td class="cell">{{ $d->text }} </td>
+                      <td><?php 
+                        if($d->level_container == 1) echo "Novice"; else  if ($d->level_container == 2)echo "Emerging";
+                      ?></td>
+                      <td class="cell">{{ $d->description_container }} </td>
+                      <td><?php 
+                        if($d->level_performing_art == 1) echo "Novice"; else if($d->level_performing_art == 2) echo "Emerging";
+                      ?></td>
+                       <td class="cell">{{ $d->description_performing_art }} </td>
                     </tr>
                     @endforeach
                     @endif

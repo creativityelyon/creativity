@@ -198,3 +198,6 @@ Route::post('/project_tipe/store', 'ProjectTipeController@store')->middleware(['
 Route::get('/project_tipe/edit/{id}', 'ProjectTipeController@edit') ->middleware(['auth:teacher']);
 Route::post('/project_tipe/update', 'ProjectTipeController@update')->middleware(['auth:teacher']);
 Route::get('/project_tipe/delete/{id}', 'ProjectTipeController@destroy')->middleware(['auth:teacher']);
+
+//
+Route::post('rubrick/creativity/store_nilai', 'ReportCreativity@store_penilaian')->middleware(['auth:teacher']);
