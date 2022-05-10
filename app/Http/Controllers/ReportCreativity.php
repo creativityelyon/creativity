@@ -131,11 +131,11 @@ class ReportCreativity extends Controller
       // dd($i);
       foreach ($i['user_id'] as $key => $value) {
 
-        $tempContainer = TempContainer::where('id_user',$value)->where('tipe', 2)->first();
-        $tempPerformingArt = TempContainer::where('id_user', $value)->where('tipe',1)->first();
         $s = new CreativityStudent;
         $s->fit_time_id = $i['fit_time_id'][$key];
         $s->user_id = $value;
+        $tempContainer = TempContainer::where('id_user',$value)->where('tipe', 2)->where('fit_time_id',$s->fit_time_id)->first();
+        $tempPerformingArt = TempContainer::where('id_user', $value)->where('tipe',1)->where('fit_time_id',$s->fit_time_id)->first();
         $s->no_induk_global = $i['no_induk_siswa_global'][$key];
         $s->nama = $i['nama_lengkap'][$key];
         $s->kelas = $i['kelas'][$key];
@@ -500,6 +500,7 @@ class ReportCreativity extends Controller
       "nilai_4" => $data['nilai_4'],
       "nilai_5" => $data['nilai_5'],
       "nilai_6" => $data['nilai_6'],
+      "fit_time_id" => $data['fit_time_id'],
       'tipe' => $data['tipe'],
       "description" => $data['description'],
       "nama_project" => $data['nama_project'],
@@ -517,4 +518,28 @@ class ReportCreativity extends Controller
     return redirect()->back()->with('success','Aspek Penilaian Berhasil di Input');
  
   }
+
+
+
+  public function creativity_percent(){
+    $fit_time = FitTime::get();
+     return view('creativity_percent.index')->with('fit_time',$fit_time);
+  }
+
+  public function creativity_percent_time($time){
+     
+      $cls = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
+      foreach($cls as $data_kelas){
+        $data = null;
+        if ($data_kelas->lokasi == 'Sutorejo') {
+          $data = Custom::getDataSiswaCreativitySutorejo($time,$data_kelas->id);
+        }else {
+          $data = Custom::getDataSiswaCreativity($time,$data_kelas->id);
+        }
+        
+      }
+  }
+
+
+
 }
