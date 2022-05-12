@@ -31,6 +31,8 @@ class ReportCreativity extends Controller
 
   public function getData($time,$kelas)
   {
+    $tipe_projek_performing_art = ProjectTipe::where('tipe', 1)->get();
+    $tipe_projek_container = ProjectTipe::where('tipe', 2)->get();
     $check_kelas = Syskelas::find($kelas);
     if ($check_kelas->lokasi == 'Sutorejo') {
       $data = Custom::getDataSiswaCreativitySutorejo($time,$kelas);
@@ -38,7 +40,11 @@ class ReportCreativity extends Controller
       $data = Custom::getDataSiswaCreativity($time,$kelas);
     }
 
-    return view('creativity.show')->with('data',$data)->with('kelas',$check_kelas)->with('fit_time',$time);
+    return view('creativity.show')->with('data',$data)
+                                  ->with('kelas',$check_kelas)
+                                  ->with('fit_time',$time)
+                                  ->with('kategori_performing', $tipe_projek_performing_art)
+                                  ->with('kategori_container', $tipe_projek_container);
   }
 
   public function store(Request $r)
@@ -189,12 +195,6 @@ class ReportCreativity extends Controller
 
   public function showModal($kelas, $id, $time)
   {
-    $query = $_GET['tipe'];
-    if($query == "Container") {
-      $tipe_projek = ProjectTipe::where('tipe', 2)->get();
-    }else{
-      $tipe_projek = ProjectTipe::where('tipe', 1)->get();
-    }
     $check_kelas = Syskelas::find($kelas);
    
     if ($check_kelas->lokasi == 'Sutorejo') {
@@ -205,10 +205,9 @@ class ReportCreativity extends Controller
 
     //for Update
     $data_Temp = null;
-    $data_Temp = TempContainer::where('id_user', $id)->where('tipe', $tipe_projek[0]->tipe)->where('fit_time_id', $time)->orderBy('created_at', 'DESC')->get();
-  
-    return ['murid'=>$murid, 'grade' => $check_kelas, 'tipe' => $tipe_projek, 'old_data' => $data_Temp];
-    //return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
+    //$data_Temp = TempContainer::where('id_user', $id)->where('tipe', $tipe_projek[0]->tipe)->first();
+    return ['murid'=>$murid, 'grade' => $check_kelas, 'old_data' => $data_Temp];
+    return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
   }
 
 
