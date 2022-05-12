@@ -41,12 +41,13 @@ $(document).ready(function() {
     });
 
     $("input#addFormPerforming").click(function(){
+        
         $("div.aspectRow").toggleClass('row');
         $("div.aspectForm").toggleClass("col-sm-6");
         $("[proyek='1']").val('');
         for(let i=7; i<=12; i++){
             $('#'+i).prop('checked',false);
-            $('#aspect'+i).hide();
+            checked[i-1] = 0;
         }
         $("div#form2").toggle();
     });
@@ -55,6 +56,10 @@ $(document).ready(function() {
         $("div.aspectRow2").toggleClass('row');
         $("div.aspectForm2").toggleClass("col-sm-6");
         $("[proyek='2']").val('');
+        for(let i=19; i<=24; i++){
+            $('#'+i).prop('checked',false);
+            checked[i-1] = 0;
+        }
         $("div#form4").toggle();
     });
 
