@@ -9,12 +9,8 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ url('rubrick/creativity/store_nilai')}}" method="post">
-              @csrf
+           
                 <div class="form-group row">
-
-                  <input type="hidden" name="old_data"  id="old_data_1" value="">
-                  <input type="hidden" name="old_data_2"  id="old_data_2" value="">
                   <input type="hidden" name="id_user" id="id_user" value="">
                   <input type="hidden" name="nama" id="nama" value="">
                   <input type="hidden" name="gender" id="gender" value="">
@@ -104,12 +100,13 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-info">Save changes</button> --}}
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" id="change_btn" class="btn btn-info" data-dismiss="modal">Save changes</button>
                 </div>
-              </form>
         </div>
       
       </div>
     </div>
   </div>
+
+

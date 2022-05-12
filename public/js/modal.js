@@ -29,22 +29,32 @@ $(document).ready(function() {
         if($(this).is(":checked")){
             $("#input"+id).attr('disabled',false);
             checked[id-1] = 1;
+            $('.nilai'+(id)).val(2);
+
+
         }
         else if($(this).is(":not(:checked)")){
             $("#input"+id).attr('disabled',true);
             checked[id-1] = 0;
+            $('.nilai'+(id)).val('');
         }
     });
 
     $("input#addFormPerforming").click(function(){
         $("div.aspectRow").toggleClass('row');
         $("div.aspectForm").toggleClass("col-sm-6");
+        $("[proyek='1']").val('');
+        for(let i=7; i<=12; i++){
+            $('#'+i).prop('checked',false);
+            $('#aspect'+i).hide();
+        }
         $("div#form2").toggle();
     });
 
     $("input#addFormContainer").click(function(){
         $("div.aspectRow2").toggleClass('row');
         $("div.aspectForm2").toggleClass("col-sm-6");
+        $("[proyek='2']").val('');
         $("div#form4").toggle();
     });
 
@@ -65,8 +75,18 @@ $(document).ready(function() {
                 success: function(result) {
                     $('input[type="number"]').each(function() {
                         $(this).attr('disabled',true);
-                        $(this).val(2);
+                    //    $(this).val(2);
                     });
+                    var kodename = "";
+                    if(name == "Performing Art") kodename = "pa"; else kodename = "c";
+                    for(let i=1; i<=12; i++){
+                        var idinput = "dmodal_"+i+"_"+kodename+"_"+id;
+                        var val = $('#'+idinput).val();
+                        $('#input'+i).val(val);
+                    }
+                    $('#tipe').val(kodename);
+
+
                     for (let index = 1; index <= 12; index++) {
                         $("#aspect"+index).hide();
                     }
@@ -94,82 +114,82 @@ $(document).ready(function() {
                     $("#grade").val(result.grade.grade);
                     $("#fit_time_id").val(splitUrl[5]);
                     
-                    if(result.old_data){
-                        $('#old_data_1').val(result.old_data[0].id);
-                        $('#namapro1').val(result.old_data[0].nama_project);
-                        $('#input1').val(result.old_data[0].nilai_1);
-                        $('#input2').val(result.old_data[0].nilai_2);
-                        $('#input3').val(result.old_data[0].nilai_3);
-                        $('#input4').val(result.old_data[0].nilai_4);
-                        $('#input5').val(result.old_data[0].nilai_5);
-                        $('#input6').val(result.old_data[0].nilai_6);
+                    // if(result.old_data){
+                    //     $('#old_data_1').val(result.old_data[0].id);
+                    //     $('#namapro1').val(result.old_data[0].nama_project);
+                    //     $('#input1').val(result.old_data[0].nilai_1);
+                    //     $('#input2').val(result.old_data[0].nilai_2);
+                    //     $('#input3').val(result.old_data[0].nilai_3);
+                    //     $('#input4').val(result.old_data[0].nilai_4);
+                    //     $('#input5').val(result.old_data[0].nilai_5);
+                    //     $('#input6').val(result.old_data[0].nilai_6);
 
-                        if(result.old_data[0].nilai_1 != null){
-                                $('#input1').attr('disabled',false);
-                                $('#1').prop('checked', true);
-                        }
-                        if(result.old_data[0].nilai_2 != null){
-                                $('#input2').attr('disabled',false);
-                                $('#2').prop('checked', true);
-                        }
-                        if(result.old_data[0].nilai_3 != null){
-                                $('#input3').attr('disabled',false);
-                                $('#3').prop('checked', true);
-                        }
-                        if(result.old_data[0].nilai_4 != null){
-                                $('#input4').attr('disabled',false);
-                                $('#4').prop('checked', true);
-                        }
-                        if(result.old_data[0].nilai_5 != null){
-                                $('#input5').attr('disabled',false);
-                                $('#5').prop('checked', true);
-                        }
-                        if(result.old_data[0].nilai_6 != null){
-                                $('#input6').attr('disabled',false);
-                                $('#6').prop('checked', true);
-                        }
+                    //     if(result.old_data[0].nilai_1 != null){
+                    //             $('#input1').attr('disabled',false);
+                    //             $('#1').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[0].nilai_2 != null){
+                    //             $('#input2').attr('disabled',false);
+                    //             $('#2').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[0].nilai_3 != null){
+                    //             $('#input3').attr('disabled',false);
+                    //             $('#3').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[0].nilai_4 != null){
+                    //             $('#input4').attr('disabled',false);
+                    //             $('#4').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[0].nilai_5 != null){
+                    //             $('#input5').attr('disabled',false);
+                    //             $('#5').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[0].nilai_6 != null){
+                    //             $('#input6').attr('disabled',false);
+                    //             $('#6').prop('checked', true);
+                    //     }
 
 
-                       if(result.old_data.length >1){
-                        $(".modal-dialog").toggleClass("modal-lg");
-                        $(".aspectForm").toggleClass("col-sm-6");
-                        $("#form2").toggle();
-                            $('#old_data_2').val(result.old_data[1].id);
-                            $('#namapro2').val(result.old_data[1].nama_project);
-                        $('#input7').val(result.old_data[1].nilai_1);
-                        $('#input8').val(result.old_data[1].nilai_2);
-                        $('#input9').val(result.old_data[1].nilai_3);
-                        $('#input10').val(result.old_data[1].nilai_4);
-                        $('#input11').val(result.old_data[1].nilai_5);
-                        $('#input12').val(result.old_data[1].nilai_6);
+                    //    if(result.old_data.length >1){
+                    //     $(".modal-dialog").toggleClass("modal-lg");
+                    //     $(".aspectForm").toggleClass("col-sm-6");
+                    //     $("#form2").toggle();
+                    //         $('#old_data_2').val(result.old_data[1].id);
+                    //         $('#namapro2').val(result.old_data[1].nama_project);
+                    //     $('#input7').val(result.old_data[1].nilai_1);
+                    //     $('#input8').val(result.old_data[1].nilai_2);
+                    //     $('#input9').val(result.old_data[1].nilai_3);
+                    //     $('#input10').val(result.old_data[1].nilai_4);
+                    //     $('#input11').val(result.old_data[1].nilai_5);
+                    //     $('#input12').val(result.old_data[1].nilai_6);
 
-                        if(result.old_data[1].nilai_1 != null){
-                                $('#input7').attr('disabled',false);
-                                $('#7').prop('checked', true);
-                        }
-                        if(result.old_data[1].nilai_2 != null){
-                                $('#input8').attr('disabled',false);
-                                $('#8').prop('checked', true);
-                        }
-                        if(result.old_data[1].nilai_3 != null){
-                                $('#input9').attr('disabled',false);
-                                $('#9').prop('checked', true);
-                        }
-                        if(result.old_data[1].nilai_4 != null){
-                                $('#input10').attr('disabled',false);
-                                $('#10').prop('checked', true);
-                        }
-                        if(result.old_data[1].nilai_5 != null){
-                                $('#input11').attr('disabled',false);
-                                $('#10').prop('checked', true);
-                        }
-                        if(result.old_data[1].nilai_6 != null){
-                            $('#input12').attr('disabled',false);
-                            $('#12').prop('checked', true);
-                        }
-                       }
+                    //     if(result.old_data[1].nilai_1 != null){
+                    //             $('#input7').attr('disabled',false);
+                    //             $('#7').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[1].nilai_2 != null){
+                    //             $('#input8').attr('disabled',false);
+                    //             $('#8').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[1].nilai_3 != null){
+                    //             $('#input9').attr('disabled',false);
+                    //             $('#9').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[1].nilai_4 != null){
+                    //             $('#input10').attr('disabled',false);
+                    //             $('#10').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[1].nilai_5 != null){
+                    //             $('#input11').attr('disabled',false);
+                    //             $('#10').prop('checked', true);
+                    //     }
+                    //     if(result.old_data[1].nilai_6 != null){
+                    //         $('#input12').attr('disabled',false);
+                    //         $('#12').prop('checked', true);
+                    //     }
+                    //    }
                      
-                    }
+                    // }
                 }
             });
         });
@@ -247,5 +267,17 @@ $(document).ready(function() {
     //       $('#errorMsg').hide();
     //     }
     // });
+
+
+
+    $('#change_btn').on('click', function(){
+        var tipe = $('#tipe').val();
+        var id = $('#id_user').val();
+        for(let i=0; i< 12; i++){
+            let ctr = i+1;
+          var idinput = "dmodal_"+ctr+"_"+tipe+"_"+id;
+          $('#'+idinput ).val( $('#input'+ctr).val());
+        }
+      });
 });
 

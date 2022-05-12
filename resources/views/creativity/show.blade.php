@@ -420,19 +420,46 @@ Creativity
                     </thead>
                     <tbody>
                       @foreach($data as $d)
+                        <input type="hidden" name="user_id[]" value="{{ $d->id}}">
+                        <input type="hidden" name="fit_time_id[]" value="{{ $fit_time }}">
+                        <input type="hidden" name="nama_lengkap[]" value="{{ $d->name}}">
+                        <input type="hidden" name="kelas[]" value="{{ $d->kelas}}">
+                        <input type="hidden" name="grade[]" value="{{ $d->grade}}">
+                        <input type="hidden" name="lokasi[]" value="{{ $d->lokasi}}">
+                        <input type="hidden" name="id_kelas[]" value="{{ $d->id_kelas}}">
+                        <input type="hidden" name="id_level[]" value="{{ $d->id_level}}">
+                        <input type="hidden" name="gender[]" value="{{ $d->gender}}">
+                        <input type="hidden" name="no_induk_siswa_global[]" value="{{ $d->no_induk_siswa_global}}">
+
+                        <input type="hidden" name="nilai_1_pa[][0]" value="" class="nilai1" id="dmodal_1_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_2_pa[][0]" value="" class="nilai2" id="dmodal_2_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_3_pa[][0]" value="" class="nilai3" id="dmodal_3_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_4_pa[][0]" value="" class="nilai4" id="dmodal_4_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_5_pa[][0]" value="" class="nilai5" id="dmodal_5_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_6_pa[][0]" value="" class="nilai6" id="dmodal_6_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_1_pa[][1]" value="" class="nilai7" id="dmodal_7_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_2_pa[][1]" value="" class="nilai8" id="dmodal_8_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_3_pa[][1]" value="" class="nilai9" id="dmodal_9_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_4_pa[][1]" value="" class="nilai10" id="dmodal_10_pa_{{$d->id}}" proyek ="1">
+                        <input type="hidden" name="nilai_5_pa[][1]" value="" class="nilai11" id="dmodal_11_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_6_pa[][1]" value="" class="nilai12" id="dmodal_12_pa_{{$d->id}}" proyek="1">
+
+
+                        <input type="hidden" name="nilai_1_c[][0]" value="" class="nilai13" id="dmodal_1_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_2_c[][0]" value="" class="nilai14" id="dmodal_2_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_3_c[][0]" value="" class="nilai15" id="dmodal_3_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_4_c[][0]" value="" class="nilai16" id="dmodal_4_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_5_c[][0]" value="" class="nilai17" id="dmodal_5_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_6_c[][0]" value="" class="nilai18" id="dmodal_6_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_1_c[][1]" value="" class="nilai19" id="dmodal_7_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_2_c[][1]" value="" class="nilai20" id="dmodal_8_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_3_c[][1]" value="" class="nilai21" id="dmodal_9_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_4_c[][1]" value="" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_5_c[][1]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek ="2">
+                        <input type="hidden" name="nilai_6_c[][1]" value="" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
                       @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                       <tr>
                         <td>{{ $loop->iteration }}
-                          <input type="hidden" name="user_id[]" value="{{ $d->id}}">
-                          <input type="hidden" name="fit_time_id[]" value="{{ $fit_time }}">
-                          <input type="hidden" name="nama_lengkap[]" value="{{ $d->name}}">
-                          <input type="hidden" name="kelas[]" value="{{ $d->kelas}}">
-                          <input type="hidden" name="grade[]" value="{{ $d->grade}}">
-                          <input type="hidden" name="lokasi[]" value="{{ $d->lokasi}}">
-                          <input type="hidden" name="id_kelas[]" value="{{ $d->id_kelas}}">
-                          <input type="hidden" name="id_level[]" value="{{ $d->id_level}}">
-                          <input type="hidden" name="gender[]" value="{{ $d->gender}}">
-                          <input type="hidden" name="no_induk_siswa_global[]" value="{{ $d->no_induk_siswa_global}}">
                         </td>
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
@@ -446,17 +473,6 @@ Creativity
                       @elseif($kelas->grade >= 1 && $kelas->grade <= 6)
                       <tr>
                         <td>{{ $loop->iteration }}
-                          <input type="hidden" name="user_id[]" value="{{ $d->id}}">
-                          <input type="hidden" name="fit_time_id[]" value="{{ $fit_time }}">
-                          <input type="hidden" name="nama_lengkap[]" value="{{ $d->name}}">
-                          <input type="hidden" name="kelas[]" value="{{ $d->kelas}}">
-                          <input type="hidden" name="grade[]" value="{{ $d->grade}}">
-                          <input type="hidden" name="lokasi[]" value="{{ $d->lokasi}}">
-                          <input type="hidden" name="id_kelas[]" value="{{ $d->id_kelas}}">
-                          <input type="hidden" name="id_level[]" value="{{ $d->id_level}}">
-                          <input type="hidden" name="gender[]" value="{{ $d->gender}}">
-                          <input type="hidden" name="no_induk_siswa_global[]" value="{{ $d->no_induk_siswa_global}}">
-  
                         </td>
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
@@ -469,16 +485,7 @@ Creativity
                       @else
                       <tr>
                         <td>{{ $loop->iteration }}
-                          <input type="hidden" name="user_id[]" value="{{ $d->id}}">
-                          <input type="hidden" name="fit_time_id[]" value="{{ $fit_time }}">
-                          <input type="hidden" name="nama_lengkap[]" value="{{ $d->name}}">
-                          <input type="hidden" name="kelas[]" value="{{ $d->kelas}}">
-                          <input type="hidden" name="grade[]" value="{{ $d->grade}}">
-                          <input type="hidden" name="lokasi[]" value="{{ $d->lokasi}}">
-                          <input type="hidden" name="id_kelas[]" value="{{ $d->id_kelas}}">
-                          <input type="hidden" name="id_level[]" value="{{ $d->id_level}}">
-                          <input type="hidden" name="gender[]" value="{{ $d->gender}}">
-                          <input type="hidden" name="no_induk_siswa_global[]" value="{{ $d->no_induk_siswa_global}}">
+                       
                         </td>
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
@@ -505,8 +512,13 @@ Creativity
                   </table>
                 </div>
               </div>
-              <div class="form-group col-sm-12">
-                <button type="submit" class="btn-lg btn-primary ">Save </button>
+              <div class="row">
+                <div class="form-group col-sm-6">
+                  <button type="submit" class="btn-lg btn-primary ">Rekap</button>
+                </div>
+                <div class="form-group col-sm-6">
+                  <button type="submit" class="btn-lg btn-primary " style="float:right" formaction="/test">Save</button>
+                </div>
               </div>
             </div>
           </div>
