@@ -339,7 +339,8 @@ class FinalReportController extends Controller
           $a->effort = $input['effort'][$key];
           $a->total_score = $input['total_score'][$key];
           if ($input['lokasi'][$key ] == 'Sutorejo') {
-            $a->user_id_sutorejo = $input['user_id_sutorejo'][$key];
+            
+            $a->user_id_sutorejo = $input['user_id_sutorejo'][0];
           }else {
             $a->user_id = $input['user_id'][$key];
           }
@@ -374,94 +375,110 @@ class FinalReportController extends Controller
     $data = FinalRubrick::find($id);
 
     //fendy
+    $tt_setting = null;
+    $id_setting = 
+    json_decode(json_encode(DB::connection('mysql')->select( 'select * from class_setting_report where id_class like "'.$data->id_kelas.'"') ), true)
+    ;
 
-    $id_setting = json_decode(json_encode(DB::connection('mysql')->select( 'select * from class_setting_report where id_class like "'.$data->id_kelas.'"') ), true)[0];
-    $tt_setting = DB::connection('mysql')->select('select * from setting_report where id = '.$id_setting['id_setting_report']);
-
-
-    $creativity = CreativityStudent::where('user_id','=',$data->user_id)->where('fit_time_id','=',$data->fit_time_id)
-    ->where('id_kelas','=',$data->id_kelas)->where('id_level','=',$data->id_level)->where('lokasi','=',$data->lokasi)
-    ->first();
-    if (!empty($creativity)) {
-      $cr1 = CreativityType::where('kode_creativity','=','cr1')->where('code','=',$creativity->creativity_1)
-      ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
-      $cr2 = CreativityType::where('kode_creativity','=','cr2')->where('code','=',$creativity->creativity_2)
-      ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
-      $cr3 = CreativityType::where('kode_creativity','=','cr3')->where('code','=',$creativity->creativity_1)
-      ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
-      $cr4 = CreativityType::where('kode_creativity','=','cr4')->where('code','=',$creativity->creativity_2)
-      ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
-      $cr5 = CreativityType::where('kode_creativity','=','cr5')->where('code','=',$creativity->creativity_1)
-      ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
-      $cr6 = CreativityType::where('kode_creativity','=','cr6')->where('code','=',$creativity->creativity_2)
-      ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
-      $creativity->cr1 = (empty($cr1)) ? '' : $cr1->text;
-      $creativity->cr2 = (empty($cr2)) ? '' : $cr2->text;
-      $creativity->cr3 = (empty($cr3)) ? '' : $cr3->text;
-      $creativity->cr4 = (empty($cr4)) ? '' : $cr4->text;
-      $creativity->cr5 = (empty($cr5)) ? '' : $cr5->text;
-      $creativity->cr6 = (empty($cr6)) ? '' : $cr6->text;
-
-      if($creativity->grade == 'KGA' || $creativity->grade == 'KGB' || $creativity->grade == 'PGB'
-      || $creativity->grade == '1' || $creativity->grade == '2'){
-        if ($creativity->creativity_1 == 2 && $creativity->creativity_2 == 1) {
-          $creativity->text = $creativity->nama.' '.$creativity->cr1.' but '.(($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2));
-        }elseif ($creativity->creativity_1 == 1 && $creativity->creativity_2 == 2) {
-          $creativity->text = $creativity->nama.' '.$creativity->cr2.'but'.(($creativity->gender == 1) ? 'She' : 'He').' '.($creativity->gender == 1) ? str_replace("his/her","her",$creativity->cr1) : str_replace("his/her","his",$creativity->cr1);
-        }else {
-          $creativity->text =
-          $creativity->nama.' '.$creativity->cr1.' '.(($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2));
-        }
-      }elseif ($creativity->grade >= 3 && $creativity->grade <= 6) {
-        if ($creativity->creativity_1 + $creativity->creativity_2 + $creativity->creativity_3 + $creativity->creativity_4 == 8) {
-          $creativity->text = $creativity->nama.' '.
-          (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
-          (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
-          (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
-          (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '');
-
-        }else {
-          $creativity->text = $creativity->nama.' '.
-          (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
-          (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
-          (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
-          (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
-          'but '.
-          (($creativity->creativity_1 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
-          (($creativity->creativity_2 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
-          (($creativity->creativity_3 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
-          (($creativity->creativity_4 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '');
-
-        }
-      }else {
-        if ($creativity->creativity_1 + $creativity->creativity_2 + $creativity->creativity_3 + $creativity->creativity_4 + $creativity->creativity_5 + $creativity->creativity_6 == 12) {
-          $creativity->text = $creativity->nama.
-          (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
-          (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
-          (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
-          (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
-          (($creativity->creativity_5 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr5) : 'he '.str_replace("his/her","his",$creativity->cr5)).' ' : '').
-          (($creativity->creativity_6 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr6) : 'he '.str_replace("his/her","his",$creativity->cr6)).' ' : '');
-        }else {
-          $creativity->text = $creativity->nama.
-          (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
-          (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
-          (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
-          (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
-          (($creativity->creativity_5 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr5) : 'he '.str_replace("his/her","his",$creativity->cr5)).' ' : '').
-          (($creativity->creativity_6 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr6) : 'he '.str_replace("his/her","his",$creativity->cr6)).' ' : '').
-          'but '.
-          (($creativity->creativity_1 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
-          (($creativity->creativity_2 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
-          (($creativity->creativity_3 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
-          (($creativity->creativity_4 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
-          (($creativity->creativity_5 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr5) : 'he '.str_replace("his/her","his",$creativity->cr5)).' ' : '').
-          (($creativity->creativity_6 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr6) : 'he '.str_replace("his/her","his",$d->cr6)).' ' : '');
-        }
-      }
+    if(count($id_setting) >0){
+      $id_setting = $id_setting[0];
+      $tt_setting = DB::connection('mysql')->select('select * from setting_report where id = '.$id_setting['id_setting_report']);
     }
 
+    
+    
 
+
+    // $creativity = CreativityStudent::where('user_id','=',$data->user_id)->where('fit_time_id','=',$data->fit_time_id)
+    // ->where('id_kelas','=',$data->id_kelas)->where('id_level','=',$data->id_level)->where('lokasi','=',$data->lokasi)
+    // ->first();
+    // if (!empty($creativity)) {
+    //   $cr1 = CreativityType::where('kode_creativity','=','cr1')->where('code','=',$creativity->creativity_1)
+    //   ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
+    //   $cr2 = CreativityType::where('kode_creativity','=','cr2')->where('code','=',$creativity->creativity_2)
+    //   ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
+    //   $cr3 = CreativityType::where('kode_creativity','=','cr3')->where('code','=',$creativity->creativity_1)
+    //   ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
+    //   $cr4 = CreativityType::where('kode_creativity','=','cr4')->where('code','=',$creativity->creativity_2)
+    //   ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
+    //   $cr5 = CreativityType::where('kode_creativity','=','cr5')->where('code','=',$creativity->creativity_1)
+    //   ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
+    //   $cr6 = CreativityType::where('kode_creativity','=','cr6')->where('code','=',$creativity->creativity_2)
+    //   ->where('level_min','<=',$creativity->id_level)->where('level_max','>=',$creativity->id_level)->first();
+    //   $creativity->cr1 = (empty($cr1)) ? '' : $cr1->text;
+    //   $creativity->cr2 = (empty($cr2)) ? '' : $cr2->text;
+    //   $creativity->cr3 = (empty($cr3)) ? '' : $cr3->text;
+    //   $creativity->cr4 = (empty($cr4)) ? '' : $cr4->text;
+    //   $creativity->cr5 = (empty($cr5)) ? '' : $cr5->text;
+    //   $creativity->cr6 = (empty($cr6)) ? '' : $cr6->text;
+
+    //   if($creativity->grade == 'KGA' || $creativity->grade == 'KGB' || $creativity->grade == 'PGB'
+    //   || $creativity->grade == '1' || $creativity->grade == '2'){
+    //     if ($creativity->creativity_1 == 2 && $creativity->creativity_2 == 1) {
+    //       $creativity->text = $creativity->nama.' '.$creativity->cr1.' but '.(($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2));
+    //     }elseif ($creativity->creativity_1 == 1 && $creativity->creativity_2 == 2) {
+    //       $creativity->text = $creativity->nama.' '.$creativity->cr2.'but'.(($creativity->gender == 1) ? 'She' : 'He').' '.($creativity->gender == 1) ? str_replace("his/her","her",$creativity->cr1) : str_replace("his/her","his",$creativity->cr1);
+    //     }else {
+    //       $creativity->text =
+    //       $creativity->nama.' '.$creativity->cr1.' '.(($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2));
+    //     }
+    //   }elseif ($creativity->grade >= 3 && $creativity->grade <= 6) {
+    //     if ($creativity->creativity_1 + $creativity->creativity_2 + $creativity->creativity_3 + $creativity->creativity_4 == 8) {
+    //       $creativity->text = $creativity->nama.' '.
+    //       (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
+    //       (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
+    //       (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
+    //       (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '');
+
+    //     }else {
+    //       $creativity->text = $creativity->nama.' '.
+    //       (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
+    //       (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
+    //       (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
+    //       (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
+    //       'but '.
+    //       (($creativity->creativity_1 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
+    //       (($creativity->creativity_2 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
+    //       (($creativity->creativity_3 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
+    //       (($creativity->creativity_4 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '');
+
+    //     }
+    //   }else {
+    //     if ($creativity->creativity_1 + $creativity->creativity_2 + $creativity->creativity_3 + $creativity->creativity_4 + $creativity->creativity_5 + $creativity->creativity_6 == 12) {
+    //       $creativity->text = $creativity->nama.
+    //       (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
+    //       (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
+    //       (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
+    //       (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
+    //       (($creativity->creativity_5 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr5) : 'he '.str_replace("his/her","his",$creativity->cr5)).' ' : '').
+    //       (($creativity->creativity_6 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr6) : 'he '.str_replace("his/her","his",$creativity->cr6)).' ' : '');
+    //     }else {
+    //       $creativity->text = $creativity->nama.
+    //       (($creativity->creativity_1 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
+    //       (($creativity->creativity_2 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
+    //       (($creativity->creativity_3 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
+    //       (($creativity->creativity_4 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
+    //       (($creativity->creativity_5 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr5) : 'he '.str_replace("his/her","his",$creativity->cr5)).' ' : '').
+    //       (($creativity->creativity_6 == 2) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr6) : 'he '.str_replace("his/her","his",$creativity->cr6)).' ' : '').
+    //       'but '.
+    //       (($creativity->creativity_1 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr1) : 'he '.str_replace("his/her","his",$creativity->cr1)).' ' : '').
+    //       (($creativity->creativity_2 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr2) : 'he '.str_replace("his/her","his",$creativity->cr2)).' ' : '').
+    //       (($creativity->creativity_3 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr3) : 'he '.str_replace("his/her","his",$creativity->cr3)).' ' : '').
+    //       (($creativity->creativity_4 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr4) : 'he '.str_replace("his/her","his",$creativity->cr4)).' ' : '').
+    //       (($creativity->creativity_5 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr5) : 'he '.str_replace("his/her","his",$creativity->cr5)).' ' : '').
+    //       (($creativity->creativity_6 == 1) ?  (($creativity->gender == 1) ? 'she '.str_replace("his/her","her",$creativity->cr6) : 'he '.str_replace("his/her","his",$d->cr6)).' ' : '');
+    //     }
+    //   }
+    // }
+      $id_usr= "";
+      if($data->lokasi  == 'Sutorejo'){
+        $id_usr = $data->user_id_sutorejo;
+      }else{
+        $id_usr = $data->user_id;
+      }
+      $creativity = CreativityStudent::where('user_id','=',$id_usr)->where('fit_time_id','=',$data->fit_time_id)
+    ->where('id_kelas','=',$data->id_kelas)->where('id_level','=',$data->id_level)->where('lokasi','=',$data->lokasi)
+    ->first();
 
 
 
@@ -482,7 +499,7 @@ class FinalReportController extends Controller
     if (empty($data)) {
       return redirect()->back()->with('error','Data not Found');
     }
-    return view('final.print')->with('data',$data)->with('creativity',$creativity)->with('exercise',$fitVideo)->with('tt_kepsek', json_decode(json_encode($tt_setting),true));
+    return view('final.print')->with('data',$data)->with('exercise',$fitVideo)->with('creativity', $creativity)->with('tt_kepsek', json_decode(json_encode($tt_setting),true));
   }
 
   public function delete($id)

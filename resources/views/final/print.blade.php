@@ -7,7 +7,9 @@ Final Report
 @endsection
 @section('content')
 <section class="section">
+  <h1>Report Creativity and Corpus Fitness</h1>
   <div class="section-header">
+    
     <table>
       <thead>
         <th></th>
@@ -46,7 +48,7 @@ Final Report
                   <thead>
                     <tr>
                       <th>Aspect</th>
-                      <th>Grade</th>
+                      <th>Level</th>
                       <th>Description</th>
                     </tr>
                   </thead>
@@ -85,6 +87,145 @@ Final Report
                       <td>{{ $data->creativity }}</td>
                       <td>{{ $data->gender == 'Male' ? str_replace("his/her","his",(str_replace("He/She","He",$data->desc_creativity))) : str_replace("his/her","her",(str_replace("He/She","She",$data->desc_creativity))) }}</td>
                     </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div style="width: 100%;">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Aspect</th>
+                      <th>Course</th>
+                      <th>Project Name</th>
+                      <th>Level</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                       <td>Creativity</td>
+                     @if($creativity->performing_art_id != null)
+                     
+                        <td><?php 
+                            $tmp = \DB::table('temp_container')->where('id',$creativity->performing_art_id)->first();
+                           $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
+                           echo $proj->nama;
+                        
+                        ?></td>
+                        <td>
+                          @php 
+                              echo $tmp->nama_project;
+                          @endphp
+                        </td>
+                        <td>
+                          @php 
+                            if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                        @endphp
+                        </td>
+                        <td>
+                          @php 
+                              echo $tmp->description;
+                          @endphp
+                        </td>
+                      @endif
+                     </tr>
+                     <tr>
+                     
+                       @if($creativity->performing_art_id_2 != null)
+                       <td>
+
+                      </td>
+                       <td><?php 
+                           $tmp = \DB::table('temp_container')->where('id',$creativity->performing_art_id_2)->first();
+                          $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
+                          echo $proj->nama;
+                       
+                       ?></td>
+                       <td>
+                         @php 
+                             echo $tmp->nama_project;
+                         @endphp
+                       </td>
+                       <td>
+                         @php 
+                           if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                       @endphp
+                       </td>
+                       <td>
+                         @php 
+                             echo $tmp->description;
+                         @endphp
+                       </td>
+                     @endif
+                     </tr>
+                     <tr>
+                      
+                       @if($creativity->container_id != null)
+                       <td>
+
+                      </td>
+                       <td><?php 
+                           $tmp = \DB::table('temp_container')->where('id',$creativity->container_id)->first();
+                          $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
+                          echo $proj->nama;
+                       
+                       ?></td>
+                       <td>
+                         @php 
+                             echo $tmp->nama_project;
+                         @endphp
+                       </td>
+                       <td>
+                         @php 
+                           if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                       @endphp
+                       </td>
+                       <td>
+                         @php 
+                             echo $tmp->description;
+                         @endphp
+                       </td>
+                     @endif
+                     </tr>
+                     <tr>
+                       
+                       @if($creativity->container_id_2 != null)
+                       <td>
+
+                      </td>
+                       <td><?php 
+                           $tmp = \DB::table('temp_container')->where('id',$creativity->container_id_2)->first();
+                          $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
+                          echo $proj->nama;
+                       
+                       ?></td>
+                       <td>
+                         @php 
+                             echo $tmp->nama_project;
+                         @endphp
+                       </td>
+                       <td>
+                         @php 
+                           if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                       @endphp
+                       </td>
+                       <td>
+                         @php 
+                             echo $tmp->description;
+                         @endphp
+                       </td>
+                     @endif
+                     </tr>
                   </tbody>
                 </table>
               </div>

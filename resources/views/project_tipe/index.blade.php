@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Project Tipe (Container / Performing Art)
+Course Tipe (Container / Performing Art)
 @endsection
 @section('css')
 
@@ -8,7 +8,7 @@ Project Tipe (Container / Performing Art)
 @section('content')
 <section class="section">
   <div class="section-header">
-    <h3 class="page__heading">Project Tipe (Container / Performing Art)</h3>
+    <h3 class="page__heading">Course Tipe (Container / Performing Art)</h3>
 
   </div>
   <div class="section-body">

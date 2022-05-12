@@ -83,9 +83,18 @@ Creativity
                       <th>Nama Murid</th>
                       <th>Kelas</th>
                       <th>Lokasi</th>
+                      <th>Nama Project Container</th>
                       <th>Level Container</th>
                       <th>Description Container</th>
+                      <th>Nama Project Performing Art</th>
                       <th>Level Performing Art</th>
+                      <th>Description Performing Art</th>
+
+                      <th>Nama Project Container 2</th>
+                      <th>Level Container 2</th>
+                      <th>Description Container 2</th>
+                      <th>Nama Project Performing Art 2</th>
+                      <th>Level Performing Art 2</th>
                       <th>Description Performing Art</th>
                     </tr>
                   </thead>
@@ -101,14 +110,28 @@ Creativity
                       <td>{{ $d->nama }}</td>
                       <td>{{ $d->kelas }}</td>
                       <td>{{ $d->lokasi }}</td>
+
+                      <td>{{$d->nama_proyek_container}}</td>
                       <td><?php 
                         if($d->level_container == 1) echo "Novice"; else  if ($d->level_container == 2)echo "Emerging";
                       ?></td>
                       <td class="cell">{{ $d->description_container }} </td>
+                      <td>{{$d->nama_proyek_performing_art}}</td>
                       <td><?php 
                         if($d->level_performing_art == 1) echo "Novice"; else if($d->level_performing_art == 2) echo "Emerging";
                       ?></td>
                        <td class="cell">{{ $d->description_performing_art }} </td>
+
+                      <td>{{$d->nama_proyek_container_2}}</td>
+                      <td><?php 
+                        if($d->level_container_2 == 1) echo "Novice"; else  if ($d->level_container_2 == 2)echo "Emerging";
+                      ?></td>
+                      <td class="cell">{{ $d->description_container_2 }} </td>
+                      <td>{{$d->nama_proyek_performing_art_2}}</td>
+                      <td><?php 
+                        if($d->level_performing_art_2 == 1) echo "Novice"; else if($d->level_performing_art_2 == 2) echo "Emerging";
+                      ?></td>
+                       <td class="cell">{{ $d->description_performing_art_2 }} </td>
                     </tr>
                     @endforeach
                     @endif

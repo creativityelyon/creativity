@@ -53,7 +53,7 @@ Creativity
               }else if ($('#kelas').val() == '' || $('#kelas').val() == 'null' || $('#kelas').val() == 'undefined') {
                 $('#kelas').focus();
               }else {
-                window.location.href = "{{ url('rubrick/creativity') }}/"+$('#time').val()+"/"+$('#kelas').val();
+                window.location.href = "{{ url('rubrick/creativity-percent') }}/"+$('#time').val();
               }
             });
 
@@ -73,15 +73,19 @@ Creativity
                     <tr>
                       <th>#</th>
                       <th>Kelas</th>
-                      <th>Performing Art</th>
-                      <th>Container</th>
+                      <th>Novice %/th>
+                      <th>Emerging</th>
                     </tr>
                   </thead>
                   <tbody>
                     @if(!empty($data) && isset($data))
                     @foreach($data as $d)
-                    <tr>
                     
+                    <tr>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{$d->grade}} - {{$d->paralel}} - {{$d->lokasi}}</td>
+                      <td>{{$d->rata_rata_novice}}</td>
+                      <td>{{$d->rata_rata_emerging}}</td>
                     </tr>
                     @endforeach
                     @endif

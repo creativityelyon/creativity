@@ -8,7 +8,7 @@ Edit Project Tipe (Container / Performing Art)
 @section('content')
 <section class="section">
   <div class="section-header">
-    <h3 class="page__heading">Edit Project Tipe (Container / Performing Art)</h3>
+    <h3 class="page__heading">Edit Course Tipe (Container / Performing Art)</h3>
   </div>
   <div class="section-body">
     <div class="row">

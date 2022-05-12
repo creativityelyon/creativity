@@ -167,7 +167,7 @@
 
     <li class="side-menus {{ Request::is('/project_tipe*') ? 'active' : '' }}">
       <a class="nav-link" href="/project_tipe">
-        <i class=" fas fa-building"></i><span>Master Project Tipe</span>
+        <i class=" fas fa-building"></i><span>Master Course Type</span>
       </a>
     </li>
 
