@@ -20,7 +20,7 @@ Creativity
           <div class="card-body">
             <div style="width: 100%;">
               <div class="form-group row">
-                <div class="col-sm-4">Kategori Performing Art</div>
+                <div class="col-sm-4">Course Performing Art</div>
                 <div class="col-sm-8">
                     <select name="kategori" id="subjects1" class="form-control">
                       @foreach ($kategori_performing as $item)
@@ -202,7 +202,7 @@ Creativity
           <div class="card-body">
             <div style="width: 100%;">
               <div class="form-group row">
-                <div class="col-sm-4">Kategori Container</div>
+                <div class="col-sm-4">Course Container</div>
                 <div class="col-sm-8">
                     <select name="kategori" id="subjects2" class="form-control">
                       @foreach ($kategori_container as $item)
@@ -431,32 +431,40 @@ Creativity
                         <input type="hidden" name="gender[]" value="{{ $d->gender}}">
                         <input type="hidden" name="no_induk_siswa_global[]" value="{{ $d->no_induk_siswa_global}}">
 
-                        <input type="hidden" name="nilai_1_pa[][0]" value="" class="nilai1" id="dmodal_1_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_2_pa[][0]" value="" class="nilai2" id="dmodal_2_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_3_pa[][0]" value="" class="nilai3" id="dmodal_3_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_4_pa[][0]" value="" class="nilai4" id="dmodal_4_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_5_pa[][0]" value="" class="nilai5" id="dmodal_5_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_6_pa[][0]" value="" class="nilai6" id="dmodal_6_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_1_pa[][1]" value="" class="nilai7" id="dmodal_7_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_2_pa[][1]" value="" class="nilai8" id="dmodal_8_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_3_pa[][1]" value="" class="nilai9" id="dmodal_9_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_4_pa[][1]" value="" class="nilai10" id="dmodal_10_pa_{{$d->id}}" proyek ="1">
-                        <input type="hidden" name="nilai_5_pa[][1]" value="" class="nilai11" id="dmodal_11_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_6_pa[][1]" value="" class="nilai12" id="dmodal_12_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nama_proyek_performing_art[proyek_1][]" value="" class="namapropa1">
+                        <input type="hidden" name="nama_proyek_performing_art[proyek_2][]" value="" class="namapropa2">
+                        <input type="hidden" name="nama_proyek_performing_container[proyek_1][]" value="" class="namaproc1">
+                        <input type="hidden" name="nama_proyek_performing_container[proyek_2][]" value="" class="namaproc2">
+
+                        <input type="hidden" name="nilai_1_pa[proyek_1][]" value="" class="nilai1" id="dmodal_1_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_2_pa[proyek_1][]" value="" class="nilai2" id="dmodal_2_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_3_pa[proyek_1][]" value="" class="nilai3" id="dmodal_3_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_4_pa[proyek_1][]" value="" class="nilai4" id="dmodal_4_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_5_pa[proyek_1][]" value="" class="nilai5" id="dmodal_5_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_6_pa[proyek_1][]" value="" class="nilai6" id="dmodal_6_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_1_pa[proyek_2][]" value="" class="nilai7" id="dmodal_7_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_2_pa[proyek_2][]" value="" class="nilai8" id="dmodal_8_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_3_pa[proyek_2][]" value="" class="nilai9" id="dmodal_9_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_4_pa[proyek_2][]" value="" class="nilai10" id="dmodal_10_pa_{{$d->id}}" proyek ="1">
+                        <input type="hidden" name="nilai_5_pa[proyek_2][]" value="" class="nilai11" id="dmodal_11_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_6_pa[proyek_2][]" value="" class="nilai12" id="dmodal_12_pa_{{$d->id}}" proyek="1">
 
 
-                        <input type="hidden" name="nilai_1_c[][0]" value="" class="nilai13" id="dmodal_1_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_2_c[][0]" value="" class="nilai14" id="dmodal_2_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_3_c[][0]" value="" class="nilai15" id="dmodal_3_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_4_c[][0]" value="" class="nilai16" id="dmodal_4_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_5_c[][0]" value="" class="nilai17" id="dmodal_5_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_6_c[][0]" value="" class="nilai18" id="dmodal_6_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_1_c[][1]" value="" class="nilai19" id="dmodal_7_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_2_c[][1]" value="" class="nilai20" id="dmodal_8_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_3_c[][1]" value="" class="nilai21" id="dmodal_9_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_4_c[][1]" value="" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_5_c[][1]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek ="2">
-                        <input type="hidden" name="nilai_6_c[][1]" value="" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_1_c[proyek_1][]" value="" class="nilai13" id="dmodal_1_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_2_c[proyek_1][]" value="" class="nilai14" id="dmodal_2_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_3_c[proyek_1][]" value="" class="nilai15" id="dmodal_3_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_4_c[proyek_1][]" value="" class="nilai16" id="dmodal_4_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_5_c[proyek_1][]" value="" class="nilai17" id="dmodal_5_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_6_c[proyek_1][]" value="" class="nilai18" id="dmodal_6_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_1_c[proyek_2][]" value="" class="nilai19" id="dmodal_7_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_2_c[proyek_2][]" value="" class="nilai20" id="dmodal_8_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_3_c[proyek_2][]" value="" class="nilai21" id="dmodal_9_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_4_c[proyek_2][]" value="" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_5_c[proyek_2][]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek ="2">
+                        <input type="hidden" name="nilai_6_c[proyek_2][]" value="" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
+
+                        <input type="hidden" name="double_proyek_c[]" value="" class="double_proyek_c">
+                        <input type="hidden" name="double_proyek_pa[]" value="" class="double_proyek_pa">
                       @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                       <tr>
                         <td>{{ $loop->iteration }}
@@ -464,6 +472,8 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
+                          <input type="hidden" name="pa[]" value=1>
+                          <input type="hidden" name="c[]" value=0>
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
                           </button>
@@ -477,6 +487,8 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
+                          <input type="hidden" name="pa[]" value=1>
+                          <input type="hidden" name="c[]" value=0>
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
                           </button>
@@ -487,6 +499,8 @@ Creativity
                         <td>{{ $loop->iteration }}
                        
                         </td>
+                        <input type="hidden" name="pa[]" value=1>
+                        <input type="hidden" name="c[]" value=1>
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         {{-- <td><input type="text" class="form-control" id="creativity_1" name="creativity_1[]" value="2"></td>
@@ -517,7 +531,7 @@ Creativity
                   <button type="submit" class="btn-lg btn-primary ">Rekap</button>
                 </div>
                 <div class="form-group col-sm-6">
-                  <button type="submit" class="btn-lg btn-primary " style="float:right" formaction="/test">Save</button>
+                  <button type="submit" class="btn-lg btn-primary " style="float:right" formaction="{{url('/rubrick/creativity/store_nilai')}}">Save</button>
                 </div>
               </div>
             </div>

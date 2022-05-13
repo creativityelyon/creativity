@@ -214,254 +214,485 @@ class ReportCreativity extends Controller
 
 
    //fendy
-   public function store_penilaian(Request $request){
+  //  public function store_penilaian(Request $request){
 
-    $data = $request->all();
+  //   $data_arr = $request->all();
+   
+  //   for($i =0; $i<count($data_arr); $i++ ){
+  //   $ctr_nilai = 0;
 
-    $ctr_nilai = 0;
+  //   if(!isset($data['nilai_1'][0])){   $data['nilai_1'][0] = null; } else { $ctr_nilai ++; }
+  //   if(!isset($data['nilai_2'][0])){   $data['nilai_2'][0] = null; } else { $ctr_nilai ++; }
+  //   if(!isset($data['nilai_3'][0])){   $data['nilai_3'][0] = null; } else { $ctr_nilai ++; }
+  //   if(!isset($data['nilai_4'][0])){   $data['nilai_4'][0] = null; } else { $ctr_nilai ++; }
+  //   if(!isset($data['nilai_5'][0])){   $data['nilai_5'][0] = null; } else { $ctr_nilai ++; }
+  //   if(!isset($data['nilai_6'][0])){   $data['nilai_6'][0] = null; } else { $ctr_nilai ++; }
 
-    if(!isset($data['nilai_1'][0])){   $data['nilai_1'][0] = null; } else { $ctr_nilai ++; }
-    if(!isset($data['nilai_2'][0])){   $data['nilai_2'][0] = null; } else { $ctr_nilai ++; }
-    if(!isset($data['nilai_3'][0])){   $data['nilai_3'][0] = null; } else { $ctr_nilai ++; }
-    if(!isset($data['nilai_4'][0])){   $data['nilai_4'][0] = null; } else { $ctr_nilai ++; }
-    if(!isset($data['nilai_5'][0])){   $data['nilai_5'][0] = null; } else { $ctr_nilai ++; }
-    if(!isset($data['nilai_6'][0])){   $data['nilai_6'][0] = null; } else { $ctr_nilai ++; }
-
-    if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-      if($ctr_nilai < 2){
-        return redirect()->back()->with('error','Aspek Penilaian Kurang');
-      }
-    }else if(intval($data['grade']) >= 1 && intval($data['grade']) <= 6){
-      if($ctr_nilai < 2){
-        return redirect()->back()->with('error','Aspek Penilaian Kurang');
-      }
-    }else{
-      if($ctr_nilai < 3){
-        return redirect()->back()->with('error','Aspek Penilaian Kurang');
-      }
-    }
+  //   if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
+  //     if($ctr_nilai < 2){
+  //       return redirect()->back()->with('error','Aspek Penilaian Kurang');
+  //     }
+  //   }else if(intval($data['grade']) >= 1 && intval($data['grade']) <= 6){
+  //     if($ctr_nilai < 2){
+  //       return redirect()->back()->with('error','Aspek Penilaian Kurang');
+  //     }
+  //   }else{
+  //     if($ctr_nilai < 3){
+  //       return redirect()->back()->with('error','Aspek Penilaian Kurang');
+  //     }
+  //   }
 
    
-    if(!isset($data['namapro'][0]))return redirect()->back()->with('error','Nama Project Harurs Di isi');
-  //  dd($data);
+  //   if(!isset($data['namapro'][0]))return redirect()->back()->with('error','Nama Project Harurs Di isi');
+  // //  dd($data);
 
-  //cek kga dan kgb
-  if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-      $data['grade'] = 0;
-  }
+  // //cek kga dan kgb
+  // if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
+  //     $data['grade'] = 0;
+  // }
 
-    $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'][0])
-    ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
-    $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'][0])
-    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-    $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'][0])
-    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-    $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'][0])
-    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-    $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'][0])
-    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-    $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'][0])
-    ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //   $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'][0])
+  //   ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //   $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'][0])
+  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //   $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'][0])
+  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //   $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'][0])
+  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //   $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'][0])
+  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //   $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'][0])
+  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
 
-    $keterangan =array();
+  //   $keterangan =array();
 
-    $keterangan[] = [
-      'aspek' => (empty($cr1)) ? '' : $cr1->creativity_type,
-      'keterangan' => 'cr1',
-      'cr' => (empty($cr1)) ? '' : $cr1->text,
-      'nilai' => $data['nilai_1'][0]
-    ];
-    $keterangan[] = [
-      'aspek' => (empty($cr2)) ? '' : $cr2->creativity_type,
-      'keterangan' => 'cr2',
-      'cr' => (empty($cr2)) ? '' : $cr2->text,
-      'nilai' => $data['nilai_2'][0]
-    ];
-    $keterangan[] = [
-      'aspek' => (empty($cr3)) ? '' : $cr3->creativity_type,
-      'keterangan' => 'cr3',
-      'cr' => (empty($cr3)) ? '' : $cr3->text,
-      'nilai' => $data['nilai_3'][0]
-    ];
-    $keterangan[] = [
-      'aspek' => (empty($cr4)) ? '' : $cr4->creativity_type,
-      'keterangan' => 'cr4',
-      'cr' => (empty($cr4)) ? '' : $cr4->text,
-      'nilai' => $data['nilai_4'][0]
-    ];
-    $keterangan[] = [
-      'aspek' => (empty($cr5)) ? '' : $cr5->creativity_type,
-      'keterangan' => 'cr5',
-      'cr' => (empty($cr5)) ? '' : $cr5->text,
-      'nilai' => $data['nilai_5'][0]
-    ];
-    $keterangan[] = [
-      'aspek' => (empty($cr6)) ? '' : $cr6->creativity_type,
-      'keterangan' => 'cr6',
-      'cr' => (empty($cr6)) ? '' : $cr6->text,
-      'nilai' => $data['nilai_6'][0]
-    ];
+  //   $keterangan[] = [
+  //     'aspek' => (empty($cr1)) ? '' : $cr1->creativity_type,
+  //     'keterangan' => 'cr1',
+  //     'cr' => (empty($cr1)) ? '' : $cr1->text,
+  //     'nilai' => $data['nilai_1'][0]
+  //   ];
+  //   $keterangan[] = [
+  //     'aspek' => (empty($cr2)) ? '' : $cr2->creativity_type,
+  //     'keterangan' => 'cr2',
+  //     'cr' => (empty($cr2)) ? '' : $cr2->text,
+  //     'nilai' => $data['nilai_2'][0]
+  //   ];
+  //   $keterangan[] = [
+  //     'aspek' => (empty($cr3)) ? '' : $cr3->creativity_type,
+  //     'keterangan' => 'cr3',
+  //     'cr' => (empty($cr3)) ? '' : $cr3->text,
+  //     'nilai' => $data['nilai_3'][0]
+  //   ];
+  //   $keterangan[] = [
+  //     'aspek' => (empty($cr4)) ? '' : $cr4->creativity_type,
+  //     'keterangan' => 'cr4',
+  //     'cr' => (empty($cr4)) ? '' : $cr4->text,
+  //     'nilai' => $data['nilai_4'][0]
+  //   ];
+  //   $keterangan[] = [
+  //     'aspek' => (empty($cr5)) ? '' : $cr5->creativity_type,
+  //     'keterangan' => 'cr5',
+  //     'cr' => (empty($cr5)) ? '' : $cr5->text,
+  //     'nilai' => $data['nilai_5'][0]
+  //   ];
+  //   $keterangan[] = [
+  //     'aspek' => (empty($cr6)) ? '' : $cr6->creativity_type,
+  //     'keterangan' => 'cr6',
+  //     'cr' => (empty($cr6)) ? '' : $cr6->text,
+  //     'nilai' => $data['nilai_6'][0]
+  //   ];
 
-    $orderedItems = collect($keterangan)->sortByDesc('nilai');
+  //   $orderedItems = collect($keterangan)->sortByDesc('nilai');
 
-      $keterangan = $orderedItems->toArray();
-   // dd($keterangan);
+  //     $keterangan = $orderedItems->toArray();
+  //  // dd($keterangan);
 
-    $level = 2;
-    $gender = "He";
-    if($data['gender'] == 2) $gender = "She";
+  //   $level = 2;
+  //   $gender = "He";
+  //   if($data['gender'] == 2) $gender = "She";
 
-    $description = $data['nama'];
-    $index = 0;
-    foreach($keterangan as $d){
-      if($index == 0){
-        $description = $description . " ". $d['cr'];
-      } else {
-        if(!empty($d['nilai'])){
-          if(intval($d['nilai']) == 2){
-            $description = $description. " and ".$gender." ";
-          }else{
-            $level = 1;
-            $description = $description. " but ".$gender." ";
-          }
+  //   $description = $data['nama'];
+  //   $index = 0;
+  //   foreach($keterangan as $d){
+  //     if($index == 0){
+  //       $description = $description . " ". $d['cr'];
+  //     } else {
+  //       if(!empty($d['nilai'])){
+  //         if(intval($d['nilai']) == 2){
+  //           $description = $description. " and ".$gender." ";
+  //         }else{
+  //           $level = 1;
+  //           $description = $description. " but ".$gender." ";
+  //         }
 
-          $description = $description. $d['cr'];
-        }
-      }
+  //         $description = $description. $d['cr'];
+  //       }
+  //     }
 
-      $index++;
-    }
+  //     $index++;
+  //   }
 
-    if($data['gender'] ==2){
-      $description = str_replace("his/her","her",$description);
-    }else{
-      $description = str_replace("his/her","his",$description);
-    }
+  //   if($data['gender'] ==2){
+  //     $description = str_replace("his/her","her",$description);
+  //   }else{
+  //     $description = str_replace("his/her","his",$description);
+  //   }
 
-    $data['description'] = $description;
+  //   $data['description'] = $description;
 
-    $row = array(
-      "id_user" => $data['id_user'],
-      "kelas" => $data['kelas'],
-      "grade" => $data['grade'],
-      "nilai_1" => $data['nilai_1'][0],
-      "nilai_2" => $data['nilai_2'][0],
-      "nilai_3" => $data['nilai_3'][0],
-      "nilai_4" => $data['nilai_4'][0],
-      "nilai_5" => $data['nilai_5'][0],
-      "nilai_6" => $data['nilai_6'][0],
-      "fit_time_id" => $data['fit_time_id'],
-      'tipe' => $data['tipe'],
-      "description" => $data['description'],
-      "nama_project" => $data['namapro'][0],
-      "master_project_tipe" => $data['kategori'],
-      "level" => $level,
-    );
+  //   $row = array(
+  //     "id_user" => $data['id_user'],
+  //     "kelas" => $data['kelas'],
+  //     "grade" => $data['grade'],
+  //     "nilai_1" => $data['nilai_1'][0],
+  //     "nilai_2" => $data['nilai_2'][0],
+  //     "nilai_3" => $data['nilai_3'][0],
+  //     "nilai_4" => $data['nilai_4'][0],
+  //     "nilai_5" => $data['nilai_5'][0],
+  //     "nilai_6" => $data['nilai_6'][0],
+  //     "fit_time_id" => $data['fit_time_id'],
+  //     'tipe' => $data['tipe'],
+  //     "description" => $data['description'],
+  //     "nama_project" => $data['namapro'][0],
+  //     "master_project_tipe" => $data['kategori'],
+  //     "level" => $level,
+  //   );
 
-    if(isset($data['old_data_1'])){
-      $temp = TempContainer::find($data['old_data_1']) -> update($row);
-    }else{
+  //   if(isset($data['old_data_1'])){
+  //     $temp = TempContainer::find($data['old_data_1']) -> update($row);
+  //   }else{
 
-      $temp = TempContainer::create($row);
-    }
+  //     $temp = TempContainer::create($row);
+  //   }
 
-    //kalo yang satunya di add juga
+  //   //kalo yang satunya di add juga
 
-    if(isset($data['ceked'])){
-      $ctr_nilai = 0;
+  //   if(isset($data['ceked'])){
+  //     $ctr_nilai = 0;
 
-      if(!isset($data['nilai_1'][1])){   $data['nilai_1'][1] = null; } else { $ctr_nilai ++; }
-      if(!isset($data['nilai_2'][1])){   $data['nilai_2'][1] = null; } else { $ctr_nilai ++; }
-      if(!isset($data['nilai_3'][1])){   $data['nilai_3'][1] = null; } else { $ctr_nilai ++; }
-      if(!isset($data['nilai_4'][1])){   $data['nilai_4'][1] = null; } else { $ctr_nilai ++; }
-      if(!isset($data['nilai_5'][1])){   $data['nilai_5'][1] = null; } else { $ctr_nilai ++; }
-      if(!isset($data['nilai_6'][1])){   $data['nilai_6'][1] = null; } else { $ctr_nilai ++; }
+  //     if(!isset($data['nilai_1'][1])){   $data['nilai_1'][1] = null; } else { $ctr_nilai ++; }
+  //     if(!isset($data['nilai_2'][1])){   $data['nilai_2'][1] = null; } else { $ctr_nilai ++; }
+  //     if(!isset($data['nilai_3'][1])){   $data['nilai_3'][1] = null; } else { $ctr_nilai ++; }
+  //     if(!isset($data['nilai_4'][1])){   $data['nilai_4'][1] = null; } else { $ctr_nilai ++; }
+  //     if(!isset($data['nilai_5'][1])){   $data['nilai_5'][1] = null; } else { $ctr_nilai ++; }
+  //     if(!isset($data['nilai_6'][1])){   $data['nilai_6'][1] = null; } else { $ctr_nilai ++; }
   
-      if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-        if($ctr_nilai < 2){
-          return redirect()->back()->with('error','Aspek Penilaian Kurang');
-        }
-      }else if(intval($data['grade']) >= 1 && intval($data['grade']) <= 6){
-        if($ctr_nilai < 2){
-          return redirect()->back()->with('error','Aspek Penilaian Kurang');
-        }
-      }else{
-        if($ctr_nilai < 3){
-          return redirect()->back()->with('error','Aspek Penilaian Kurang');
-        }
-      }
+  //     if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
+  //       if($ctr_nilai < 2){
+  //         return redirect()->back()->with('error','Aspek Penilaian Kurang');
+  //       }
+  //     }else if(intval($data['grade']) >= 1 && intval($data['grade']) <= 6){
+  //       if($ctr_nilai < 2){
+  //         return redirect()->back()->with('error','Aspek Penilaian Kurang');
+  //       }
+  //     }else{
+  //       if($ctr_nilai < 3){
+  //         return redirect()->back()->with('error','Aspek Penilaian Kurang');
+  //       }
+  //     }
   
      
-      if(!isset($data['namapro'][1]))return redirect()->back()->with('error','Nama Project Harurs Di isi');
-    //  dd($data);
+  //     if(!isset($data['namapro'][1]))return redirect()->back()->with('error','Nama Project Harurs Di isi');
+  //   //  dd($data);
   
-    //cek kga dan kgb
-    if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-        $data['grade'] = 0;
+  //   //cek kga dan kgb
+  //   if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
+  //       $data['grade'] = 0;
+  //   }
+  
+  //     $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'][1])
+  //     ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //     $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'][1])
+  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //     $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'][1])
+  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //     $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'][1])
+  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //     $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'][1])
+  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  //     $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'][1])
+  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
+  
+  //     $keterangan =array();
+  
+  //     $keterangan[] = [
+  //       'aspek' => (empty($cr1)) ? '' : $cr1->creativity_type,
+  //       'keterangan' => 'cr1',
+  //       'cr' => (empty($cr1)) ? '' : $cr1->text,
+  //       'nilai' => $data['nilai_1'][1]
+  //     ];
+  //     $keterangan[] = [
+  //       'aspek' => (empty($cr2)) ? '' : $cr2->creativity_type,
+  //       'keterangan' => 'cr2',
+  //       'cr' => (empty($cr2)) ? '' : $cr2->text,
+  //       'nilai' => $data['nilai_2'][1]
+  //     ];
+  //     $keterangan[] = [
+  //       'aspek' => (empty($cr3)) ? '' : $cr3->creativity_type,
+  //       'keterangan' => 'cr3',
+  //       'cr' => (empty($cr3)) ? '' : $cr3->text,
+  //       'nilai' => $data['nilai_3'][1]
+  //     ];
+  //     $keterangan[] = [
+  //       'aspek' => (empty($cr4)) ? '' : $cr4->creativity_type,
+  //       'keterangan' => 'cr4',
+  //       'cr' => (empty($cr4)) ? '' : $cr4->text,
+  //       'nilai' => $data['nilai_4'][1]
+  //     ];
+  //     $keterangan[] = [
+  //       'aspek' => (empty($cr5)) ? '' : $cr5->creativity_type,
+  //       'keterangan' => 'cr5',
+  //       'cr' => (empty($cr5)) ? '' : $cr5->text,
+  //       'nilai' => $data['nilai_5'][1]
+  //     ];
+  //     $keterangan[] = [
+  //       'aspek' => (empty($cr6)) ? '' : $cr6->creativity_type,
+  //       'keterangan' => 'cr6',
+  //       'cr' => (empty($cr6)) ? '' : $cr6->text,
+  //       'nilai' => $data['nilai_6'][1]
+  //     ];
+  
+  //     $orderedItems = collect($keterangan)->sortByDesc('nilai');
+  
+  //       $keterangan = $orderedItems->toArray();
+  //    // dd($keterangan);
+  
+  //     $level = 2;
+  //     $gender = "He";
+  //     if($data['gender'] == 2) $gender = "She";
+  
+  //     $description = $data['nama'];
+  //     $index = 0;
+  //     foreach($keterangan as $d){
+  //       if($index == 0){
+  //         $description = $description . " ". $d['cr'];
+  //       } else {
+  //         if(!empty($d['nilai'])){
+  //           if(intval($d['nilai']) == 2){
+  //             $description = $description. " and ".$gender." ";
+  //           }else{
+  //             $level = 1;
+  //             $description = $description. " but ".$gender." ";
+  //           }
+  
+  //           $description = $description. $d['cr'];
+  //         }
+  //       }
+  
+  //       $index++;
+  //     }
+  
+  //     if($data['gender'] ==2){
+  //       $description = str_replace("his/her","her",$description);
+  //     }else{
+  //       $description = str_replace("his/her","his",$description);
+  //     }
+  
+  //     $data['description'] = $description;
+  
+  //     $row = array(
+  //       "id_user" => $data['id_user'],
+  //       "kelas" => $data['kelas'],
+  //       "grade" => $data['grade'],
+  //       "nilai_1" => $data['nilai_1'][1],
+  //       "nilai_2" => $data['nilai_2'][1],
+  //       "nilai_3" => $data['nilai_3'][1],
+  //       "nilai_4" => $data['nilai_4'][1],
+  //       "nilai_5" => $data['nilai_5'][1],
+  //       "nilai_6" => $data['nilai_6'][1],
+  //       "fit_time_id" => $data['fit_time_id'],
+  //       'tipe' => $data['tipe'],
+  //       "description" => $data['description'],
+  //       "nama_project" => $data['namapro'][1],
+  //       "master_project_tipe" => $data['kategori'],
+  //       "level" => $level,
+  //     );
+  
+  //     if(isset($data['old_data_2'])){
+  //       $temp = TempContainer::find($data['old_data_2']) -> update($row);
+  //     }else{
+  
+  //       $temp = TempContainer::create($row);
+  //     }
+  //   }
+
+
+  //   return redirect()->back()->with('success','Aspek Penilaian Berhasil di Input');
+ 
+  // }
+
+  public function store_penilaian(Request $request){
+    $data_arr = $request->only(['user_id', 'fit_time_id','grade', 'lokasi', 'id_kelas', 'pa', 'c', 'double_proyek_c', 'double_proyek_pa', 'gender', 'nama_lengkap']);
+
+
+    $data_nama_proyek_pa = $request->input('nama_proyek_performing_art');
+    $data_nama_proyek_c = $request->input('nama_proyek_container');
+
+    $data_nilai_1_pa = $request->input('nilai_1_pa');
+    $data_nilai_2_pa = $request->input('nilai_2_pa');
+    $data_nilai_3_pa = $request->input('nilai_3_pa');
+    $data_nilai_4_pa = $request->input('nilai_4_pa');
+    $data_nilai_5_pa = $request->input('nilai_5_pa');
+    $data_nilai_6_pa = $request->input('nilai_6_pa');
+    
+    $data_nilai_1_c = $request->input('nilai_1_c');
+    $data_nilai_2_c = $request->input('nilai_2_c');
+    $data_nilai_3_c = $request->input('nilai_3_c');
+    $data_nilai_4_c = $request->input('nilai_4_c');
+    $data_nilai_5_c = $request->input('nilai_5_c');
+    $data_nilai_6_c = $request->input('nilai_6_c');
+    // dd($data_nilai_1_pa);
+
+    for($i=0; $i< count($data_arr); $i++){
+      $data_siswa = [
+        'id_user' => $data_arr['user_id'][$i],
+        'fit_time_id' => $data_arr['fit_time_id'][$i],
+        'kelas' => $data_arr['id_kelas'][$i],
+        'grade' => $data_arr['grade'][$i],
+      ];
+      
+      //cek data_nilai performing art
+      if($data_arr['pa'][$i] == 1){
+          $ctr_nilai = 0;
+          $data_nilai = [];
+
+          if($data_nilai_1_pa['proyek_1'][$i] != null){
+            $ctr_nilai ++;
+            $data_nilai['nilai_1'] = $data_nilai_1_pa['proyek_1'][$i];
+          }else{
+            $data_nilai['nilai_1'] = null;
+          }
+          if($data_nilai_2_pa['proyek_1'][$i] != null){
+            $ctr_nilai ++;
+            $data_nilai['nilai_2'] = $data_nilai_2_pa['proyek_1'][$i];
+          }else{
+            $data_nilai['nilai_2'] = null;
+          }
+          if($data_nilai_3_pa['proyek_1'][$i] != null){
+            $ctr_nilai ++;
+            $data_nilai['nilai_3'] = $data_nilai_3_pa['proyek_1'][$i];
+          }else{
+            $data_nilai['nilai_3'] = null;
+          }
+          if($data_nilai_4_pa['proyek_1'][$i] != null){
+            $ctr_nilai ++;
+            $data_nilai['nilai_4'] = $data_nilai_4_pa['proyek_1'][$i];
+          }else{
+            $data_nilai['nilai_4'] = null;
+          }
+          if($data_nilai_5_pa['proyek_1'][$i] != null){
+            $ctr_nilai ++;
+            $data_nilai['nilai_5'] = $data_nilai_5_pa['proyek_1'][$i];
+          }else{
+            $data_nilai['nilai_5'] = null;
+          }
+          if($data_nilai_6_pa['proyek_1'][$i] != null){
+            $ctr_nilai ++;
+            $data_nilai['nilai_6'] = $data_nilai_6_pa['proyek_1'][$i];
+          }else{
+            $data_nilai['nilai_6'] = null;
+          }
+    
+    
+          if($data_arr['grade'][$i] == 'KGA' || $data_arr['grade'][$i] == 'KGB' || $data_arr['grade'] [$i]== 'PGB'){
+            if($ctr_nilai < 2){
+              return redirect()->back()->with('error','Aspek Penilaian Kurang');
+            }
+          }else if(intval($data_arr['grade'][$i]) >= 1 && intval($data_arr['grade'][$i]) <= 6){
+            if($ctr_nilai < 2){
+              return redirect()->back()->with('error','Aspek Penilaian Kurang');
+            }
+          }else{
+            if($ctr_nilai < 3){
+              return redirect()->back()->with('error','Aspek Penilaian Kurang');
+            }
+          }
+
+         
+          $tmp = $this->DescCreaativity($data_arr['gender'][$i], $data_nilai ,$data_arr['grade'][$i], $data_arr['nama_lengkap'][$i]);
+          $data_siswa['description'] = $tmp['description'];
+          $data_siswa['level'] = $tmp['level'];
+          
+
+
+
+
+
+
+
+
+
+
+      }
+
     }
-  
-      $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'][1])
-      ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
-      $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'][1])
-      ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-      $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'][1])
-      ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-      $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'][1])
-      ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-      $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'][1])
-      ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-      $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'][1])
-      ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  
-      $keterangan =array();
-  
+  } 
+
+
+
+  public function DescCreaativity($gender, $data_nilai, $grade, $nama){
+      $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data_nilai['nilai_1'])
+      ->where('level_min','<=', $grade)->where('level_max','>=',$grade)->first();
+      $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data_nilai['nilai_2'])
+      ->where('level_min','<=',$grade)->where('level_max','>=',$grade)->first();
+      $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data_nilai['nilai_3'])
+      ->where('level_min','<=',$grade)->where('level_max','>=',$grade)->first();
+      $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data_nilai['nilai_4'])
+      ->where('level_min','<=',$grade)->where('level_max','>=',$grade)->first();
+      $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data_nilai['nilai_5'])
+      ->where('level_min','<=',$grade)->where('level_max','>=',$grade)->first();
+      $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data_nilai['nilai_6'])
+      ->where('level_min','<=',$grade)->where('level_max','>=',$grade)->first();
+
+         $keterangan =array();
+
       $keterangan[] = [
         'aspek' => (empty($cr1)) ? '' : $cr1->creativity_type,
         'keterangan' => 'cr1',
         'cr' => (empty($cr1)) ? '' : $cr1->text,
-        'nilai' => $data['nilai_1'][1]
+        'nilai' =>$data_nilai['nilai_1']
       ];
       $keterangan[] = [
         'aspek' => (empty($cr2)) ? '' : $cr2->creativity_type,
         'keterangan' => 'cr2',
         'cr' => (empty($cr2)) ? '' : $cr2->text,
-        'nilai' => $data['nilai_2'][1]
+        'nilai' =>$data_nilai['nilai_2']
       ];
       $keterangan[] = [
         'aspek' => (empty($cr3)) ? '' : $cr3->creativity_type,
         'keterangan' => 'cr3',
         'cr' => (empty($cr3)) ? '' : $cr3->text,
-        'nilai' => $data['nilai_3'][1]
+        'nilai' =>$data_nilai['nilai_3']
       ];
       $keterangan[] = [
         'aspek' => (empty($cr4)) ? '' : $cr4->creativity_type,
         'keterangan' => 'cr4',
         'cr' => (empty($cr4)) ? '' : $cr4->text,
-        'nilai' => $data['nilai_4'][1]
+        'nilai' =>$data_nilai['nilai_4']
       ];
       $keterangan[] = [
         'aspek' => (empty($cr5)) ? '' : $cr5->creativity_type,
         'keterangan' => 'cr5',
         'cr' => (empty($cr5)) ? '' : $cr5->text,
-        'nilai' => $data['nilai_5'][1]
+        'nilai' =>$data_nilai['nilai_5']
       ];
       $keterangan[] = [
         'aspek' => (empty($cr6)) ? '' : $cr6->creativity_type,
         'keterangan' => 'cr6',
         'cr' => (empty($cr6)) ? '' : $cr6->text,
-        'nilai' => $data['nilai_6'][1]
+        'nilai' =>$data_nilai['nilai_6']
       ];
-  
+
       $orderedItems = collect($keterangan)->sortByDesc('nilai');
-  
-        $keterangan = $orderedItems->toArray();
-     // dd($keterangan);
-  
+
+      $keterangan = $orderedItems->toArray();
+
       $level = 2;
-      $gender = "He";
-      if($data['gender'] == 2) $gender = "She";
+      $genderket = "He";
+      if($gender == 2) $genderket = "She";
   
-      $description = $data['nama'];
+      $description = $nama;
       $index = 0;
       foreach($keterangan as $d){
         if($index == 0){
@@ -469,10 +700,10 @@ class ReportCreativity extends Controller
         } else {
           if(!empty($d['nilai'])){
             if(intval($d['nilai']) == 2){
-              $description = $description. " and ".$gender." ";
+              $description = $description. " and ".$genderket." ";
             }else{
               $level = 1;
-              $description = $description. " but ".$gender." ";
+              $description = $description. " but ".$genderket." ";
             }
   
             $description = $description. $d['cr'];
@@ -482,46 +713,15 @@ class ReportCreativity extends Controller
         $index++;
       }
   
-      if($data['gender'] ==2){
+      if($gender ==2){
         $description = str_replace("his/her","her",$description);
       }else{
         $description = str_replace("his/her","his",$description);
       }
   
-      $data['description'] = $description;
-  
-      $row = array(
-        "id_user" => $data['id_user'],
-        "kelas" => $data['kelas'],
-        "grade" => $data['grade'],
-        "nilai_1" => $data['nilai_1'][1],
-        "nilai_2" => $data['nilai_2'][1],
-        "nilai_3" => $data['nilai_3'][1],
-        "nilai_4" => $data['nilai_4'][1],
-        "nilai_5" => $data['nilai_5'][1],
-        "nilai_6" => $data['nilai_6'][1],
-        "fit_time_id" => $data['fit_time_id'],
-        'tipe' => $data['tipe'],
-        "description" => $data['description'],
-        "nama_project" => $data['namapro'][1],
-        "master_project_tipe" => $data['kategori'],
-        "level" => $level,
-      );
-  
-      if(isset($data['old_data_2'])){
-        $temp = TempContainer::find($data['old_data_2']) -> update($row);
-      }else{
-  
-        $temp = TempContainer::create($row);
-      }
-    }
+     return ['description' => $description, 'level' => $level];
 
-
-    return redirect()->back()->with('success','Aspek Penilaian Berhasil di Input');
- 
   }
-
-
   
 
 

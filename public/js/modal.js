@@ -30,8 +30,6 @@ $(document).ready(function() {
             $("#input"+id).attr('disabled',false);
             checked[id-1] = 1;
             $('.nilai'+(id)).val(2);
-
-
         }
         else if($(this).is(":not(:checked)")){
             $("#input"+id).attr('disabled',true);
@@ -50,6 +48,28 @@ $(document).ready(function() {
             checked[i-1] = 0;
         }
         $("div#form2").toggle();
+        if($('.double_proyek_pa').val() == "1"){
+            $('.double_proyek_pa').val("");
+        } else{
+            $('.double_proyek_pa').val("1");
+        }
+    });
+
+    $('#namapro1').on('change', function(){
+        var temp = $this.val();
+        $('.namapropa1').val(temp);
+    });
+    $('#namapro2').on('change', function(){
+        var temp = $this.val();
+        $('.namapropa2').val(temp);
+    });
+    $('#namapro3').on('change', function(){
+        var temp = $this.val();
+        $('.namaproc1').val(temp);
+    });
+    $('#namapro4').on('change', function(){
+        var temp = $this.val();
+        $('.namaproc2').val(temp);
     });
 
     $("input#addFormContainer").click(function(){
@@ -61,6 +81,11 @@ $(document).ready(function() {
             checked[i-1] = 0;
         }
         $("div#form4").toggle();
+        if($('.double_proyek_c').val() == "1"){
+            $('.double_proyek_c').val("");
+        } else{
+            $('.double_proyek_c').val("1");
+        }
     });
 
     $('.btn-primary').each(function() {
