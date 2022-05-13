@@ -2,6 +2,8 @@ $(document).ready(function() {
     var currentURL = window.location.href;
     var splitUrl = currentURL.split('/');
     var kelas = $("input:hidden[name=zyx]").val();
+    $('.kategori_pa').val($('#subjects1').val());
+    $('.kategori_c').val($('#subjects2').val());
     $("div#container").hide();
     $("div#form2").hide();
     $("div#form4").hide();
@@ -25,7 +27,9 @@ $(document).ready(function() {
     var checked = Array(24);
     checked.fill(0);
     $('input[type="checkbox"]').click(function(){
+      
         var id = $(this).attr('id');
+       
         if($(this).is(":checked")){
             $("#input"+id).attr('disabled',false);
             checked[id-1] = 1;
@@ -56,21 +60,30 @@ $(document).ready(function() {
     });
 
     $('#namapro1').on('change', function(){
-        var temp = $this.val();
+        var temp = $(this).val();
         $('.namapropa1').val(temp);
     });
     $('#namapro2').on('change', function(){
-        var temp = $this.val();
+        var temp = $(this).val();
         $('.namapropa2').val(temp);
     });
     $('#namapro3').on('change', function(){
-        var temp = $this.val();
+        var temp = $(this).val();
         $('.namaproc1').val(temp);
     });
     $('#namapro4').on('change', function(){
-        var temp = $this.val();
+        var temp = $(this).val();
         $('.namaproc2').val(temp);
     });
+
+    $('#subjects1').on('change', function(){
+        var temp = $(this).val();
+        $('.kategori_pa').val(temp);
+    })
+    $('#subjects2').on('change', function(){
+        var temp = $(this).val();
+        $('.kategori_c').val(temp);
+    })
 
     $("input#addFormContainer").click(function(){
         $("div.aspectRow2").toggleClass('row');
@@ -108,9 +121,11 @@ $(document).ready(function() {
                     //    $(this).val(2);
                     });
                     var kodename = "";
-                    if(name == "Performing Art") kodename = "pa"; else kodename = "c";
+                    if(name == "Performing Art") {
+                        kodename = "pa"; }else{ kodename = "c"; }
                     for(let i=1; i<=12; i++){
                         var idinput = "dmodal_"+i+"_"+kodename+"_"+id;
+                        console.log(idinput);
                         var val = $('#'+idinput).val();
                         $('#input'+i).val(val);
                     }

@@ -460,11 +460,16 @@ Creativity
                         <input type="hidden" name="nilai_2_c[proyek_2][]" value="" class="nilai20" id="dmodal_8_c_{{$d->id}}" proyek="2">
                         <input type="hidden" name="nilai_3_c[proyek_2][]" value="" class="nilai21" id="dmodal_9_c_{{$d->id}}" proyek="2">
                         <input type="hidden" name="nilai_4_c[proyek_2][]" value="" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_5_c[proyek_2][]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek ="2">
+                        <input type="hidden" name="nilai_5_c[proyek_2][]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek="2">
                         <input type="hidden" name="nilai_6_c[proyek_2][]" value="" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
+                         
+                        
 
                         <input type="hidden" name="double_proyek_c[]" value="" class="double_proyek_c">
                         <input type="hidden" name="double_proyek_pa[]" value="" class="double_proyek_pa">
+
+                        <input type="hidden" name="kategori_pa[]" value="" class="kategori_pa">
+                        <input type="hidden" name="kategori_c[]" value="" class="kategori_c">
                       @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                       <tr>
                         <td>{{ $loop->iteration }}
