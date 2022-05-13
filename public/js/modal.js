@@ -151,13 +151,13 @@ $(document).ready(function() {
                             }
                         }
                     }
-                    $('#exampleModalLabel').html(name);
-                    $("#id_user").val(result.murid.id);
-                    $("#nama").val(result.murid.name);
-                    $("#gender").val(result.murid.gender);
-                    $("#kelas").val(result.grade.kode_kelas);
-                    $("#grade").val(result.grade.grade);
-                    $("#fit_time_id").val(splitUrl[5]);
+                    // $('#exampleModalLabel').html(name);
+                    // $("#id_user").val(result.murid.id);
+                    // $("#nama").val(result.murid.name);
+                    // $("#gender").val(result.murid.gender);
+                    // $("#kelas").val(result.grade.kode_kelas);
+                    // $("#grade").val(result.grade.grade);
+                    // $("#fit_time_id").val(splitUrl[5]);
                     
                     // if(result.old_data){
                     //     $('#old_data_1').val(result.old_data[0].id);

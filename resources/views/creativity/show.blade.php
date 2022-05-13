@@ -433,9 +433,42 @@ Creativity
 
                         <input type="hidden" name="nama_proyek_performing_art[proyek_1][]" value="" class="namapropa1">
                         <input type="hidden" name="nama_proyek_performing_art[proyek_2][]" value="" class="namapropa2">
-                        <input type="hidden" name="nama_proyek_performing_container[proyek_1][]" value="" class="namaproc1">
-                        <input type="hidden" name="nama_proyek_performing_container[proyek_2][]" value="" class="namaproc2">
+                        <input type="hidden" name="nama_proyek_container[proyek_1][]" value="" class="namaproc1">
+                        <input type="hidden" name="nama_proyek_container[proyek_2][]" value="" class="namaproc2">
 
+                        <?php 
+                       
+
+                          // $data_temp_pa = \DB::connection('mysql')->table('temp_container')->where('id_user', $d->id)->where('fit_time_id', $fit_time)->where('tipe',1)->get();
+                          // $data_temp_co = \DB::connection('mysql')->table('temp_container')->where('id_user', $d->id)->where('fit_time_id', $fit_time)->where('tipe',2)->get();
+                          // $old_pa_proyek1 = null;
+                          // $old_pa_proyek2 = null;
+                          // $old_c_proyek1 = null;
+                          // $old_c_proyek2 = null;
+
+                          // // if(count($data_temp_pa) <=2 ){
+                          // //   $old_pa_proyek1 = $data_temp_pa[0]->id;
+                          // //   $old_pa_proyek2 = $data_temp_pa[1]->id;
+                          // // } else if(count($data_temp_pa) <=1){
+                          // //   $old_pa_proyek1 = $data_temp_pa[0]->id;
+                          // // }
+
+                          // // if(count($data_temp_co) <=2 ){
+                          // //   $old_c_proyek1 = $data_temp_co[0]->id;
+                          // //   $old_c_proyek2 = $data_temp_co[1]->id;
+                          // // } else if(count($data_temp_co) <=1){
+                          // //   $old_c_proyek1 = $data_temp_co[0]->id;
+                          // // }
+
+
+                        
+                        ?>
+
+                        {{-- <input type="hidden" name="point1[]" value="">
+                        <input type="hidden" name="point2[]" value=""> 
+                        <input type="hidden" name="point3[]" value="">
+                        <input type="hidden" name="point4[]" value="">  --}}
+                    
                         <input type="hidden" name="nilai_1_pa[proyek_1][]" value="" class="nilai1" id="dmodal_1_pa_{{$d->id}}">
                         <input type="hidden" name="nilai_2_pa[proyek_1][]" value="" class="nilai2" id="dmodal_2_pa_{{$d->id}}">
                         <input type="hidden" name="nilai_3_pa[proyek_1][]" value="" class="nilai3" id="dmodal_3_pa_{{$d->id}}">
@@ -462,6 +495,11 @@ Creativity
                         <input type="hidden" name="nilai_4_c[proyek_2][]" value="" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
                         <input type="hidden" name="nilai_5_c[proyek_2][]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek="2">
                         <input type="hidden" name="nilai_6_c[proyek_2][]" value="" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
+
+                        
+                      
+
+                       
                          
                         
 
@@ -477,8 +515,8 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
-                          <input type="hidden" name="pa[]" value=1>
-                          <input type="hidden" name="c[]" value=0>
+                          <input type="hidden" name="pa[]" value="1">
+                          {{-- <input type="hidden" name="container[]" value="0"> --}}
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
                           </button>
@@ -492,8 +530,8 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
-                          <input type="hidden" name="pa[]" value=1>
-                          <input type="hidden" name="c[]" value=0>
+                          <input type="hidden" name="pa[]" value="1">
+                          {{-- <input type="hidden" name="container[]" value="0"> --}}
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
                           </button>
@@ -504,16 +542,11 @@ Creativity
                         <td>{{ $loop->iteration }}
                        
                         </td>
-                        <input type="hidden" name="pa[]" value=1>
-                        <input type="hidden" name="c[]" value=1>
+                        <input type="hidden" name="pa[]" value="2">
+                        {{-- <input type="hidden" name="container[]" value="1"> --}}
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
-                        {{-- <td><input type="text" class="form-control" id="creativity_1" name="creativity_1[]" value="2"></td>
-                        <td><input type="text" class="form-control" id="creativity_2" name="creativity_2[]" value="2"></td>
-                        <td><input type="text" class="form-control" id="creativity_3" name="creativity_3[]" value="2"></td>
-                        <td><input type="text" class="form-control" id="creativity_4" name="creativity_4[]" value="2"></td>
-                        <td><input type="text" class="form-control" id="creativity_5" name="creativity_5[]" value="2"></td>
-                        <td><input type="text" class="form-control" id="creativity_6" name="creativity_6[]" value="2"></td> --}}
+  
                         <td>
                             <button type="button" id="performing{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                               Performing Art
@@ -536,7 +569,7 @@ Creativity
                   <button type="submit" class="btn-lg btn-primary ">Rekap</button>
                 </div>
                 <div class="form-group col-sm-6">
-                  <button type="submit" class="btn-lg btn-primary " style="float:right" formaction="{{url('/rubrick/creativity/store_nilai')}}">Save</button>
+                  <button type="submit" class="btn-lg btn-primary " style="float:right"    formaction="{{url('/rubrick/creativity/store_nilai')}}">Save</button>
                 </div>
               </div>
             </div>

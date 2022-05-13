@@ -34,6 +34,7 @@ class ReportCreativity extends Controller
     $tipe_projek_performing_art = ProjectTipe::where('tipe', 1)->get();
     $tipe_projek_container = ProjectTipe::where('tipe', 2)->get();
     $check_kelas = Syskelas::find($kelas);
+
     if ($check_kelas->lokasi == 'Sutorejo') {
       $data = Custom::getDataSiswaCreativitySutorejo($time,$kelas);
     }else {
@@ -213,319 +214,12 @@ class ReportCreativity extends Controller
 
 
 
-   //fendy
-  //  public function store_penilaian(Request $request){
-
-  //   $data_arr = $request->all();
-   
-  //   for($i =0; $i<count($data_arr); $i++ ){
-  //   $ctr_nilai = 0;
-
-  //   if(!isset($data['nilai_1'][0])){   $data['nilai_1'][0] = null; } else { $ctr_nilai ++; }
-  //   if(!isset($data['nilai_2'][0])){   $data['nilai_2'][0] = null; } else { $ctr_nilai ++; }
-  //   if(!isset($data['nilai_3'][0])){   $data['nilai_3'][0] = null; } else { $ctr_nilai ++; }
-  //   if(!isset($data['nilai_4'][0])){   $data['nilai_4'][0] = null; } else { $ctr_nilai ++; }
-  //   if(!isset($data['nilai_5'][0])){   $data['nilai_5'][0] = null; } else { $ctr_nilai ++; }
-  //   if(!isset($data['nilai_6'][0])){   $data['nilai_6'][0] = null; } else { $ctr_nilai ++; }
-
-  //   if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-  //     if($ctr_nilai < 2){
-  //       return redirect()->back()->with('error','Aspek Penilaian Kurang');
-  //     }
-  //   }else if(intval($data['grade']) >= 1 && intval($data['grade']) <= 6){
-  //     if($ctr_nilai < 2){
-  //       return redirect()->back()->with('error','Aspek Penilaian Kurang');
-  //     }
-  //   }else{
-  //     if($ctr_nilai < 3){
-  //       return redirect()->back()->with('error','Aspek Penilaian Kurang');
-  //     }
-  //   }
-
-   
-  //   if(!isset($data['namapro'][0]))return redirect()->back()->with('error','Nama Project Harurs Di isi');
-  // //  dd($data);
-
-  // //cek kga dan kgb
-  // if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-  //     $data['grade'] = 0;
-  // }
-
-  //   $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'][0])
-  //   ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //   $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'][0])
-  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //   $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'][0])
-  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //   $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'][0])
-  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //   $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'][0])
-  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //   $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'][0])
-  //   ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-
-  //   $keterangan =array();
-
-  //   $keterangan[] = [
-  //     'aspek' => (empty($cr1)) ? '' : $cr1->creativity_type,
-  //     'keterangan' => 'cr1',
-  //     'cr' => (empty($cr1)) ? '' : $cr1->text,
-  //     'nilai' => $data['nilai_1'][0]
-  //   ];
-  //   $keterangan[] = [
-  //     'aspek' => (empty($cr2)) ? '' : $cr2->creativity_type,
-  //     'keterangan' => 'cr2',
-  //     'cr' => (empty($cr2)) ? '' : $cr2->text,
-  //     'nilai' => $data['nilai_2'][0]
-  //   ];
-  //   $keterangan[] = [
-  //     'aspek' => (empty($cr3)) ? '' : $cr3->creativity_type,
-  //     'keterangan' => 'cr3',
-  //     'cr' => (empty($cr3)) ? '' : $cr3->text,
-  //     'nilai' => $data['nilai_3'][0]
-  //   ];
-  //   $keterangan[] = [
-  //     'aspek' => (empty($cr4)) ? '' : $cr4->creativity_type,
-  //     'keterangan' => 'cr4',
-  //     'cr' => (empty($cr4)) ? '' : $cr4->text,
-  //     'nilai' => $data['nilai_4'][0]
-  //   ];
-  //   $keterangan[] = [
-  //     'aspek' => (empty($cr5)) ? '' : $cr5->creativity_type,
-  //     'keterangan' => 'cr5',
-  //     'cr' => (empty($cr5)) ? '' : $cr5->text,
-  //     'nilai' => $data['nilai_5'][0]
-  //   ];
-  //   $keterangan[] = [
-  //     'aspek' => (empty($cr6)) ? '' : $cr6->creativity_type,
-  //     'keterangan' => 'cr6',
-  //     'cr' => (empty($cr6)) ? '' : $cr6->text,
-  //     'nilai' => $data['nilai_6'][0]
-  //   ];
-
-  //   $orderedItems = collect($keterangan)->sortByDesc('nilai');
-
-  //     $keterangan = $orderedItems->toArray();
-  //  // dd($keterangan);
-
-  //   $level = 2;
-  //   $gender = "He";
-  //   if($data['gender'] == 2) $gender = "She";
-
-  //   $description = $data['nama'];
-  //   $index = 0;
-  //   foreach($keterangan as $d){
-  //     if($index == 0){
-  //       $description = $description . " ". $d['cr'];
-  //     } else {
-  //       if(!empty($d['nilai'])){
-  //         if(intval($d['nilai']) == 2){
-  //           $description = $description. " and ".$gender." ";
-  //         }else{
-  //           $level = 1;
-  //           $description = $description. " but ".$gender." ";
-  //         }
-
-  //         $description = $description. $d['cr'];
-  //       }
-  //     }
-
-  //     $index++;
-  //   }
-
-  //   if($data['gender'] ==2){
-  //     $description = str_replace("his/her","her",$description);
-  //   }else{
-  //     $description = str_replace("his/her","his",$description);
-  //   }
-
-  //   $data['description'] = $description;
-
-  //   $row = array(
-  //     "id_user" => $data['id_user'],
-  //     "kelas" => $data['kelas'],
-  //     "grade" => $data['grade'],
-  //     "nilai_1" => $data['nilai_1'][0],
-  //     "nilai_2" => $data['nilai_2'][0],
-  //     "nilai_3" => $data['nilai_3'][0],
-  //     "nilai_4" => $data['nilai_4'][0],
-  //     "nilai_5" => $data['nilai_5'][0],
-  //     "nilai_6" => $data['nilai_6'][0],
-  //     "fit_time_id" => $data['fit_time_id'],
-  //     'tipe' => $data['tipe'],
-  //     "description" => $data['description'],
-  //     "nama_project" => $data['namapro'][0],
-  //     "master_project_tipe" => $data['kategori'],
-  //     "level" => $level,
-  //   );
-
-  //   if(isset($data['old_data_1'])){
-  //     $temp = TempContainer::find($data['old_data_1']) -> update($row);
-  //   }else{
-
-  //     $temp = TempContainer::create($row);
-  //   }
-
-  //   //kalo yang satunya di add juga
-
-  //   if(isset($data['ceked'])){
-  //     $ctr_nilai = 0;
-
-  //     if(!isset($data['nilai_1'][1])){   $data['nilai_1'][1] = null; } else { $ctr_nilai ++; }
-  //     if(!isset($data['nilai_2'][1])){   $data['nilai_2'][1] = null; } else { $ctr_nilai ++; }
-  //     if(!isset($data['nilai_3'][1])){   $data['nilai_3'][1] = null; } else { $ctr_nilai ++; }
-  //     if(!isset($data['nilai_4'][1])){   $data['nilai_4'][1] = null; } else { $ctr_nilai ++; }
-  //     if(!isset($data['nilai_5'][1])){   $data['nilai_5'][1] = null; } else { $ctr_nilai ++; }
-  //     if(!isset($data['nilai_6'][1])){   $data['nilai_6'][1] = null; } else { $ctr_nilai ++; }
-  
-  //     if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-  //       if($ctr_nilai < 2){
-  //         return redirect()->back()->with('error','Aspek Penilaian Kurang');
-  //       }
-  //     }else if(intval($data['grade']) >= 1 && intval($data['grade']) <= 6){
-  //       if($ctr_nilai < 2){
-  //         return redirect()->back()->with('error','Aspek Penilaian Kurang');
-  //       }
-  //     }else{
-  //       if($ctr_nilai < 3){
-  //         return redirect()->back()->with('error','Aspek Penilaian Kurang');
-  //       }
-  //     }
-  
-     
-  //     if(!isset($data['namapro'][1]))return redirect()->back()->with('error','Nama Project Harurs Di isi');
-  //   //  dd($data);
-  
-  //   //cek kga dan kgb
-  //   if($data['grade'] == 'KGA' || $data['grade'] == 'KGB' || $data['grade'] == 'PGB'){
-  //       $data['grade'] = 0;
-  //   }
-  
-  //     $cr1 = CreativityType::where('kode_creativity','=','creativity_1')->where('code','=',$data['nilai_1'][1])
-  //     ->where('level_min','<=', $data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //     $cr2 = CreativityType::where('kode_creativity','=','creativity_2')->where('code','=',$data['nilai_2'][1])
-  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //     $cr3 = CreativityType::where('kode_creativity','=','creativity_3')->where('code','=',$data['nilai_3'][1])
-  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //     $cr4 = CreativityType::where('kode_creativity','=','creativity_4')->where('code','=',$data['nilai_4'][1])
-  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //     $cr5 = CreativityType::where('kode_creativity','=','creativity_5')->where('code','=',$data['nilai_5'][1])
-  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  //     $cr6 = CreativityType::where('kode_creativity','=','creativity_6')->where('code','=',$data['nilai_6'][1])
-  //     ->where('level_min','<=',$data['grade'])->where('level_max','>=',$data['grade'])->first();
-  
-  //     $keterangan =array();
-  
-  //     $keterangan[] = [
-  //       'aspek' => (empty($cr1)) ? '' : $cr1->creativity_type,
-  //       'keterangan' => 'cr1',
-  //       'cr' => (empty($cr1)) ? '' : $cr1->text,
-  //       'nilai' => $data['nilai_1'][1]
-  //     ];
-  //     $keterangan[] = [
-  //       'aspek' => (empty($cr2)) ? '' : $cr2->creativity_type,
-  //       'keterangan' => 'cr2',
-  //       'cr' => (empty($cr2)) ? '' : $cr2->text,
-  //       'nilai' => $data['nilai_2'][1]
-  //     ];
-  //     $keterangan[] = [
-  //       'aspek' => (empty($cr3)) ? '' : $cr3->creativity_type,
-  //       'keterangan' => 'cr3',
-  //       'cr' => (empty($cr3)) ? '' : $cr3->text,
-  //       'nilai' => $data['nilai_3'][1]
-  //     ];
-  //     $keterangan[] = [
-  //       'aspek' => (empty($cr4)) ? '' : $cr4->creativity_type,
-  //       'keterangan' => 'cr4',
-  //       'cr' => (empty($cr4)) ? '' : $cr4->text,
-  //       'nilai' => $data['nilai_4'][1]
-  //     ];
-  //     $keterangan[] = [
-  //       'aspek' => (empty($cr5)) ? '' : $cr5->creativity_type,
-  //       'keterangan' => 'cr5',
-  //       'cr' => (empty($cr5)) ? '' : $cr5->text,
-  //       'nilai' => $data['nilai_5'][1]
-  //     ];
-  //     $keterangan[] = [
-  //       'aspek' => (empty($cr6)) ? '' : $cr6->creativity_type,
-  //       'keterangan' => 'cr6',
-  //       'cr' => (empty($cr6)) ? '' : $cr6->text,
-  //       'nilai' => $data['nilai_6'][1]
-  //     ];
-  
-  //     $orderedItems = collect($keterangan)->sortByDesc('nilai');
-  
-  //       $keterangan = $orderedItems->toArray();
-  //    // dd($keterangan);
-  
-  //     $level = 2;
-  //     $gender = "He";
-  //     if($data['gender'] == 2) $gender = "She";
-  
-  //     $description = $data['nama'];
-  //     $index = 0;
-  //     foreach($keterangan as $d){
-  //       if($index == 0){
-  //         $description = $description . " ". $d['cr'];
-  //       } else {
-  //         if(!empty($d['nilai'])){
-  //           if(intval($d['nilai']) == 2){
-  //             $description = $description. " and ".$gender." ";
-  //           }else{
-  //             $level = 1;
-  //             $description = $description. " but ".$gender." ";
-  //           }
-  
-  //           $description = $description. $d['cr'];
-  //         }
-  //       }
-  
-  //       $index++;
-  //     }
-  
-  //     if($data['gender'] ==2){
-  //       $description = str_replace("his/her","her",$description);
-  //     }else{
-  //       $description = str_replace("his/her","his",$description);
-  //     }
-  
-  //     $data['description'] = $description;
-  
-  //     $row = array(
-  //       "id_user" => $data['id_user'],
-  //       "kelas" => $data['kelas'],
-  //       "grade" => $data['grade'],
-  //       "nilai_1" => $data['nilai_1'][1],
-  //       "nilai_2" => $data['nilai_2'][1],
-  //       "nilai_3" => $data['nilai_3'][1],
-  //       "nilai_4" => $data['nilai_4'][1],
-  //       "nilai_5" => $data['nilai_5'][1],
-  //       "nilai_6" => $data['nilai_6'][1],
-  //       "fit_time_id" => $data['fit_time_id'],
-  //       'tipe' => $data['tipe'],
-  //       "description" => $data['description'],
-  //       "nama_project" => $data['namapro'][1],
-  //       "master_project_tipe" => $data['kategori'],
-  //       "level" => $level,
-  //     );
-  
-  //     if(isset($data['old_data_2'])){
-  //       $temp = TempContainer::find($data['old_data_2']) -> update($row);
-  //     }else{
-  
-  //       $temp = TempContainer::create($row);
-  //     }
-  //   }
-
-
-  //   return redirect()->back()->with('success','Aspek Penilaian Berhasil di Input');
- 
-  // }
-
   public function store_penilaian(Request $request){
-    $data_arr = $request->only(['user_id', 'fit_time_id','grade', 'lokasi', 'id_kelas', 'pa', 'c', 'kategori_c', 'kategori_pa', 'double_proyek_c', 'double_proyek_pa', 'gender', 'nama_lengkap']);
+    $data_arr = $request->only(['user_id', 'fit_time_id','grade', 'lokasi', 'id_kelas', 'pa', 'kategori_c', 'kategori_pa', 'double_proyek_c', 'double_proyek_pa', 'gender', 'nama_lengkap',
+   // 'old_pa_proyek1', 'old_pa_proyek2', 'old_c_proyek1', 'old_c_proyek2'
+  ]);
 
-
+    
     $data_nama_proyek_pa = $request->input('nama_proyek_performing_art');
     $data_nama_proyek_c = $request->input('nama_proyek_container');
 
@@ -542,10 +236,8 @@ class ReportCreativity extends Controller
     $data_nilai_4_c = $request->input('nilai_4_c');
     $data_nilai_5_c = $request->input('nilai_5_c');
     $data_nilai_6_c = $request->input('nilai_6_c');
-   //  dd(count($data_arr));
- 
-    // dd($data_nilai_4_c);
-    dd($request->all());
+    DB::beginTransaction();
+    try {
     for($i=0; $i< count($data_arr['user_id']); $i++){
       $data_siswa = [
         'id_user' => $data_arr['user_id'][$i],
@@ -554,8 +246,11 @@ class ReportCreativity extends Controller
         'grade' => $data_arr['grade'][$i],
       ];
       
+      //pa = 1-> only performing art
+      //pa = 2-> with container
+
       //cek data_nilai performing art
-      if($data_arr['pa'][$i] == 1){
+      if(intval($data_arr['pa'][$i]) == 1 || intval($data_arr['pa'][$i]) == 2){
           $ctr_nilai = 0;
           $data_nilai = [];
 
@@ -628,8 +323,12 @@ class ReportCreativity extends Controller
           $data_siswa['master_project_tipe'] = $data_arr['kategori_pa'][$i];
           $data_siswa['tipe'] = 1;
           
+          // if($data_arr['old_pa_proyek1'][$i] == null){
 
-          $temp = TempContainer::create($data_siswa);
+            $temp = TempContainer::create($data_siswa);
+          // }else{
+          //   $temp = TempContainer::where('id',intval($data_arr['old_pa_proyek1'][$i]))->update($data_siswa);
+          // }
 
           //if proyek kedua juga dipakai
           if(intval($data_arr['double_proyek_pa'][$i]) == 1){
@@ -705,17 +404,22 @@ class ReportCreativity extends Controller
             $data_siswa['master_project_tipe'] = $data_arr['kategori_pa'][$i];
             $data_siswa['tipe'] = 1;
             
-            $temp = TempContainer::create($data_siswa);
+        //    if($data_arr['old_pa_proyek2'][$i] == null){
+
+              $temp = TempContainer::create($data_siswa);
+            // }else{
+            //   $temp = TempContainer::where('id',intval($data_arr['old_pa_proyek2'][$i]))->update($data_siswa);
+            // }
           }
+        
 
-
-
+     
 
 
       }
 
       //cek data_nilai container
-      if($data_arr['c'][$i] == 1){
+      if(intval($data_arr['pa'][$i]) == 2){
         $ctr_nilai = 0;
         $data_nilai = [];
 
@@ -763,7 +467,7 @@ class ReportCreativity extends Controller
         }
         
         if($data_nama_proyek_c['proyek_1'][$i] == null){
-          return redirect()->back()->with('error',' Nama Proyek tidka boleh kosong');
+          return redirect()->back()->with('error',' Nama Proyek tidak boleh kosong zzz');
         }
   
         if($data_arr['grade'][$i] == 'KGA' || $data_arr['grade'][$i] == 'KGB' || $data_arr['grade'] [$i]== 'PGB'){
@@ -786,10 +490,15 @@ class ReportCreativity extends Controller
         $data_siswa['level'] = $tmp['level'];
         $data_siswa['nama_project'] = $data_nama_proyek_c['proyek_1'][$i];
         $data_siswa['master_project_tipe'] = $data_arr['kategori_c'][$i];
-        $data_siswa['tipe'] = 1;
+        $data_siswa['tipe'] = 2;
         
 
-        $temp = TempContainer::create($data_siswa);
+      //  if($data_arr['old_c_proyek1'][$i] == null){
+
+          $temp = TempContainer::create($data_siswa);
+        // }else{
+        //   $temp = TempContainer::where('id',intval($data_arr['old_c_proyek1'][$i]))->update($data_siswa);
+        // }
 
         //if proyek kedua juga dipakai
         if(intval($data_arr['double_proyek_c'][$i]) == 1){
@@ -841,7 +550,7 @@ class ReportCreativity extends Controller
           }
           
           if($data_nama_proyek_c['proyek_2'][$i] == null){
-            return redirect()->back()->with('error',' Nama Proyek tidak boleh kosong');
+            return redirect()->back()->with('error',' Nama Proyek tidak boleh kosong bbbb');
           }
     
           if($data_arr['grade'][$i] == 'KGA' || $data_arr['grade'][$i] == 'KGB' || $data_arr['grade'] [$i]== 'PGB'){
@@ -863,13 +572,24 @@ class ReportCreativity extends Controller
           $data_siswa['level'] = $tmp['level'];
           $data_siswa['nama_project'] = $data_nama_proyek_c['proyek_2'][$i];
           $data_siswa['master_project_tipe'] = $data_arr['kategori_c'][$i];
-          $data_siswa['tipe'] = 1;
+          $data_siswa['tipe'] = 2;
           
-          $temp = TempContainer::create($data_siswa);
+         // if($data_arr['old_c_proyek2'][$i] == null){
+
+            $temp = TempContainer::create($data_siswa);
+          // }else{
+          //   $temp = TempContainer::where('id',intval($data_arr['old_c_proyek2'][$i]))->update($data_siswa);
+          // }
         }
       }
 
     }
+    DB::commit();
+    return redirect()->back()->with('success','Berhasil di Input');
+    } catch(\Exception $e){
+      DB::rollback();
+      return $e;
+  }
   } 
 
 
@@ -985,21 +705,6 @@ class ReportCreativity extends Controller
         }else {
           $data = Custom::getDataSiswaCreativity($time,$data_kelas->id);
         }
-
-    //     $ctr = 0;
-        
-    // //    dd($data);
-    //     for($i=0; $i< count($data); $i ++){
-    //       $temp = TempContainer::where('kelas',$data[$i]->id_kelas)->where('fit_time_id', $time)->first();
-    //      for($j=0; $j<count($data); $j++){
-    //         $temp2 = TempContainer::where('kelas',$data[$j]->id_kelas)->where('fit_time_id', $time)->first();
-    //        if($temp->id_user == $temp2->id_user){
-    //          $ctr++;
-    //        }
-    //      }
-    //     }
-
-    //     dd($ctr);
 
         $temp_novice = TempContainer::where('kelas',$data_kelas->kode_kelas)->where('fit_time_id', $time)->where('level', 1)->get();
         //dd($temp_novice);
