@@ -1,14 +1,106 @@
 $(document).ready(function() {
+    var pa =JSON.parse( $('#performing_art').val());
+    var co =JSON.parse( $('#container').val());
+    var pa2 =JSON.parse( $('#performing_art2').val());
+    var co2 =JSON.parse( $('#container2').val());
+     var nilai_tmp = Array(24);
+     nilai_tmp.fill(null);
+    var bool_dual_pa = false;
+    var bool_dual_co = false;
+
+    var checked = Array(24);
+    checked.fill(0);
     var currentURL = window.location.href;
     var splitUrl = currentURL.split('/');
     var kelas = $("input:hidden[name=zyx]").val();
-    $('.kategori_pa').val($('#subjects1').val());
-    $('.kategori_c').val($('#subjects2').val());
+  
     $("div#container").hide();
     $("div#form2").hide();
     $("div#form4").hide();
     $("div.aspectRow").removeClass('row');
     $("div.aspectRow2").removeClass('row');
+   
+    if(pa.length > 0){
+      $("#namapro1").val(  pa[0].nama_project);
+      $('.namapropa1').val( pa[0].nama_project);
+       $('#subjects1').val( pa[0].master_project_tipe);
+        nilai_tmp[0] = pa[0].nilai_1;
+        nilai_tmp[1] = pa[0].nilai_2;
+        nilai_tmp[2] = pa[0].nilai_3;
+        nilai_tmp[3] = pa[0].nilai_4;
+        nilai_tmp[4] = pa[0].nilai_5;
+        nilai_tmp[5] = pa[0].nilai_6;
+
+        if(pa2.length > 0 ){
+            $("#namapro2").val(  pa2[0].nama_project);
+            $('.namapropa2').val( pa2[0].nama_project);
+            nilai_tmp[6] = pa2[0].nilai_1;
+            nilai_tmp[7] = pa2[0].nilai_2;
+            nilai_tmp[8] = pa2[0].nilai_3;
+            nilai_tmp[9] = pa2[0].nilai_4;
+            nilai_tmp[10] = pa2[0].nilai_5;
+            nilai_tmp[11] = pa2[0].nilai_6;
+            bool_dual_pa = true;
+        }
+    }
+    console.log(nilai_tmp)
+    if(co.length > 0){
+        $('#subjects2').val( co[0].master_project_tipe);
+        $("#namapro3").val( co[0].nama_project);
+        $('.namaproc1').val( co[0].nama_project);
+        nilai_tmp[12] = co[0].nilai_1;
+        nilai_tmp[13] = co[0].nilai_2;
+        nilai_tmp[14] = co[0].nilai_3;
+        nilai_tmp[15] = co[0].nilai_4;
+        nilai_tmp[16] = co[0].nilai_5;
+        nilai_tmp[17] = co[0].nilai_6;
+
+        if(co.length > 0){
+            $("#namapro4").val(co2[0].nama_project);
+            $('.namaproc2').val( co2[0].nama_project);
+            nilai_tmp[18] = co2[0].nilai_1;
+            nilai_tmp[19] = co2[0].nilai_2;
+            nilai_tmp[20] = co2[0].nilai_3;
+            nilai_tmp[21] = co2[0].nilai_4;
+            nilai_tmp[22] = co2[0].nilai_5;
+            nilai_tmp[23] = co2[0].nilai_6;
+            bool_dual_co = true;
+        }
+    }
+   
+    console.log(pa)
+    console.log(co)
+    console.log(pa2)
+    console.log(co2)
+   
+    for(let i=0; i<24; i++){
+        if(nilai_tmp[i] != null){
+            $("#"+(i+1)).prop('checked', true);
+            checked[i] = 1;
+        }
+    }
+
+   
+    if(bool_dual_pa){
+        $("div.aspectRow").addClass('row');
+        $("div.aspectForm").addClass("col-sm-6");
+        $("div#form2").show();
+        $('input#addFormPerforming').prop('checked', true);
+        $('input#addFormPerforming').hide();
+        $('.double_proyek_pa').val("1");
+    }
+
+    if(bool_dual_co){
+        $("div.aspectRow2").addClass('row');
+        $("div.aspectForm2").addClass("col-sm-6");
+        $("div#form4").show();
+        $('input#addFormContainer').prop('checked', true);
+        $('input#addFormContainer').hide();
+        $('.double_proyek_c').val("1");
+    }
+
+    $('.kategori_pa').val($('#subjects1').val());
+    $('.kategori_c').val($('#subjects2').val());
  
     if(kelas == 'KGA' || kelas == 'KGB' || kelas == 'PGB'){
         $("div#aspect21").hide();$("div#aspect31").hide();
@@ -24,8 +116,7 @@ $(document).ready(function() {
         $("div#form3").show();
     }
 
-    var checked = Array(24);
-    checked.fill(0);
+    
     $('input[type="checkbox"]').click(function(){
       
         var id = $(this).attr('id');
@@ -43,15 +134,19 @@ $(document).ready(function() {
     });
 
     $("input#addFormPerforming").click(function(){
-        
+       
+          
         $("div.aspectRow").toggleClass('row');
-        $("div.aspectForm").toggleClass("col-sm-6");
-        $("[proyek='1']").val('');
+            $("div.aspectForm").toggleClass("col-sm-6");
+            $("[proyek='1']").val('');
+            $("div#form2").toggle();
         for(let i=7; i<=12; i++){
-            $('#'+i).prop('checked',false);
-            checked[i-1] = 0;
+            if(!bool_dual_pa){
+                $('#'+i).prop('checked',false);
+                checked[i-1] = 0;
+            }
         }
-        $("div#form2").toggle();
+      
         if($('.double_proyek_pa').val() == "1"){
             $('.double_proyek_pa').val("");
         } else{
@@ -90,8 +185,10 @@ $(document).ready(function() {
         $("div.aspectForm2").toggleClass("col-sm-6");
         $("[proyek='2']").val('');
         for(let i=19; i<=24; i++){
-            $('#'+i).prop('checked',false);
-            checked[i-1] = 0;
+            if(!bool_dual_co){
+                $('#'+i).prop('checked',false);
+                checked[i-1] = 0;
+            }
         }
         $("div#form4").toggle();
         if($('.double_proyek_c').val() == "1"){
@@ -116,6 +213,8 @@ $(document).ready(function() {
                 '&id9='+checked[20]+'&id10='+checked[21]+'&id11='+checked[22]+'&id12='+checked[23],
                 dataType: 'json',
                 success: function(result) {
+                    $("#msg").html("Belum memilih aspek penilaian pada proyek ini");
+                    $("#msg2").html("Belum memilih aspek penilaian pada proyek ini");
                     $('input[type="number"]').each(function() {
                         $(this).attr('disabled',true);
                     //    $(this).val(2);
@@ -140,6 +239,7 @@ $(document).ready(function() {
                             if(checked[index] == 1){
                                 $("#aspect"+(index+1)).show();
                                 $("#input"+(index+1)).attr('disabled',false);
+                                $("#msg").html("");
                             }
                         }
                     }
@@ -148,172 +248,16 @@ $(document).ready(function() {
                             if(checked[index] == 1){
                                 $("#aspect"+(index-11)).show();
                                 $("#input"+(index-11)).attr('disabled',false);
+                                $("#msg2").html("");
                             }
                         }
                     }
-                    // $('#exampleModalLabel').html(name);
-                    // $("#id_user").val(result.murid.id);
-                    // $("#nama").val(result.murid.name);
-                    // $("#gender").val(result.murid.gender);
-                    // $("#kelas").val(result.grade.kode_kelas);
-                    // $("#grade").val(result.grade.grade);
-                    // $("#fit_time_id").val(splitUrl[5]);
-                    
-                    // if(result.old_data){
-                    //     $('#old_data_1').val(result.old_data[0].id);
-                    //     $('#namapro1').val(result.old_data[0].nama_project);
-                    //     $('#input1').val(result.old_data[0].nilai_1);
-                    //     $('#input2').val(result.old_data[0].nilai_2);
-                    //     $('#input3').val(result.old_data[0].nilai_3);
-                    //     $('#input4').val(result.old_data[0].nilai_4);
-                    //     $('#input5').val(result.old_data[0].nilai_5);
-                    //     $('#input6').val(result.old_data[0].nilai_6);
-
-                    //     if(result.old_data[0].nilai_1 != null){
-                    //             $('#input1').attr('disabled',false);
-                    //             $('#1').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[0].nilai_2 != null){
-                    //             $('#input2').attr('disabled',false);
-                    //             $('#2').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[0].nilai_3 != null){
-                    //             $('#input3').attr('disabled',false);
-                    //             $('#3').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[0].nilai_4 != null){
-                    //             $('#input4').attr('disabled',false);
-                    //             $('#4').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[0].nilai_5 != null){
-                    //             $('#input5').attr('disabled',false);
-                    //             $('#5').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[0].nilai_6 != null){
-                    //             $('#input6').attr('disabled',false);
-                    //             $('#6').prop('checked', true);
-                    //     }
-
-
-                    //    if(result.old_data.length >1){
-                    //     $(".modal-dialog").toggleClass("modal-lg");
-                    //     $(".aspectForm").toggleClass("col-sm-6");
-                    //     $("#form2").toggle();
-                    //         $('#old_data_2').val(result.old_data[1].id);
-                    //         $('#namapro2').val(result.old_data[1].nama_project);
-                    //     $('#input7').val(result.old_data[1].nilai_1);
-                    //     $('#input8').val(result.old_data[1].nilai_2);
-                    //     $('#input9').val(result.old_data[1].nilai_3);
-                    //     $('#input10').val(result.old_data[1].nilai_4);
-                    //     $('#input11').val(result.old_data[1].nilai_5);
-                    //     $('#input12').val(result.old_data[1].nilai_6);
-
-                    //     if(result.old_data[1].nilai_1 != null){
-                    //             $('#input7').attr('disabled',false);
-                    //             $('#7').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[1].nilai_2 != null){
-                    //             $('#input8').attr('disabled',false);
-                    //             $('#8').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[1].nilai_3 != null){
-                    //             $('#input9').attr('disabled',false);
-                    //             $('#9').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[1].nilai_4 != null){
-                    //             $('#input10').attr('disabled',false);
-                    //             $('#10').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[1].nilai_5 != null){
-                    //             $('#input11').attr('disabled',false);
-                    //             $('#10').prop('checked', true);
-                    //     }
-                    //     if(result.old_data[1].nilai_6 != null){
-                    //         $('#input12').attr('disabled',false);
-                    //         $('#12').prop('checked', true);
-                    //     }
-                    //    }
-                     
-                    // }
+                    $("#id_user").val(result.murid.id);
+                
                 }
             });
         });
     });
-
-    // $('.btn-primary').each(function() {
-    //     $(this).click(function(){
-    //         var id = $(this).attr('value');
-    //         var name = $(this).attr('name');
-    //         $.ajax({
-    //             method: 'GET',
-    //             url: '/creativity/show/'+sizeUrl[6]+'/'+id+'?tipe='+name,
-    //             dataType: 'json',
-    //             success: function(result) {
-    //                 if(result.grade.grade == 'KGA' || result.grade.grade == 'KGB' || result.grade.grade == 'PGB'){
-    //                     $("#aspect21").hide();$("#aspect31").hide();
-    //                     $("#aspect22").hide();$("#aspect32").hide();
-    //                     $("#aspect41").hide();$("#aspect61").hide();
-    //                     $("#aspect42").hide();$("#aspect62").hide();
-    //                 } 
-    //                 else if(result.grade.grade >= 1 && result.grade.grade <= 6){
-    //                     $("#aspect21").hide();$("#aspect61").hide();
-    //                     $("#aspect22").hide();$("#aspect62").hide();
-    //                 }else{
-    //                     if(result.grade.grade >= 13){
-    //                         $("#subjects").hide();
-    //                     }
-    //                 }
-
-    //                 $('#exampleModalLabel').html(name);
-    //                 $('input[type="number"]').each(function() {
-    //                     $(this).attr('disabled',true);
-    //                     $(this).val(2);
-    //                 });
-    //                 $('input[type="checkbox"]').each(function() {
-    //                     $(this).prop('checked',false);
-    //                 });
-    //                 $("#id").val(result.murid.id);
-    //                 $("#nama").val(result.murid.name);
-    //                 $("#gender").val(result.murid.gender);
-    //                 $("#tipe").val(result.tipe[0].tipe);
-    //                 $("#kelas").val(result.grade.kode_kelas);
-    //                 $("#grade").val(result.grade.grade);
-    //                 $("#fit_time_id").val(sizeUrl[5]);
-    //                 $("#subjects").html("");
-    //                 result.tipe.forEach(element => {
-    //                     $('#subjects').append(
-    //                         $('<option>', {value: element.id, text: element.nama}));
-    //                 });
-    //             }
-    //         });
-    //     });
-    // });
-    // $("#form2").hide();
-    
-    // $('#exampleModal').on('hidden.bs.modal', function () {
-    //     $(".modal-dialog").removeClass("modal-lg");
-    //     $(".aspectForm").removeClass("col-sm-6");
-    //     $("#form2").hide();
-    // });
-
-    // $("#add").click(function(){
-    //     $(".modal-dialog").toggleClass("modal-lg");
-    //     $(".aspectForm").toggleClass("col-sm-6");
-    //     $("#form2").toggle();
-    // });
-
-    
-
-    // $('input[type="number"]').keyup(function() {
-    //     if($('#txtNumber').val()<-10 || $('#txtNumber').val()>10 ){
-    //         $('#errorMsg').show();
-    //     }
-    //     else{
-    //       $('#errorMsg').hide();
-    //     }
-    // });
-
-
 
     $('#change_btn').on('click', function(){
         var tipe = $('#tipe').val();
@@ -321,6 +265,7 @@ $(document).ready(function() {
         for(let i=0; i< 12; i++){
             let ctr = i+1;
           var idinput = "dmodal_"+ctr+"_"+tipe+"_"+id;
+          console.log(idinput);
           $('#'+idinput ).val( $('#input'+ctr).val());
         }
       });

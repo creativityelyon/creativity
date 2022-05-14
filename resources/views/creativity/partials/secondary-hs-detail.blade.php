@@ -1,27 +1,28 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Performing Art</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-           
-                <div class="form-group row">
-                  <input type="hidden" name="id_user" id="id_user" value="">
-                  <input type="hidden" name="nama" id="nama" value="">
-                  <input type="hidden" name="gender" id="gender" value="">
-                  <input type="hidden" name="tipe" id="tipe" value="">
-                  <input type="hidden" name="kelas" id="kelas" value="">
-                  <input type="hidden" name="grade" id="grade" value="">
-                  <input type="hidden" name="fit_time_id" id="fit_time_id" value="">
-                </div>
-                <div class="row">
-                  <div class="aspectForm">  
-                      <h5>Penilaian untuk Proyek Pertama</h5>            
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Performing Art</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         
+              <div class="form-group row">
+                <input type="hidden" name="id_user" id="id_user" value="">
+                <input type="hidden" name="nama" id="nama" value="">
+                <input type="hidden" name="gender" id="gender" value="">
+                <input type="hidden" name="tipe" id="tipe" value="">
+                <input type="hidden" name="kelas" id="kelas" value="">
+                <input type="hidden" name="grade" id="grade" value="">
+                <input type="hidden" name="fit_time_id" id="fit_time_id" value="">
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">  
+                      <h5>Penilaian untuk Proyek Pertama</h5>   
+                      <p id="msg" style="color: red;"></p>         
                       <div class="form-group row" id="aspect1">
                         <div class="col-sm-6">Idea Generation</div>
                         <div class="col-sm-3">
@@ -59,8 +60,9 @@
                         </div>
                       </div>
                   </div>
-                  <div class="aspectForm">   
-                    <h5>Penilaian untuk Proyek Kedua</h5>               
+                  <div class="col-sm-6">   
+                    <h5>Penilaian untuk Proyek Kedua</h5>   
+                    <p id="msg2" style="color: red;"></p>          
                     <div class="form-group row" id="aspect7">
                       <div class="col-sm-6">Idea Generation</div>
                       <div class="col-sm-3">
@@ -97,16 +99,17 @@
                           <input type="number"  id="input12" class="form-control" name="nilai_6[1]" value="">
                       </div>
                     </div>
-                  </div>
+                  
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" id="change_btn" class="btn btn-info" data-dismiss="modal">Save changes</button>
-                </div>
-        </div>
-      
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="change_btn" class="btn btn-info" data-dismiss="modal">Save changes</button>
+              </div>
       </div>
+    
     </div>
   </div>
+</div>
 
 

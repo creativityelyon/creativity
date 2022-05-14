@@ -15,6 +15,10 @@ Creativity
       dd($kelas->grade);
   @endphp --}}
   <div class="section-body">
+    <input type="hidden" name="tempPa" value='<?php echo $performing_art;?>' id="performing_art">
+    <input type="hidden" name="tempContainer" value='<?php echo  $container;?>' id="container">
+    <input type="hidden" name="tempPa2" value='<?php echo $performing_art2;?>' id="performing_art2">
+    <input type="hidden" name="tempContainer2" value='<?php echo  $container2;?>' id="container2">
       <div class="col-sm-12" id="performing_art">
         <div class="card">
           <div class="card-body">
@@ -439,62 +443,79 @@ Creativity
                         <?php 
                        
 
-                          // $data_temp_pa = \DB::connection('mysql')->table('temp_container')->where('id_user', $d->id)->where('fit_time_id', $fit_time)->where('tipe',1)->get();
-                          // $data_temp_co = \DB::connection('mysql')->table('temp_container')->where('id_user', $d->id)->where('fit_time_id', $fit_time)->where('tipe',2)->get();
-                          // $old_pa_proyek1 = null;
-                          // $old_pa_proyek2 = null;
-                          // $old_c_proyek1 = null;
-                          // $old_c_proyek2 = null;
+                          $data_temp_pa = \DB::connection('mysql')->table('temp_container')->where('id_user', $d->id)->where('fit_time_id', $fit_time)->where('tipe',1)->get();
+                          $data_temp_co = \DB::connection('mysql')->table('temp_container')->where('id_user', $d->id)->where('fit_time_id', $fit_time)->where('tipe',2)->get();
+                          $arrPa = [null,null];
+                          $arrCo = [null,null];
 
-                          // // if(count($data_temp_pa) <=2 ){
-                          // //   $old_pa_proyek1 = $data_temp_pa[0]->id;
-                          // //   $old_pa_proyek2 = $data_temp_pa[1]->id;
-                          // // } else if(count($data_temp_pa) <=1){
-                          // //   $old_pa_proyek1 = $data_temp_pa[0]->id;
-                          // // }
+                          $nilai_1_pa = [null, null];
+                          $nilai_2_pa = [null, null];
+                          $nilai_3_pa = [null, null];
+                          $nilai_4_pa = [null, null];
+                          $nilai_5_pa = [null, null];
+                          $nilai_6_pa = [null, null];
 
-                          // // if(count($data_temp_co) <=2 ){
-                          // //   $old_c_proyek1 = $data_temp_co[0]->id;
-                          // //   $old_c_proyek2 = $data_temp_co[1]->id;
-                          // // } else if(count($data_temp_co) <=1){
-                          // //   $old_c_proyek1 = $data_temp_co[0]->id;
-                          // // }
+                          $nilai_1_co = [null,null];
+                          $nilai_2_co = [null,null];
+                          $nilai_3_co = [null,null];
+                          $nilai_4_co = [null,null];
+                          $nilai_5_co = [null,null];
+                          $nilai_6_co = [null,null];
+                    
+                          for($i=0;$i< count($data_temp_pa); $i++){
+                            $arrPa[$i] = $data_temp_pa[$i]->id;
+                            $nilai_1_pa[$i] = $data_temp_pa[$i]->nilai_1;
+                            $nilai_2_pa[$i] = $data_temp_pa[$i]->nilai_2;
+                            $nilai_3_pa[$i] = $data_temp_pa[$i]->nilai_3;
+                            $nilai_4_pa[$i] = $data_temp_pa[$i]->nilai_4;
+                            $nilai_5_pa[$i] = $data_temp_pa[$i]->nilai_5;
+                            $nilai_6_pa[$i] = $data_temp_pa[$i]->nilai_6;
+                          
+                          }
+                          for($i=0;$i< count($data_temp_co); $i++){
+                            $arrCo[$i] = $data_temp_co[$i]->id;
+                            $nilai_1_co[$i] = $data_temp_co[$i]->nilai_1;
+                            $nilai_2_co[$i] = $data_temp_co[$i]->nilai_2;
+                            $nilai_3_co[$i] = $data_temp_co[$i]->nilai_3;
+                            $nilai_4_co[$i] = $data_temp_co[$i]->nilai_4;
+                            $nilai_5_co[$i] = $data_temp_co[$i]->nilai_5;
+                            $nilai_6_co[$i] = $data_temp_co[$i]->nilai_6;
+                          }
 
+                          $arrPa = array_merge($arrPa,$arrCo);
 
-                        
+                         // dd($nilai_1_pa[0]);
+                         
                         ?>
 
-                        {{-- <input type="hidden" name="point1[]" value="">
-                        <input type="hidden" name="point2[]" value=""> 
-                        <input type="hidden" name="point3[]" value="">
-                        <input type="hidden" name="point4[]" value="">  --}}
+                            <input type="hidden" name="arroldPaCo[]" value="<?php echo json_encode($arrPa); ?>">
                     
-                        <input type="hidden" name="nilai_1_pa[proyek_1][]" value="" class="nilai1" id="dmodal_1_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_2_pa[proyek_1][]" value="" class="nilai2" id="dmodal_2_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_3_pa[proyek_1][]" value="" class="nilai3" id="dmodal_3_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_4_pa[proyek_1][]" value="" class="nilai4" id="dmodal_4_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_5_pa[proyek_1][]" value="" class="nilai5" id="dmodal_5_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_6_pa[proyek_1][]" value="" class="nilai6" id="dmodal_6_pa_{{$d->id}}">
-                        <input type="hidden" name="nilai_1_pa[proyek_2][]" value="" class="nilai7" id="dmodal_7_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_2_pa[proyek_2][]" value="" class="nilai8" id="dmodal_8_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_3_pa[proyek_2][]" value="" class="nilai9" id="dmodal_9_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_4_pa[proyek_2][]" value="" class="nilai10" id="dmodal_10_pa_{{$d->id}}" proyek ="1">
-                        <input type="hidden" name="nilai_5_pa[proyek_2][]" value="" class="nilai11" id="dmodal_11_pa_{{$d->id}}" proyek="1">
-                        <input type="hidden" name="nilai_6_pa[proyek_2][]" value="" class="nilai12" id="dmodal_12_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_1_pa[proyek_1][]" value="{{$nilai_1_pa[0]}}" class="nilai1" id="dmodal_1_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_2_pa[proyek_1][]" value="{{$nilai_2_pa[0]}}" class="nilai2" id="dmodal_2_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_3_pa[proyek_1][]" value="{{$nilai_3_pa[0]}}" class="nilai3" id="dmodal_3_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_4_pa[proyek_1][]" value="{{$nilai_4_pa[0]}}" class="nilai4" id="dmodal_4_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_5_pa[proyek_1][]" value="{{$nilai_5_pa[0]}}" class="nilai5" id="dmodal_5_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_6_pa[proyek_1][]" value="{{$nilai_6_pa[0]}}" class="nilai6" id="dmodal_6_pa_{{$d->id}}">
+                        <input type="hidden" name="nilai_1_pa[proyek_2][]" value="{{$nilai_1_pa[1]}}" class="nilai7" id="dmodal_7_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_2_pa[proyek_2][]" value="{{$nilai_2_pa[1]}}" class="nilai8" id="dmodal_8_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_3_pa[proyek_2][]" value="{{$nilai_3_pa[1]}}" class="nilai9" id="dmodal_9_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_4_pa[proyek_2][]" value="{{$nilai_4_pa[1]}}" class="nilai10" id="dmodal_10_pa_{{$d->id}}" proyek ="1">
+                        <input type="hidden" name="nilai_5_pa[proyek_2][]" value="{{$nilai_5_pa[1]}}" class="nilai11" id="dmodal_11_pa_{{$d->id}}" proyek="1">
+                        <input type="hidden" name="nilai_6_pa[proyek_2][]" value="{{$nilai_6_pa[1]}}" class="nilai12" id="dmodal_12_pa_{{$d->id}}" proyek="1">
 
 
-                        <input type="hidden" name="nilai_1_c[proyek_1][]" value="" class="nilai13" id="dmodal_1_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_2_c[proyek_1][]" value="" class="nilai14" id="dmodal_2_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_3_c[proyek_1][]" value="" class="nilai15" id="dmodal_3_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_4_c[proyek_1][]" value="" class="nilai16" id="dmodal_4_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_5_c[proyek_1][]" value="" class="nilai17" id="dmodal_5_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_6_c[proyek_1][]" value="" class="nilai18" id="dmodal_6_c_{{$d->id}}">
-                        <input type="hidden" name="nilai_1_c[proyek_2][]" value="" class="nilai19" id="dmodal_7_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_2_c[proyek_2][]" value="" class="nilai20" id="dmodal_8_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_3_c[proyek_2][]" value="" class="nilai21" id="dmodal_9_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_4_c[proyek_2][]" value="" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_5_c[proyek_2][]" value="" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek="2">
-                        <input type="hidden" name="nilai_6_c[proyek_2][]" value="" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_1_c[proyek_1][]" value="{{$nilai_1_co[0]}}" class="nilai13" id="dmodal_1_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_2_c[proyek_1][]" value="{{$nilai_2_co[0]}}" class="nilai14" id="dmodal_2_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_3_c[proyek_1][]" value="{{$nilai_3_co[0]}}" class="nilai15" id="dmodal_3_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_4_c[proyek_1][]" value="{{$nilai_4_co[0]}}" class="nilai16" id="dmodal_4_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_5_c[proyek_1][]" value="{{$nilai_5_co[0]}}" class="nilai17" id="dmodal_5_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_6_c[proyek_1][]" value="{{$nilai_6_co[0]}}" class="nilai18" id="dmodal_6_c_{{$d->id}}">
+                        <input type="hidden" name="nilai_1_c[proyek_2][]" value="{{$nilai_1_co[1]}}" class="nilai19" id="dmodal_7_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_2_c[proyek_2][]" value="{{$nilai_2_co[1]}}" class="nilai20" id="dmodal_8_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_3_c[proyek_2][]" value="{{$nilai_3_co[1]}}" class="nilai21" id="dmodal_9_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_4_c[proyek_2][]" value="{{$nilai_4_co[1]}}" class="nilai22" id="dmodal_10_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_5_c[proyek_2][]" value="{{$nilai_5_co[1]}}" class="nilai23" id="dmodal_11_c_{{$d->id}}" proyek="2">
+                        <input type="hidden" name="nilai_6_c[proyek_2][]" value="{{$nilai_6_co[1]}}" class="nilai24" id="dmodal_12_c_{{$d->id}}" proyek="2">
 
                         
                       
@@ -515,7 +536,7 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
-                          <input type="hidden" name="pa[]" value="1">
+                          {{-- <input type="hidden" name="pa[]" value="1"> --}}
                           {{-- <input type="hidden" name="container[]" value="0"> --}}
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
@@ -530,7 +551,7 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
-                          <input type="hidden" name="pa[]" value="1">
+                          {{-- <input type="hidden" name="pa[]" value="1"> --}}
                           {{-- <input type="hidden" name="container[]" value="0"> --}}
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
@@ -542,7 +563,7 @@ Creativity
                         <td>{{ $loop->iteration }}
                        
                         </td>
-                        <input type="hidden" name="pa[]" value="2">
+                        {{-- <input type="hidden" name="pa[]" value="2"> --}}
                         {{-- <input type="hidden" name="container[]" value="1"> --}}
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>

@@ -95,7 +95,7 @@ Final Report
         </div>
       </div>
 
-
+      @if( $creativity != null)
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
@@ -119,6 +119,17 @@ Final Report
                         <td><?php 
                             $tmp = \DB::table('temp_container')->where('id',$creativity->performing_art_id)->first();
                            $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
+                          if($creativity->grade == 'KGA' || $creativity->grade == "KGB" || $creativity->grade== 'PGB'){
+                            echo "Performing Art";
+                          }else
+                          if(intval($creativity->grade) <= 6 && intval($creativity->grade) >= 1 && $creativity->lokasi == "Sukomanunggal" ){
+                            echo "Performing Art";
+                          } else if(intval($creativity->grade)<= 4 && intval($creativity->grade) >= 1 && $creativity->lokasi == "Sutorejo" ){
+                            echo "Music";
+                          } else if(intval($creativity->grade)<= 5 && intval($creativity->grade) >= 6 && $creativity->lokasi == "Sutorejo" ){
+                            echo "Performing Art";
+                          }
+                         
                            echo $proj->nama;
                         
                         ?></td>
@@ -174,10 +185,12 @@ Final Report
                        <td>
 
                       </td>
-                       <td><?php 
+                       <td>
+                         <b>Club for Talent, Interest and Innovation</b> <br>
+                         <?php 
                            $tmp = \DB::table('temp_container')->where('id',$creativity->container_id)->first();
                           $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
-                          echo $proj->nama;
+                          echo "(". $proj->nama.")";
                        
                        ?></td>
                        <td>
@@ -203,10 +216,13 @@ Final Report
                        <td>
 
                       </td>
-                       <td><?php 
+                     
+                       <td>
+                        <b>Club for Talent, Interest and Innovation</b> <br>
+                         <?php 
                            $tmp = \DB::table('temp_container')->where('id',$creativity->container_id_2)->first();
                           $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
-                          echo $proj->nama;
+                          echo "(". $proj->nama.")";
                        
                        ?></td>
                        <td>
@@ -233,6 +249,7 @@ Final Report
           </div>
         </div>
       </div>
+      @endif
     </div>
 
     <div class="row">

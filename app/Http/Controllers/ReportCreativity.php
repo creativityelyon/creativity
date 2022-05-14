@@ -35,6 +35,11 @@ class ReportCreativity extends Controller
     $tipe_projek_container = ProjectTipe::where('tipe', 2)->get();
     $check_kelas = Syskelas::find($kelas);
 
+    $temp_pa = json_encode(DB::connection('mysql')->table('temp_container')->select('proyek_ke','nilai_1','nilai_2', 'nilai_3', 'nilai_4', 'nilai_5', 'nilai_6', 'nama_project', 'master_project_tipe')->where('kelas', $check_kelas->kode_kelas)->where('fit_time_id', $time)->where('grade', $check_kelas->grade)->where('tipe',1)->where('proyek_ke',1)->distinct()->get());
+    $temp_container = json_encode(DB::connection('mysql')->table('temp_container')->select('proyek_ke','nilai_1','nilai_2', 'nilai_3', 'nilai_4', 'nilai_5', 'nilai_6', 'nama_project', 'master_project_tipe')->where('kelas', $check_kelas->kode_kelas)->where('fit_time_id', $time)->where('grade', $check_kelas->grade)->where('tipe',2)->where('proyek_ke',1)->distinct()->get());
+    $temp_pa2 = json_encode(DB::connection('mysql')->table('temp_container')->select('proyek_ke','nilai_1','nilai_2', 'nilai_3', 'nilai_4', 'nilai_5', 'nilai_6', 'nama_project', 'master_project_tipe')->where('kelas', $check_kelas->kode_kelas)->where('fit_time_id', $time)->where('grade', $check_kelas->grade)->where('tipe',1)->where('proyek_ke',2)->distinct()->get());
+    $temp_container2 = json_encode(DB::connection('mysql')->table('temp_container')->select('proyek_ke','nilai_1','nilai_2', 'nilai_3', 'nilai_4', 'nilai_5', 'nilai_6', 'nama_project', 'master_project_tipe')->where('kelas', $check_kelas->kode_kelas)->where('fit_time_id', $time)->where('grade', $check_kelas->grade)->where('tipe',2)->where('proyek_ke',2)->distinct()->get());
+   
     if ($check_kelas->lokasi == 'Sutorejo') {
       $data = Custom::getDataSiswaCreativitySutorejo($time,$kelas);
     }else {
@@ -45,7 +50,11 @@ class ReportCreativity extends Controller
                                   ->with('kelas',$check_kelas)
                                   ->with('fit_time',$time)
                                   ->with('kategori_performing', $tipe_projek_performing_art)
-                                  ->with('kategori_container', $tipe_projek_container);
+                                  ->with('kategori_container', $tipe_projek_container)
+                                  ->with('performing_art', $temp_pa)
+                                  ->with('container', $temp_container)
+                                  ->with('performing_art2', $temp_pa2 )
+                                  ->with('container2', $temp_container2);
   }
 
   public function store(Request $r)
@@ -215,7 +224,7 @@ class ReportCreativity extends Controller
 
 
   public function store_penilaian(Request $request){
-    $data_arr = $request->only(['user_id', 'fit_time_id','grade', 'lokasi', 'id_kelas', 'pa', 'kategori_c', 'kategori_pa', 'double_proyek_c', 'double_proyek_pa', 'gender', 'nama_lengkap',
+    $data_arr = $request->only(['user_id', 'fit_time_id','grade', 'lokasi', 'arroldPaCo', 'id_kelas', 'pa', 'kategori_c', 'kategori_pa', 'double_proyek_c', 'double_proyek_pa', 'gender', 'nama_lengkap',
    // 'old_pa_proyek1', 'old_pa_proyek2', 'old_c_proyek1', 'old_c_proyek2'
   ]);
 
@@ -236,6 +245,9 @@ class ReportCreativity extends Controller
     $data_nilai_4_c = $request->input('nilai_4_c');
     $data_nilai_5_c = $request->input('nilai_5_c');
     $data_nilai_6_c = $request->input('nilai_6_c');
+
+//    dd($_POST);
+
     DB::beginTransaction();
     try {
     for($i=0; $i< count($data_arr['user_id']); $i++){
@@ -245,12 +257,12 @@ class ReportCreativity extends Controller
         'kelas' => $data_arr['id_kelas'][$i],
         'grade' => $data_arr['grade'][$i],
       ];
-      
-      //pa = 1-> only performing art
-      //pa = 2-> with container
+
+      $data_id = json_decode($data_arr['arroldPaCo'][$i]);
+
 
       //cek data_nilai performing art
-      if(intval($data_arr['pa'][$i]) == 1 || intval($data_arr['pa'][$i]) == 2){
+      // if($data_arr['grade'][$i] == 'KGA' || $data_arr['grade'][$i] == 'KGB' || $data_arr['grade'] [$i]== 'PGB' || (intval($data_arr['grade'][$i]) >= 1 && intval($data_arr['grade'][$i]) <= 6)){
           $ctr_nilai = 0;
           $data_nilai = [];
 
@@ -260,6 +272,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_1'] = $data_nilai_1_pa['proyek_1'][$i];
           }else{
             $data_nilai['nilai_1'] = null;
+            $data_siswa['nilai_1'] = null;
           }
           if($data_nilai_2_pa['proyek_1'][$i] != null){
             $ctr_nilai ++;
@@ -267,6 +280,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_2'] = $data_nilai_2_pa['proyek_1'][$i];
           }else{
             $data_nilai['nilai_2'] = null;
+            $data_siswa['nilai_2'] = null;
           }
           if($data_nilai_3_pa['proyek_1'][$i] != null){
             $ctr_nilai ++;
@@ -274,6 +288,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_3'] = $data_nilai_3_pa['proyek_1'][$i];
           }else{
             $data_nilai['nilai_3'] = null;
+            $data_siswa['nilai_3'] = null;
           }
           if($data_nilai_4_pa['proyek_1'][$i] != null){
             $ctr_nilai ++;
@@ -281,6 +296,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_4'] = $data_nilai_4_pa['proyek_1'][$i];
           }else{
             $data_nilai['nilai_4'] = null;
+            $data_siswa['nilai_4'] = null;
           }
           if($data_nilai_5_pa['proyek_1'][$i] != null){
             $ctr_nilai ++;
@@ -288,6 +304,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_5'] = $data_nilai_5_pa['proyek_1'][$i];
           }else{
             $data_nilai['nilai_5'] = null;
+            $data_siswa['nilai_5'] = null;
           }
           if($data_nilai_6_pa['proyek_1'][$i] != null){
             $ctr_nilai ++;
@@ -295,6 +312,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_6'] = $data_nilai_6_pa['proyek_1'][$i];
           }else{
             $data_nilai['nilai_6'] = null;
+            $data_siswa['nilai_6'] = null;
           }
           
           if($data_nama_proyek_pa['proyek_1'][$i] == null){
@@ -322,13 +340,13 @@ class ReportCreativity extends Controller
           $data_siswa['nama_project'] = $data_nama_proyek_pa['proyek_1'][$i];
           $data_siswa['master_project_tipe'] = $data_arr['kategori_pa'][$i];
           $data_siswa['tipe'] = 1;
-          
-          // if($data_arr['old_pa_proyek1'][$i] == null){
+          $data_siswa['proyek_ke'] = 1;
+          if($data_id[0] == null){
 
             $temp = TempContainer::create($data_siswa);
-          // }else{
-          //   $temp = TempContainer::where('id',intval($data_arr['old_pa_proyek1'][$i]))->update($data_siswa);
-          // }
+          }else{
+            $temp = TempContainer::where('id',intval($data_id[0]))->update($data_siswa);
+          }
 
           //if proyek kedua juga dipakai
           if(intval($data_arr['double_proyek_pa'][$i]) == 1){
@@ -342,6 +360,7 @@ class ReportCreativity extends Controller
               $data_siswa['nilai_1'] = $data_nilai_1_pa['proyek_2'][$i];
             }else{
               $data_nilai['nilai_1'] = null;
+              $data_siswa['nilai_1'] = null;
             }
             if($data_nilai_2_pa['proyek_2'][$i] != null){
               $ctr_nilai ++;
@@ -349,6 +368,7 @@ class ReportCreativity extends Controller
               $data_siswa['nilai_2'] = $data_nilai_2_pa['proyek_2'][$i];
             }else{
               $data_nilai['nilai_2'] = null;
+              $data_siswa['nilai_2'] = null;
             }
             if($data_nilai_3_pa['proyek_2'][$i] != null){
               $ctr_nilai ++;
@@ -356,6 +376,7 @@ class ReportCreativity extends Controller
               $data_siswa['nilai_3'] = $data_nilai_3_pa['proyek_2'][$i];
             }else{
               $data_nilai['nilai_3'] = null;
+              $data_siswa['nilai_3'] = null;
             }
             if($data_nilai_4_pa['proyek_2'][$i] != null){
               $ctr_nilai ++;
@@ -363,6 +384,7 @@ class ReportCreativity extends Controller
               $data_siswa['nilai_4'] = $data_nilai_4_pa['proyek_2'][$i];
             }else{
               $data_nilai['nilai_4'] = null;
+              $data_siswa['nilai_4'] = null;
             }
             if($data_nilai_5_pa['proyek_2'][$i] != null){
               $ctr_nilai ++;
@@ -370,6 +392,7 @@ class ReportCreativity extends Controller
               $data_siswa['nilai_5'] = $data_nilai_5_pa['proyek_2'][$i];
             }else{
               $data_nilai['nilai_5'] = null;
+              $data_siswa['nilai_5'] = null;
             }
             if($data_nilai_6_pa['proyek_2'][$i] != null){
               $ctr_nilai ++;
@@ -377,6 +400,7 @@ class ReportCreativity extends Controller
               $data_siswa['nilai_6'] = $data_nilai_6_pa['proyek_2'][$i];
             }else{
               $data_nilai['nilai_6'] = null;
+              $data_siswa['nilai_6'] = null;
             }
             
             if($data_nama_proyek_pa['proyek_2'][$i] == null){
@@ -403,23 +427,19 @@ class ReportCreativity extends Controller
             $data_siswa['nama_project'] = $data_nama_proyek_pa['proyek_2'][$i];
             $data_siswa['master_project_tipe'] = $data_arr['kategori_pa'][$i];
             $data_siswa['tipe'] = 1;
-            
-        //    if($data_arr['old_pa_proyek2'][$i] == null){
+            $data_siswa['proyek_ke'] = 2;
+            if($data_id[1] == null){
 
               $temp = TempContainer::create($data_siswa);
-            // }else{
-            //   $temp = TempContainer::where('id',intval($data_arr['old_pa_proyek2'][$i]))->update($data_siswa);
-            // }
+            }else{
+              $temp = TempContainer::where('id',intval($data_id[1]))->update($data_siswa);
+            }
           }
-        
 
-     
-
-
-      }
+     // }
 
       //cek data_nilai container
-      if(intval($data_arr['pa'][$i]) == 2){
+      if($data_arr['grade'][$i] >= 7){
         $ctr_nilai = 0;
         $data_nilai = [];
 
@@ -429,6 +449,7 @@ class ReportCreativity extends Controller
           $data_siswa['nilai_1'] = $data_nilai_1_c['proyek_1'][$i];
         }else{
           $data_nilai['nilai_1'] = null;
+          $data_siswa['nilai_1'] = null;
         }
         if($data_nilai_2_c['proyek_1'][$i] != null){
           $ctr_nilai ++;
@@ -436,6 +457,7 @@ class ReportCreativity extends Controller
           $data_siswa['nilai_2'] = $data_nilai_2_c['proyek_1'][$i];
         }else{
           $data_nilai['nilai_2'] = null;
+          $data_siswa['nilai_2'] = null;
         }
         if($data_nilai_3_c['proyek_1'][$i] != null){
           $ctr_nilai ++;
@@ -443,6 +465,7 @@ class ReportCreativity extends Controller
           $data_siswa['nilai_3'] = $data_nilai_3_c['proyek_1'][$i];
         }else{
           $data_nilai['nilai_3'] = null;
+          $data_siswa['nilai_3'] = null;
         }
         if($data_nilai_4_c['proyek_1'][$i] != null){
           $ctr_nilai ++;
@@ -450,6 +473,7 @@ class ReportCreativity extends Controller
           $data_siswa['nilai_4'] = $data_nilai_4_c['proyek_1'][$i];
         }else{
           $data_nilai['nilai_4'] = null;
+          $data_siswa['nilai_4'] = null;
         }
         if($data_nilai_5_c['proyek_1'][$i] != null){
           $ctr_nilai ++;
@@ -457,6 +481,7 @@ class ReportCreativity extends Controller
           $data_siswa['nilai_5'] = $data_nilai_5_c['proyek_1'][$i];
         }else{
           $data_nilai['nilai_5'] = null;
+          $data_siswa['nilai_5'] = null;
         }
         if($data_nilai_6_c['proyek_1'][$i] != null){
           $ctr_nilai ++;
@@ -464,6 +489,7 @@ class ReportCreativity extends Controller
           $data_siswa['nilai_6'] = $data_nilai_6_c['proyek_1'][$i];
         }else{
           $data_nilai['nilai_6'] = null;
+          $data_siswa['nilai_6'] = null;
         }
         
         if($data_nama_proyek_c['proyek_1'][$i] == null){
@@ -491,14 +517,15 @@ class ReportCreativity extends Controller
         $data_siswa['nama_project'] = $data_nama_proyek_c['proyek_1'][$i];
         $data_siswa['master_project_tipe'] = $data_arr['kategori_c'][$i];
         $data_siswa['tipe'] = 2;
-        
+        $data_siswa['proyek_ke'] = 1;
 
-      //  if($data_arr['old_c_proyek1'][$i] == null){
+      if($data_id[2] == null){
 
           $temp = TempContainer::create($data_siswa);
-        // }else{
-        //   $temp = TempContainer::where('id',intval($data_arr['old_c_proyek1'][$i]))->update($data_siswa);
-        // }
+        }else{
+          $temp = TempContainer::where('id',intval($data_id[2]))->update($data_siswa);
+        }
+       
 
         //if proyek kedua juga dipakai
         if(intval($data_arr['double_proyek_c'][$i]) == 1){
@@ -512,6 +539,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_1'] = $data_nilai_1_c['proyek_2'][$i];
           }else{
             $data_nilai['nilai_1'] = null;
+            $data_siswa['nilai_1'] = null;
           }
           if($data_nilai_2_c['proyek_2'][$i] != null){
             $ctr_nilai ++;
@@ -519,6 +547,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_2'] = $data_nilai_2_c['proyek_2'][$i];
           }else{
             $data_nilai['nilai_2'] = null;
+            $data_siswa['nilai_2'] = null;
           }
           if($data_nilai_3_c['proyek_2'][$i] != null){
             $ctr_nilai ++;
@@ -526,6 +555,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_3'] = $data_nilai_3_c['proyek_2'][$i];
           }else{
             $data_nilai['nilai_3'] = null;
+            $data_siswa['nilai_3'] = null;
           }
           if($data_nilai_4_c['proyek_2'][$i] != null){
             $ctr_nilai ++;
@@ -533,6 +563,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_4'] = $data_nilai_4_c['proyek_2'][$i];
           }else{
             $data_nilai['nilai_4'] = null;
+            $data_siswa['nilai_4'] = null;
           }
           if($data_nilai_5_c['proyek_2'][$i] != null){
             $ctr_nilai ++;
@@ -540,6 +571,7 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_5'] = $data_nilai_5_c['proyek_2'][$i];
           }else{
             $data_nilai['nilai_5'] = null;
+            $data_siswa['nilai_5'] = null;
           }
           if($data_nilai_6_c['proyek_2'][$i] != null){
             $ctr_nilai ++;
@@ -547,8 +579,8 @@ class ReportCreativity extends Controller
             $data_siswa['nilai_6'] = $data_nilai_6_c['proyek_2'][$i];
           }else{
             $data_nilai['nilai_6'] = null;
+            $data_siswa['nilai_6'] = null;
           }
-          
           if($data_nama_proyek_c['proyek_2'][$i] == null){
             return redirect()->back()->with('error',' Nama Proyek tidak boleh kosong bbbb');
           }
@@ -573,13 +605,14 @@ class ReportCreativity extends Controller
           $data_siswa['nama_project'] = $data_nama_proyek_c['proyek_2'][$i];
           $data_siswa['master_project_tipe'] = $data_arr['kategori_c'][$i];
           $data_siswa['tipe'] = 2;
-          
-         // if($data_arr['old_c_proyek2'][$i] == null){
+          $data_siswa['proyek_ke'] = 2;
+        if($data_id[3]== null){
 
             $temp = TempContainer::create($data_siswa);
-          // }else{
-          //   $temp = TempContainer::where('id',intval($data_arr['old_c_proyek2'][$i]))->update($data_siswa);
-          // }
+          }else{
+           
+            $temp = TempContainer::where('id',intval($data_id[3]))->update($data_siswa);
+          }
         }
       }
 
@@ -587,8 +620,10 @@ class ReportCreativity extends Controller
     DB::commit();
     return redirect()->back()->with('success','Berhasil di Input');
     } catch(\Exception $e){
+      dd($e);
       DB::rollback();
       return $e;
+      
   }
   } 
 

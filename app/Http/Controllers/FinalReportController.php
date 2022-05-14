@@ -603,7 +603,7 @@ class FinalReportController extends Controller
 
   public function destroy($id)
   {
-    DB::connection('mysql')->table('class_setting_report')->where('id', $id)->delete();
+    DB::connection('mysql')->table('class_setting_report')->where('id_setting_report', $id)->delete();
     DB::connection('mysql')->table('setting_report')->where('id', $id)->delete();
     return redirect('corpus/indexsetting');
   }
