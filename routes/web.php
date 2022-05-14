@@ -166,6 +166,7 @@ Route::get('/report/pernyataan','ReportPernyataan@index')->middleware(['auth:tea
 Route::get('/report/pernyataan/{id}','ReportPernyataan@show')->middleware(['auth:teacher']);
 
 Route::get('rubrick/creativity','ReportCreativity@index')->middleware(['auth:teacher']);
+Route::get('rubrick/creativity_teacher','ReportCreativityTeacher@index')->middleware(['auth:teacher']);
 Route::get('rubrick/creativity/{time}/{kelas}','ReportCreativity@getData')->middleware(['auth:teacher']);
 Route::post('/creativity/store','ReportCreativity@store')->middleware(['auth:teacher']);
 Route::get('/creativity/edit/{id}','ReportCreativity@edit')->middleware(['auth:teacher']);

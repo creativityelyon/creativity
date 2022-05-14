@@ -254,5 +254,23 @@
 </ul>
 </li>
 
+<li class="dropdown">
+  <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-heartbeat"></i> <span>Creativity Teacher</span></a>
+  <ul class="dropdown-menu">
+
+  <li class="side-menus {{ Request::is('rubrick/creativity_teacher') ? 'active' : '' }}">
+    <a class="nav-link" href="/rubrick/creativity_teacher">
+      <i class="fas fa-heartbeat"></i><span>Creativity Teacher</span>
+    </a>
+  </li>
+
+  <li class="side-menus {{ Request::is('rubrick/creativity_teacher') ? 'active' : '' }}">
+    <a class="nav-link" href="/rubrick/creativity_teacher-percent">
+      <i class="fas fa-heartbeat"></i><span>Creativity Teacher %</span>
+    </a>
+  </li>
+</ul>
+</li>
+
 
 @endif
