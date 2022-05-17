@@ -412,6 +412,13 @@ class Custom extends Model
     where fit_time_id = ? and deleted_at is null and no_induk_global is not null)",array($kelas,$time));
   }
 
+  //fendy 
+  public static function getDataTeacherCreativity($time){
+    return DB::connection('mysql2')->select("select id, status_kepegawaian, admin_level,nama_lengkap, nip, syscabang_id from users where deleted_at is null
+      and nip not in (select nip from creativity_teacher where fit_time_id = ? and deleted_at is null and nip is not null)", array($time));
+
+  }
+
   public static function getDataCreativity()
   {
     return DB::connection('mysql')->select("select *,

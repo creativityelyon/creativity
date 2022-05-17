@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CreativityTeacher extends Model
 {
   use SoftDeletes;
-  protected $connection = 'mysql';
+  protected $connection = 'mysql2';
   public $table = 'creativity_teacher';
 }
