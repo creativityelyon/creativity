@@ -106,6 +106,9 @@ Route::get('/export/test/create','ExportFitController@create');
 Route::post('/export/test/store','ExportFitController@storeFile');
 Route::get('/export/daily', 'ExportCheckDaily@index');
 Route::post('/export/daily-store', 'ExportCheckDaily@storeFile');
+Route::get('/export/student','ExportStudentController@index');
+Route::get('/export/student/create','ExportStudentController@create');
+Route::post('/export/student/store','ExportStudentController@storeFile');
 
 Route::get('runSync','ExportFitController@runSync');
 Route::get('runSyncDaily', 'ExportCheckDaily@runSync');

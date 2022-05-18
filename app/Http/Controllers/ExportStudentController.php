@@ -8,13 +8,13 @@ class ExportStudentController extends Controller
 {
     public function index()
   {
-    return view('fit_test_manual.index');
+    return view('student_manual.index');
   }
 
   public function create()
   {
 
-    return view('fit_test_manual.create');
+    return view('student_manual.create');
   }
 
   public function storeFile(Request $r)
