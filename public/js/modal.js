@@ -1,10 +1,16 @@
 $(document).ready(function() {
-    var pa =JSON.parse( $('#performing_art').val());
-    var co =JSON.parse( $('#container').val());
-    var pa2 =JSON.parse( $('#performing_art2').val());
-    var co2 =JSON.parse( $('#container2').val());
-     var nilai_tmp = Array(24);
-     nilai_tmp.fill(null);
+    // var pa =JSON.parse( $('#performing_art').val());
+    // var co =JSON.parse( $('#container').val());
+    // var pa2 =JSON.parse( $('#performing_art2').val());
+    // var co2 =JSON.parse( $('#container2').val());
+
+    var pa ="";
+    var co ="";
+    var pa2 ="";
+    var co2 ="";
+
+    var nilai_tmp = Array(24);
+    nilai_tmp.fill(null);
     var bool_dual_pa = false;
     var bool_dual_co = false;
 
@@ -234,6 +240,7 @@ $(document).ready(function() {
                     for (let index = 1; index <= 12; index++) {
                         $("#aspect"+index).hide();
                     }
+                    
                     if(name == "Performing Art"){
                         for (let index = 0; index < 12; index++) {
                             if(checked[index] == 1){
@@ -243,7 +250,7 @@ $(document).ready(function() {
                             }
                         }
                     }
-                    else{
+                    else if(name == "Container"){
                         for (let index = 12; index < 24; index++) {
                             if(checked[index] == 1){
                                 $("#aspect"+(index-11)).show();

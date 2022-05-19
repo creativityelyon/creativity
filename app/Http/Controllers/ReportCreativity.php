@@ -36,7 +36,7 @@ class ReportCreativity extends Controller
     $tipe_projek_performing_art = ProjectTipe::where('tipe', 1)->get();
     $tipe_projek_container = ProjectTipe::where('tipe', 2)->get();
     //$check_kelas = Syskelas::find($kelas);
-
+    $tipe = ProjectTipe::where('id',$kelas)->first();
     $temp_pa = "";
     $temp_container  = "";
     $temp_pa2 = "";
@@ -52,9 +52,10 @@ class ReportCreativity extends Controller
     //   $data = Custom::getDataSiswaCreativity($time,$kelas);
     // }
     $data = Custom::getDataUnionCreativity($time, $kelas);
-   // dd($data);
+    //dd($data);
     return view('creativity.show')->with('data',$data)
                                //   ->with('kelas',$check_kelas)
+                                  ->with('tipe',$tipe)
                                   ->with('fit_time',$time)
                                   ->with('kategori_performing', $tipe_projek_performing_art)
                                   ->with('kategori_container', $tipe_projek_container)
@@ -214,16 +215,16 @@ class ReportCreativity extends Controller
   {
     $check_kelas = Syskelas::find($kelas);
    
-    if ($check_kelas->lokasi == 'Sutorejo') {
-      $murid = ActiveStudentSuto::select('id', 'name', 'gender')->where('id', $id)->first();
-    }else {
-      $murid = ActiveStudent::select('id', 'name', 'gender')->where('id', $id)->first();
-    }
+    // if ($check_kelas->lokasi == 'Sutorejo') {
+    //   $murid = ActiveStudentSuto::select('id', 'name', 'gender')->where('id', $id)->first();
+    // }else {
+    //   $murid = ActiveStudent::select('id', 'name', 'gender')->where('id', $id)->first();
+    // }
 
     //for Update
     $data_Temp = null;
     //$data_Temp = TempContainer::where('id_user', $id)->where('tipe', $tipe_projek[0]->tipe)->first();
-    return ['murid'=>$murid, 'grade' => $check_kelas, 'old_data' => $data_Temp];
+    return ['grade' => $check_kelas, 'old_data' => $data_Temp];
     return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
   }
 

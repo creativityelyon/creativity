@@ -11,9 +11,6 @@ Creativity
     <h3 class="page__heading">Creativity</h3>
   </div>
   {{-- <input type="hidden" name="zyx" value="{{$kelas->grade}}"> --}}
-  {{-- @php
-      dd($kelas->grade);
-  @endphp --}}
   <div class="section-body">
     <input type="hidden" name="tempPa" value='<?php echo $performing_art;?>' id="performing_art">
     <input type="hidden" name="tempContainer" value='<?php echo  $container;?>' id="container">
@@ -24,14 +21,17 @@ Creativity
           <div class="card-body">
             <div style="width: 100%;">
               <div class="form-group row">
-                <div class="col-sm-4">Course Performing Art</div>
-                <div class="col-sm-8">
-                    <select name="kategori" id="subjects1" class="form-control">
+                <div class="col-sm-5"><h4>@if ($tipe->tipe == 1)
+                  Performing Art
+                @else
+                    Container
+                @endif</h4></div>
+                <div class="col-sm-7 mt-5">
+                    {{-- <select name="kategori" id="subjects1" class="form-control">
                       @foreach ($kategori_performing as $item)
                         <option value="{{$item->id}}">{{$item->nama}}</option>
                       @endforeach
-                    </select>
-                    <br>
+                    </select> --}}
                     <input class="form-check-input" type="checkbox" id="addFormPerforming" style="float: left">
                     <label class="form-check-label" for="">
                       Need more form?
@@ -201,7 +201,7 @@ Creativity
           </div>
         </div>
       </div>
-      <div class="col-sm-12" id="container">
+      {{-- <div class="col-sm-12" id="container">
         <div class="card">
           <div class="card-body">
             <div style="width: 100%;">
@@ -381,7 +381,7 @@ Creativity
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       <form class="row" action="{{ url('/creativity/store') }}" method="post">
         @csrf
         <div class="col-lg-12">
@@ -396,7 +396,7 @@ Creativity
                         <th>#</th>
                         <th>Nama Murid</th>
                         <th>Kelas</th>
-                        <th>Performing Art</th>
+                        <th>Aksi</th>
                       </tr>
                   
                       {{-- @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
@@ -544,7 +544,7 @@ Creativity
                           <td>{{ $d->kelas }}</td>
                           <td>
                             <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
-                              Performing Art
+                              Nilai
                             </button>
                           </td>
                         </tr>
