@@ -10,7 +10,7 @@ Creativity
   <div class="section-header">
     <h3 class="page__heading">Creativity</h3>
   </div>
-  <input type="hidden" name="zyx" value="{{$kelas->grade}}">
+  {{-- <input type="hidden" name="zyx" value="{{$kelas->grade}}"> --}}
   {{-- @php
       dd($kelas->grade);
   @endphp --}}
@@ -391,7 +391,15 @@ Creativity
                 <div class="table-responsive">
                   <table class="table table-hover table-striped table-bordered table-condensed">
                     <thead>
-                      @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
+
+                      <tr>
+                        <th>#</th>
+                        <th>Nama Murid</th>
+                        <th>Kelas</th>
+                        <th>Performing Art</th>
+                      </tr>
+                  
+                      {{-- @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                       <tr>
                         <th>#</th>
                         <th>Nama Murid</th>
@@ -409,18 +417,18 @@ Creativity
                       <tr>
                         <th>#</th>
                         <th>Nama Murid</th>
-                        <th>Kelas</th>
+                        <th>Kelas</th> --}}
                         {{-- <th>Idea Generation</th>
                         <th>Idea Design and Refinement</th>
                         <th>Openness and Courage to Explore</th>
                         <th>Work Creatively with others</th>
                         <th>Creative Production and Innovation</th>
                         <th>Reflection</th> --}}
-                        <th>Performing Art</th>
+                        {{-- <th>Performing Art</th>
                         <th>Container</th>
                       </tr>
   
-                      @endif
+                      @endif --}}
                     </thead>
                     <tbody>
                       @foreach($data as $d)
@@ -529,15 +537,24 @@ Creativity
 
                         <input type="hidden" name="kategori_pa[]" value="" class="kategori_pa">
                         <input type="hidden" name="kategori_c[]" value="" class="kategori_c">
-                      @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
+                        <tr>
+                          <td>{{ $loop->iteration }}
+                          </td>
+                          <td>{{ $d->name }}</td>
+                          <td>{{ $d->kelas }}</td>
+                          <td>
+                            <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
+                              Performing Art
+                            </button>
+                          </td>
+                        </tr>
+                      {{-- @if($kelas->grade == 'KGA' || $kelas->grade == 'KGB' || $kelas->grade == 'PGB')
                       <tr>
                         <td>{{ $loop->iteration }}
                         </td>
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
-                          {{-- <input type="hidden" name="pa[]" value="1"> --}}
-                          {{-- <input type="hidden" name="container[]" value="0"> --}}
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
                           </button>
@@ -551,8 +568,6 @@ Creativity
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
                         <td>
-                          {{-- <input type="hidden" name="pa[]" value="1"> --}}
-                          {{-- <input type="hidden" name="container[]" value="0"> --}}
                           <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-toggle="modal" data-target="#exampleModal">
                             Performing Art
                           </button>
@@ -563,8 +578,6 @@ Creativity
                         <td>{{ $loop->iteration }}
                        
                         </td>
-                        {{-- <input type="hidden" name="pa[]" value="2"> --}}
-                        {{-- <input type="hidden" name="container[]" value="1"> --}}
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->kelas }}</td>
   
@@ -579,7 +592,7 @@ Creativity
                             </button>
                         </td>
                       </tr>
-                      @endif
+                      @endif --}}
                       @endforeach                      
                     </tbody>
                   </table>
