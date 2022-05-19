@@ -15,4 +15,6 @@ class ActiveStudent extends Model
   {
     return $this->hasMany('App\Models\Pernyataan','user_id','id');
   }
+
+  protected $fillable = ['project_course_id'];
 }

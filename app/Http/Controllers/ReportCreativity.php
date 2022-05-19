@@ -21,8 +21,10 @@ class ReportCreativity extends Controller
 
   public function index()
   {
-    $cls = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
-    $fit_time = FitTime::get();
+  //  $cls = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
+    
+  $cls = ProjectTipe::get();
+  $fit_time = FitTime::get();
     // $data = Custom::getDataCreativity();
     $data = CreativityStudent::get();
    
@@ -40,12 +42,12 @@ class ReportCreativity extends Controller
     $temp_pa2 = json_encode(DB::connection('mysql')->table('temp_container')->select('proyek_ke','nilai_1','nilai_2', 'nilai_3', 'nilai_4', 'nilai_5', 'nilai_6', 'nama_project', 'master_project_tipe')->where('kelas', $check_kelas->kode_kelas)->where('fit_time_id', $time)->where('grade', $check_kelas->grade)->where('tipe',1)->where('proyek_ke',2)->distinct()->get());
     $temp_container2 = json_encode(DB::connection('mysql')->table('temp_container')->select('proyek_ke','nilai_1','nilai_2', 'nilai_3', 'nilai_4', 'nilai_5', 'nilai_6', 'nama_project', 'master_project_tipe')->where('kelas', $check_kelas->kode_kelas)->where('fit_time_id', $time)->where('grade', $check_kelas->grade)->where('tipe',2)->where('proyek_ke',2)->distinct()->get());
    
-    if ($check_kelas->lokasi == 'Sutorejo') {
-      $data = Custom::getDataSiswaCreativitySutorejo($time,$kelas);
-    }else {
-      $data = Custom::getDataSiswaCreativity($time,$kelas);
-    }
-
+    // if ($check_kelas->lokasi == 'Sutorejo') {
+    //   $data = Custom::getDataSiswaCreativitySutorejo($time,$kelas);
+    // }else {
+    //   $data = Custom::getDataSiswaCreativity($time,$kelas);
+    // }
+    $data = Custom::getDataUnionCreativity($time, $kelas);
     return view('creativity.show')->with('data',$data)
                                   ->with('kelas',$check_kelas)
                                   ->with('fit_time',$time)

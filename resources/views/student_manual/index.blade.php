@@ -16,7 +16,7 @@ Check Fit
     <div class="row">
 
       <div class="col-lg-12">
-        <a href="{{ url('/export/test/create')}}" class="btn btn-info btn-lg pull-right">Create Schedule</a>
+        <a href="{{ url('/export/student/create')}}" class="btn btn-info btn-lg pull-right">Create Student</a>
         <div class="card">
           <div class="card-body">
 

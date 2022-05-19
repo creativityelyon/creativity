@@ -112,6 +112,7 @@ Route::post('/export/student/store','ExportStudentController@storeFile');
 
 Route::get('runSync','ExportFitController@runSync');
 Route::get('runSyncDaily', 'ExportCheckDaily@runSync');
+Route::get('runSyncCreativity', 'ExportStudentController@runSync');
 
 Route::get('manual/test','ManualTestController@index');
 Route::get('manual/test/create','ManualTestController@create');

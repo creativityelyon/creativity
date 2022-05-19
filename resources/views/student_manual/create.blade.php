@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Create Export Fit Time
+Export Student
 @endsection
 @section('css')
 
@@ -8,17 +8,17 @@ Create Export Fit Time
 @section('content')
 <section class="section">
   <div class="section-header">
-    <h3 class="page__heading">Create Export Fit Time</h3>
+    <h3 class="page__heading">Export Student</h3>
   </div>
   <div class="section-body">
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form action="{{ url('/export/test/store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ url('/export/student/store') }}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="form-group row">
-                <label for="attendance_file" class="col-sm-2 col-form-label">TKI & BMI Test File</label>
+                <label for="attendance_file" class="col-sm-2 col-form-label">Add Student Course PA/ Container</label>
                 <div class="col-sm-10">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input @error('attendance_file') is-invalid @enderror" id="customFile" name="attendance_file" required>
