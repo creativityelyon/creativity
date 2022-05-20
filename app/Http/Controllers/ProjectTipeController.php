@@ -27,6 +27,8 @@ class ProjectTipeController extends Controller
           $d = new ProjectTipe();
           $d->nama = $input['nama'];
           $d->tipe = $input['tipe'];
+          $d->description = $input['description'];
+          $d->class_range = json_encode($input['range_class']);
           $d->teacher_id = $input['teacher'];
           $d->created_by = auth()->user()->id;
           $d->save();

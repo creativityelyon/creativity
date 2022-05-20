@@ -12,7 +12,7 @@ use App\Models\CreativityStudent;
 use App\Models\CreativityType;
 use App\Models\ProjectTipe;
 use DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TempContainer;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
@@ -22,8 +22,8 @@ class ReportCreativity extends Controller
   public function index()
   {
   //  $cls = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
-    
-  $cls = ProjectTipe::get();
+    $id_user = Auth::user()->id;
+  $cls = ProjectTipe::where('teacher_id', $id_user)->get();
   $fit_time = FitTime::get();
     // $data = Custom::getDataCreativity();
     $data = CreativityStudent::get();

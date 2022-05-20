@@ -44,7 +44,7 @@ Creativity
               <select class="kelas select form-input" name="kelas" id="kelas">
                 <option value="">Select Class</option>
                 @foreach($cls as $d )
-                <option value="{{$d->id}}">{{$d->nama}}</option>
+                <option value="{{$d->id}}">{{$d->nama}}  - {{$d->description}} </option>
                 @endforeach
               </select>
               

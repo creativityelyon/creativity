@@ -43,6 +43,32 @@ Create Course Tipe (Container / Performing Art)
               </div>
 
               <div class="form-group col-sm-12">
+                <label for="keterangan">Description</label>
+                <input type="text" class="form-control" name="description" >
+              </div>
+
+
+              <div class="form-group col-sm-12">
+                <label for="">Class</label>
+                <hr>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="pgkg">
+                  <label class="form-check-label" for="exampleCheck1">PGKG</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="primary">
+                  <label class="form-check-label" for="exampleCheck1">Primary</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="secondary">
+                  <label class="form-check-label" for="exampleCheck1">Secondary</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="highschool">
+                  <label class="form-check-label" for="exampleCheck1">HighSchool</label>
+                </div>
+              </div>
+              <div class="form-group col-sm-12">
                 <button type="submit" class="btn btn-info btn-lg">Submit</button>
               </div>
 
