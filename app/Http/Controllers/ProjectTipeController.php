@@ -42,7 +42,8 @@ class ProjectTipeController extends Controller
       if (empty($d)) {
         return redirect('/project_tipe')->with('error','Data tidak ditemukan');
       }
-      return view('project_tipe.edit')->with('d',$d);
+      $data_teacher = DB::connection('mysql2')->table('users')->where('id', $d->teacher_id)->first();
+      return view('project_tipe.edit')->with('d',$d)->with('data_teacher', $data_teacher);
     }
 
     public function update(Request $r)
@@ -59,6 +60,9 @@ class ProjectTipeController extends Controller
             $d->nama = $input['nama'];
             $d->tipe = $input['tipe'];
             $d->updated_by = auth()->user()->id;
+            $d->description = $input['description'];
+            $d->class_range = json_encode($input['range_class']);
+            $d->teacher_id = $input['teacher'];
             $d->save();
 
             DB::commit();
@@ -88,7 +92,7 @@ class ProjectTipeController extends Controller
             $d->deleted_by = auth()->user()->id;
             $d->save();
             DB::commit();
-            return redirect('semester')->with('success','Berhasil Menghapus Data');
+            return redirect('project_tipe')->with('success','Berhasil Menghapus Data');
         } catch (\Exception $e) {
           DB::rollback();
             return $e;

@@ -36,7 +36,42 @@ Edit Project Tipe (Container / Performing Art)
                     <option value=2  @if($d->tipe == 2) selected @endif>Container</option>
                 </select>
               </div>
+              <div class="form-group col-sm-12">
+                <label for="keterangan">Teacher</label>
+                <select class="form-control basicAutoComplete" type="text" name="teacher" autocomplete="off"></select>
+              </div>
 
+              <div class="form-group col-sm-12">
+                <label for="keterangan">Description</label>
+                <input type="text" class="form-control" name="description"  value="{{$d->description}}">
+              </div>
+
+
+              <div class="form-group col-sm-12">
+                <label for="">Class</label>
+                <hr>
+                <?php 
+                  $data_tmp = json_decode($d->class_range, true);
+                
+                ?>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="pgkg"  @if(in_array("pgkg",$data_tmp)) checked @endif>
+                  <label class="form-check-label" for="exampleCheck1">PGKG</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="primary" @if(in_array("primary",$data_tmp)) checked @endif>
+                  <label class="form-check-label" for="exampleCheck1">Primary</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="secondary" @if(in_array("secondary",$data_tmp)) checked @endif>
+                  <label class="form-check-label" for="exampleCheck1">Secondary</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="highschool" @if(in_array("secondary",$data_tmp)) checked @endif>
+                  <label class="form-check-label" for="exampleCheck1">HighSchool</label>
+                </div>
+              </div>
+             
 
               <div class="form-group col-sm-12">
                 <button type="submit" name="button" class="btn btn-info btn-lg">Submit</button>
@@ -49,4 +84,32 @@ Edit Project Tipe (Container / Performing Art)
     </div>
   </div>
 </section>
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
+<script>
+
+  <?php 
+    if($data_teacher != null){
+      ?>
+      $('.basicAutoComplete').autoComplete('set', {value : "<?php if($data_teacher != null){ echo $data_teacher->id; } else { echo '';} ?>", text : "<?php if($data_teacher != null) {echo $data_teacher->nama_lengkap; } else {echo '';} ?>"})
+
+  <?php
+    
+    }
+  
+  
+  
+  ?>
+
+$('.basicAutoComplete').autoComplete({
+      resolverSettings: {
+        url: 'getTeacherId',
+        method : 'get',
+        
+      }
+  });
+
+</script>
+
+@endsection
 @endsection
