@@ -94,4 +94,20 @@ class ProjectTipeController extends Controller
 
 
     }
+
+
+    public function getTeacherId(Request $request){
+        $nama = "";
+        // $nama = $request->input('search');
+        $data_teacher = DB::connection('mysql2')->table('users')->where('nama_lengkap', 'LIKE', '%'. $nama. '%')->get();
+        $data = [];
+        foreach($data_teacher as $d){
+            $tmp = [
+                "value" => $d->id,
+                "text" => $d->nama_lengkap
+            ];
+            $data[] = $tmp;
+        }
+        return $data;
+    }
 }
