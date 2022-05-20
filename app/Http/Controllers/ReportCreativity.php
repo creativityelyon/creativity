@@ -55,6 +55,7 @@ class ReportCreativity extends Controller
     //dd($data);
     return view('creativity.show')->with('data',$data)
                                //   ->with('kelas',$check_kelas)
+                                  ->with('kelas',$tipe->class_range)
                                   ->with('tipe',$tipe)
                                   ->with('fit_time',$time)
                                   ->with('kategori_performing', $tipe_projek_performing_art)

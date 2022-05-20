@@ -18,8 +18,8 @@ $(document).ready(function() {
     checked.fill(0);
     var currentURL = window.location.href;
     var splitUrl = currentURL.split('/');
-    var kelas = $("input:hidden[name=zyx]").val();
-  
+    var kelas = JSON.parse($("input:hidden[name=zyx]").val());
+    
     $("div#container").hide();
     $("div#form2").hide();
     $("div#form4").hide();
@@ -107,14 +107,15 @@ $(document).ready(function() {
 
     $('.kategori_pa').val($('#subjects1').val());
     $('.kategori_c').val($('#subjects2').val());
+
  
-    if(kelas == 'KGA' || kelas == 'KGB' || kelas == 'PGB'){
+    if(kelas[0] == 'pgkg'){
         $("div#aspect21").hide();$("div#aspect31").hide();
         $("div#aspect22").hide();$("div#aspect32").hide();
         $("div#aspect41").hide();$("div#aspect61").hide();
         $("div#aspect42").hide();$("div#aspect62").hide();
     } 
-    else if(kelas >= 1 && kelas <= 6){
+    else if(kelas[0] == 'primary'){
         $("div#aspect21").hide();$("div#aspect61").hide();
         $("div#aspect22").hide();$("div#aspect62").hide();
     }else{
@@ -240,7 +241,7 @@ $(document).ready(function() {
                     for (let index = 1; index <= 12; index++) {
                         $("#aspect"+index).hide();
                     }
-                    
+
                     if(name == "Performing Art"){
                         for (let index = 0; index < 12; index++) {
                             if(checked[index] == 1){

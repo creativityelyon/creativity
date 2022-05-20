@@ -38,7 +38,8 @@ Edit Project Tipe (Container / Performing Art)
               </div>
               <div class="form-group col-sm-12">
                 <label for="keterangan">Teacher</label>
-                <select class="form-control basicAutoComplete" type="text" name="teacher" autocomplete="off"></select>
+                <select class="form-control basicAutoComplete" type="text" name="teacher" autocomplete="off" required></select>
+                <label for="keterangan">Guru sebelumnya: {{$nama_teacher}}</label>
               </div>
 
               <div class="form-group col-sm-12">
@@ -51,23 +52,24 @@ Edit Project Tipe (Container / Performing Art)
                 <label for="">Class</label>
                 <hr>
                 <?php 
+                  $data_tmp = null;
                   $data_tmp = json_decode($d->class_range, true);
                 
                 ?>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="pgkg"  @if(in_array("pgkg",$data_tmp)) checked @endif>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="pgkg"  @if($data_tmp != null && in_array("pgkg",$data_tmp)) checked @endif>
                   <label class="form-check-label" for="exampleCheck1">PGKG</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="primary" @if(in_array("primary",$data_tmp)) checked @endif>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck2" name="range_class[]" value="primary" @if($data_tmp != null && in_array("primary",$data_tmp)) checked @endif>
                   <label class="form-check-label" for="exampleCheck1">Primary</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="secondary" @if(in_array("secondary",$data_tmp)) checked @endif>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck3" name="range_class[]" value="secondary" @if($data_tmp != null && in_array("secondary",$data_tmp)) checked @endif>
                   <label class="form-check-label" for="exampleCheck1">Secondary</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="range_class[]" value="highschool" @if(in_array("secondary",$data_tmp)) checked @endif>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck4" name="range_class[]" value="highschool" @if($data_tmp != null && in_array("secondary",$data_tmp)) checked @endif>
                   <label class="form-check-label" for="exampleCheck1">HighSchool</label>
                 </div>
               </div>
@@ -87,28 +89,23 @@ Edit Project Tipe (Container / Performing Art)
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
 <script>
+  // var id = "<?php echo $id_teacher; ?>";
+  // var nama = "<?php echo $nama_teacher; ?>";
 
-  <?php 
-    if($data_teacher != null){
-      ?>
-      $('.basicAutoComplete').autoComplete('set', {value : "<?php if($data_teacher != null){ echo $data_teacher->id; } else { echo '';} ?>", text : "<?php if($data_teacher != null) {echo $data_teacher->nama_lengkap; } else {echo '';} ?>"})
+  // if(id != null && nama != null){
+  //   $('.basicAutoComplete').autoComplete('set', {
+  //     value : id, 
+  //     text : nama
+  //   });
+  // }
 
-  <?php
-    
-    }
-  
-  
-  
-  ?>
-
-$('.basicAutoComplete').autoComplete({
+  $('.basicAutoComplete').autoComplete({
       resolverSettings: {
-        url: 'getTeacherId',
+        url: '{{url("project_tipe/getTeacherId")}}',
         method : 'get',
-        
       }
   });
-
+  
 </script>
 
 @endsection

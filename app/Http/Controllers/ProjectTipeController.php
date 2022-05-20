@@ -38,12 +38,18 @@ class ProjectTipeController extends Controller
 
     public function edit($id)
     {
-      $d = ProjectTipe::find($id);
-      if (empty($d)) {
-        return redirect('/project_tipe')->with('error','Data tidak ditemukan');
-      }
-      $data_teacher = DB::connection('mysql2')->table('users')->where('id', $d->teacher_id)->first();
-      return view('project_tipe.edit')->with('d',$d)->with('data_teacher', $data_teacher);
+        $id_teacher = null;
+        $nama_teacher = null;
+        $d = ProjectTipe::find($id);
+        if (empty($d)) {
+            return redirect('/project_tipe')->with('error','Data tidak ditemukan');
+        }
+        $data_teacher = DB::connection('mysql2')->table('users')->where('id', $d->teacher_id)->first();
+        if($data_teacher){
+            $nama_teacher = $data_teacher->nama_lengkap;
+            $id_teacher = $data_teacher->id;
+        }
+        return view('project_tipe.edit')->with('d',$d)->with('id_teacher', $id_teacher)->with('nama_teacher', $nama_teacher);
     }
 
     public function update(Request $r)

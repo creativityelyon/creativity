@@ -10,7 +10,7 @@ Creativity
   <div class="section-header">
     <h3 class="page__heading">Creativity</h3>
   </div>
-  {{-- <input type="hidden" name="zyx" value="{{$kelas->grade}}"> --}}
+  <input type="hidden" name="zyx" value="{{$kelas}}">
   <div class="section-body">
     <input type="hidden" name="tempPa" value='<?php echo $performing_art;?>' id="performing_art">
     <input type="hidden" name="tempContainer" value='<?php echo  $container;?>' id="container">
