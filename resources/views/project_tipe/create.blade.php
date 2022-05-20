@@ -39,11 +39,11 @@ Create Course Tipe (Container / Performing Art)
 
               <div class="form-group col-sm-12">
                 <label for="keterangan">Teacher</label>
-                <input class="form-control basicAutoComplete" type="text" autocomplete="off">
+                <select class="form-control basicAutoComplete" type="text" name="teacher" autocomplete="off"></select>
               </div>
 
               <div class="form-group col-sm-12">
-                <button type="submit" name="button" class="btn btn-info btn-lg">Submit</button>
+                <button type="submit" class="btn btn-info btn-lg">Submit</button>
               </div>
 
              
@@ -59,15 +59,13 @@ Create Course Tipe (Container / Performing Art)
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
 <script>
   $('.basicAutoComplete').autoComplete({
-    resolverSettings: {
+      resolverSettings: {
         url: 'getTeacherId',
-        method : 'POST',
-        // data : {search : $(this).val()},
-        succes : function(result){
-          console.log(result)
-        }
-    }
-});
+        method : 'get',
+        
+      }
+  });
+
 </script>
 
 @endsection

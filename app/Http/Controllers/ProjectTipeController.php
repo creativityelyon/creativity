@@ -24,10 +24,10 @@ class ProjectTipeController extends Controller
           ]);
 
           $input = $r->all();
-
           $d = new ProjectTipe();
           $d->nama = $input['nama'];
           $d->tipe = $input['tipe'];
+          $d->teacher_id = $input['teacher'];
           $d->created_by = auth()->user()->id;
           $d->save();
       
@@ -95,12 +95,9 @@ class ProjectTipeController extends Controller
 
     }
 
-
     public function getTeacherId(Request $request){
-        $nama = "";
-        // $nama = $request->input('search');
+        $nama = $request->q;
         $data_teacher = DB::connection('mysql2')->table('users')->where('nama_lengkap', 'LIKE', '%'. $nama. '%')->get();
-        $data = [];
         foreach($data_teacher as $d){
             $tmp = [
                 "value" => $d->id,

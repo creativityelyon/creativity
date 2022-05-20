@@ -213,5 +213,4 @@ Route::get('rubrick/creativity-percent/{time}', 'ReportCreativity@creativity_per
 //creativity Teacher
 Route::get('rubrick/creativity-teacher/{time}','ReportCreativityTeacher@getData')->middleware(['auth:teacher']);
 
-
-Route::post('project_tipe/getTeacherId', 'ProjectTipeController@getTeacherId');
+Route::get('project_tipe/getTeacherId', 'ProjectTipeController@getTeacherId');
