@@ -71,7 +71,7 @@ class ExportStudentController extends Controller
             // dd($check);
             if (!empty($check) && $check != null && !empty($d->nik)) {
 
-              $data_siswa = ActiveStudent::find($check->id)->update(['project_course_id'=> $d->creativity_student]);
+              $data_siswa = ActiveStudent::find($check->id)->update(['project_course_id'=> $d->creativity_student, 'project_container_id' => $d->crativity_student_container]);
               echo $data_siswa."<br>";
               $d->delete();
             }

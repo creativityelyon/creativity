@@ -14,7 +14,8 @@ class TempImportStudentCreativity extends Model
     'email',
     'nik',
     'nama',
-    'creativity_student'
+    'creativity_student',
+    'creativity_student_container'
    ];
 
 

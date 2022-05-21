@@ -23,7 +23,8 @@ class FitImportCreativity implements ToModel, WithHeadingRow
       'email' => $row['email'],
       'nik' => $row['nik'],
       'nama' => $row['nama'],
-      'creativity_student' => $row['creativity_student']
+      'creativity_student' => $row['creativity_student'],
+      'creativity_student_container' => $row['creativity_student_container']
     ]);
 
   }

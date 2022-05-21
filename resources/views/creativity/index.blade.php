@@ -44,7 +44,7 @@ Creativity
               <select class="kelas select form-input" name="kelas" id="kelas">
                 <option value="">Select Class</option>
                 @foreach($cls as $d )
-                <option value="{{$d->id}}">{{$d->nama}}  - {{$d->description}} </option>
+                <option value="{{$d->id}}" tipe="{{$d->tipe}}">{{$d->nama}}  - {{$d->description}} </option>
                 @endforeach
               </select>
               
@@ -63,12 +63,13 @@ Creativity
             @section('scripts')
             <script>
             $('.btn-select').click(function(){
+           
               if ($('#time').val() == '' || $('#time').val() == 'null' || $('#time').val() == 'undefined') {
                 $('#time').focus();
               }else if ($('#kelas').val() == '' || $('#kelas').val() == 'null' || $('#kelas').val() == 'undefined') {
                 $('#kelas').focus();
               }else {
-                window.location.href = "{{ url('rubrick/creativity') }}/"+$('#time').val()+"/"+$('#kelas').val();
+                window.location.href = "{{ url('rubrick/creativity') }}/"+$('#time').val()+"/"+$('#kelas').val()+"/"+$("#kelas").find(':selected').attr('tipe');
               }
             });
 
