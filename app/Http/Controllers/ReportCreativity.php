@@ -222,10 +222,10 @@ class ReportCreativity extends Controller
     //   $murid = ActiveStudent::select('id', 'name', 'gender')->where('id', $id)->first();
     // }
 
-    $murid = DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
-    where fit_time_id = ? and deleted_at is null and no_induk_global is not null and id = ?)) UNION
+    $murid = DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE id = ? and project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null )) UNION
     (select * from active_student_sutorejo where project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
-    where fit_time_id = ? and deleted_at is null and no_induk_global is not null and id = ?));",array($kelas,$time, $kelas, $time,$id,$id));
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null));",array($id,$kelas,$time,$id,$kelas, $time));
     //for Update
     $data_Temp = null;
     //$data_Temp = TempContainer::where('id_user', $id)->where('tipe', $tipe_projek[0]->tipe)->first();

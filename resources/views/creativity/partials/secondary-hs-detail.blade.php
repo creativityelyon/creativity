@@ -26,37 +26,37 @@
                       <div class="form-group row" id="aspect1">
                         <div class="col-sm-6">Idea Generation</div>
                         <div class="col-sm-3">
-                            <input type="number" id="input1" name="nilai_1[0]" class="form-control" value="">
+                            <input type="number" id="input1" name="nilai_1[0]" min="1" max="2" class="form-control" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect2">
                         <div class="col-sm-6">Idea Design and Refinement</div>
                         <div class="col-sm-3">
-                            <input type="number" id="input2" name="nilai_2[0]" class="form-control" value="">
+                            <input type="number" id="input2" name="nilai_2[0]" min="1" max="2" class="form-control" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect3">
                         <div class="col-sm-6">Openness and Courage to Explore</div>
                         <div class="col-sm-3">
-                            <input type="number"  id="input3" name="nilai_3[0]" class="form-control" value="">
+                            <input type="number"  id="input3" name="nilai_3[0]" min="1" max="2" class="form-control" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect4">
                         <div class="col-sm-6">Work Creatively with others</div>
                         <div class="col-sm-3">
-                            <input type="number" id="input4"  name="nilai_4[0]" class="form-control" value="">
+                            <input type="number" id="input4"  name="nilai_4[0]" min="1" max="2" class="form-control" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect5">
                         <div class="col-sm-6">Creative Production and Innovation</div>
                         <div class="col-sm-3">
-                            <input type="number" id="input5" class="form-control" name="nilai_5[0]" value="">
+                            <input type="number" id="input5" class="form-control" min="1" max="2" name="nilai_5[0]" value="">
                         </div>
                       </div>
                       <div class="form-group row" id="aspect6">
                         <div class="col-sm-6">Reflection </div>
                         <div class="col-sm-3">
-                            <input type="number"  id="input6" class="form-control" name="nilai_6[0]" value="">
+                            <input type="number"  id="input6" class="form-control" min="1" max="2" name="nilai_6[0]" value="">
                         </div>
                       </div>
                   </div>
@@ -66,37 +66,37 @@
                     <div class="form-group row" id="aspect7">
                       <div class="col-sm-6">Idea Generation</div>
                       <div class="col-sm-3">
-                          <input type="number" id="input7" name="nilai_1[1]" class="form-control" value="">
+                          <input type="number" id="input7" name="nilai_1[1]" min="1" max="2" class="form-control" value="">
                       </div>
                     </div>
                     <div class="form-group row" id="aspect8">
                       <div class="col-sm-6">Idea Design and Refinement</div>
                       <div class="col-sm-3">
-                          <input type="number" id="input8" name="nilai_2[1]" class="form-control" value="">
+                          <input type="number" id="input8" name="nilai_2[1]" min="1" max="2" class="form-control" value="">
                       </div>
                     </div>
                     <div class="form-group row" id="aspect9">
                       <div class="col-sm-6">Openness and Courage to Explore</div>
                       <div class="col-sm-3">
-                          <input type="number"  id="input9" name="nilai_3[1]" class="form-control" value="">
+                          <input type="number"  id="input9" name="nilai_3[1]" min="1" max="2" class="form-control" value="">
                       </div>
                     </div>
                     <div class="form-group row" id="aspect10">
                       <div class="col-sm-6">Work Creatively with others</div>
                       <div class="col-sm-3">
-                          <input type="number" id="input10"  name="nilai_4[1]" class="form-control" value="">
+                          <input type="number" id="input10"  name="nilai_4[1]" min="1" max="2" class="form-control" value="">
                       </div>
                     </div>
                     <div class="form-group row" id="aspect11">
                       <div class="col-sm-6">Creative Production and Innovation</div>
                       <div class="col-sm-3">
-                          <input type="number"  id="input11" class="form-control" name="nilai_5[1]" value="">
+                          <input type="number"  id="input11" class="form-control" min="1" max="2" name="nilai_5[1]" value="">
                       </div>
                     </div>
                     <div class="form-group row" id="aspect12">
                       <div class="col-sm-6">Reflection </div>
                       <div class="col-sm-3">
-                          <input type="number"  id="input12" class="form-control" name="nilai_6[1]" value="">
+                          <input type="number"  id="input12" class="form-control" min="1" max="2" name="nilai_6[1]" value="">
                       </div>
                     </div>
                   

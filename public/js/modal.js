@@ -49,7 +49,7 @@ $(document).ready(function() {
             bool_dual_pa = true;
         }
     }
-    console.log(nilai_tmp)
+
     if(co.length > 0){
         $('#subjects2').val( co[0].master_project_tipe);
         $("#namapro3").val( co[0].nama_project);
@@ -74,10 +74,6 @@ $(document).ready(function() {
         }
     }
    
-    console.log(pa)
-    console.log(co)
-    console.log(pa2)
-    console.log(co2)
    
     for(let i=0; i<24; i++){
         if(nilai_tmp[i] != null){
@@ -127,7 +123,7 @@ $(document).ready(function() {
     $('input[type="checkbox"]').click(function(){
       
         var id = $(this).attr('id');
-       
+        console.log(id);
         if($(this).is(":checked")){
             $("#input"+id).attr('disabled',false);
             checked[id-1] = 1;
@@ -205,9 +201,23 @@ $(document).ready(function() {
         }
     });
 
+    $('input[type="number"]').change(function() {
+        var max = parseInt($(this).attr('max'));
+        var min = parseInt($(this).attr('min'));
+        if ($(this).val() > max)
+        {
+           $(this).val(max);
+        }
+        else if ($(this).val() < min)
+        {
+           $(this).val(min);
+        }       
+      }); 
+
     $('.btn-primary').each(function() {
         $(this).click(function(){
             var id = $(this).attr('value');
+            console.log(id);
             var name = $(this).attr('name');
             $.ajax({
                 method: 'GET',
@@ -220,6 +230,7 @@ $(document).ready(function() {
                 '&id9='+checked[20]+'&id10='+checked[21]+'&id11='+checked[22]+'&id12='+checked[23],
                 dataType: 'json',
                 success: function(result) {
+                    console.log(checked);
                     $("#msg").html("Belum memilih aspek penilaian pada proyek ini");
                     $("#msg2").html("Belum memilih aspek penilaian pada proyek ini");
                     $('input[type="number"]').each(function() {
@@ -243,11 +254,17 @@ $(document).ready(function() {
                     }
 
                     if(name == "Performing Art"){
-                        for (let index = 0; index < 12; index++) {
+                        console.log(checked);
+                        for (let index = 0; index < 6; index++) {
                             if(checked[index] == 1){
                                 $("#aspect"+(index+1)).show();
                                 $("#input"+(index+1)).attr('disabled',false);
                                 $("#msg").html("");
+                            }
+                            if(checked[index+6] == 1){
+                                $("#aspect"+(index+7)).show();
+                                $("#input"+(index+7)).attr('disabled',false);
+                                $("#msg2").html("");
                             }
                         }
                     }
@@ -260,8 +277,8 @@ $(document).ready(function() {
                             }
                         }
                     }
-                    console.log(result)
-                    $("#id_user").val(result.murid.id);
+                    console.log(result.murid[0].id);
+                    $("#id_user").val(result.murid[0].id);
                 
                 }
             });
