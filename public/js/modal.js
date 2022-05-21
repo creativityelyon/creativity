@@ -260,6 +260,7 @@ $(document).ready(function() {
                             }
                         }
                     }
+                    console.log(result)
                     $("#id_user").val(result.murid.id);
                 
                 }

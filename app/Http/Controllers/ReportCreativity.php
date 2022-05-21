@@ -222,10 +222,14 @@ class ReportCreativity extends Controller
     //   $murid = ActiveStudent::select('id', 'name', 'gender')->where('id', $id)->first();
     // }
 
+    $murid = DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null and id = ?)) UNION
+    (select * from active_student_sutorejo where project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null and id = ?));",array($kelas,$time, $kelas, $time,$id,$id));
     //for Update
     $data_Temp = null;
     //$data_Temp = TempContainer::where('id_user', $id)->where('tipe', $tipe_projek[0]->tipe)->first();
-    return ['grade' => $check_kelas, 'old_data' => $data_Temp];
+    return ['grade' => $check_kelas, 'old_data' => $data_Temp, 'murid'=> $murid];
     return view('creativity.partials.secondary-hs-detail', ["id" => $id]);
   }
 
