@@ -143,7 +143,8 @@ Creativity
                     @foreach($data as $d)
                     <tr>
                       <td>
-                      
+                        <a href="{{ url('/creativity/edit',$d->id)}}" class="btn btn-danger btn-sm btn-info" ><i class="fas fa-pen"></i></a>
+
                         <a href="{{ url('/creativity/delete',$d->id)}}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onclick="return confirm('Delete This Data ?');"><i class="fas fa-trash"></i></a>
                       </td>
                       <td>{{ $loop->iteration }}</td>
@@ -153,23 +154,27 @@ Creativity
 
                       <td>{{$d->nama_proyek_container}}</td>
                       <td><?php 
-                        if($d->level_container == 1) echo "Novice"; else  if ($d->level_container == 2)echo "Emerging";
+                      if($d->level_container != null)
+                        if($d->level_container < 1.5) echo "Novice"; else  if ($d->level_container >= 1.5)echo "Emerging";
                       ?></td>
                       <td class="cell">{{ $d->description_container }} </td>
                       <td>{{$d->nama_proyek_performing_art}}</td>
                       <td><?php 
-                        if($d->level_performing_art == 1) echo "Novice"; else if($d->level_performing_art == 2) echo "Emerging";
+                      if($d->level_performing_art != null)
+                        if($d->level_performing_art < 1.5) echo "Novice"; else if($d->level_performing_art >= 1.5) echo "Emerging";
                       ?></td>
                        <td class="cell">{{ $d->description_performing_art }} </td>
 
                       <td>{{$d->nama_proyek_container_2}}</td>
                       <td><?php 
-                        if($d->level_container_2 == 1) echo "Novice"; else  if ($d->level_container_2 == 2)echo "Emerging";
+                        if($d->level_container_2 != null)
+                        if($d->level_container_2 <1.5) echo "Novice"; else  if ($d->level_container_2 >= 1.5)echo "Emerging";
                       ?></td>
                       <td class="cell">{{ $d->description_container_2 }} </td>
                       <td>{{$d->nama_proyek_performing_art_2}}</td>
                       <td><?php 
-                        if($d->level_performing_art_2 == 1) echo "Novice"; else if($d->level_performing_art_2 == 2) echo "Emerging";
+                        if ($d->level_performing_art_2 != null)
+                        if($d->level_performing_art_2 < 1.5) echo "Novice"; else if($d->level_performing_art_2 >= 1.5) echo "Emerging";
                       ?></td>
                        <td class="cell">{{ $d->description_performing_art_2 }} </td>
                     </tr>

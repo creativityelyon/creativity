@@ -65,18 +65,7 @@ class ReportCreativity extends Controller
   public function store(Request $r)
   {
    
-    // //$i = $r->all();
-    // $i = [];
-    // $i['user_id'] = json_decode($r->input('user_id'));
-    // $i['fit_time_id'] = json_decode($r->input('fit_time_id'));
-    // $i['nama_lengkap'] = json_decode($r->input('nama_lengkap'));
-    // $i['no_induk_siswa_global'] = json_decode($r->input('no_induk_siswa_global'));
-    // $i['kelas'] = json_decode($r->input('kelas'));
-    // $i['grade'] = json_decode($r->input('grade'));
-    // $i['lokasi'] = json_decode($r->input('lokasi'));
-    // $i['id_kelas'] = json_decode($r->input('id_kelas'));
-    // $i['id_level'] = json_decode($r->input('id_level'));
-    // $i['gender'] = json_decode($r->input('gender'));
+    
     $kelas = $r->input('kelas');
     $time = $r->input('time');
     $r->validate([
@@ -94,25 +83,7 @@ class ReportCreativity extends Controller
 
     DB::beginTransaction();
     try {
-      // dd($i);
-      // foreach ($i['user_id'] as $key => $value) {
-
-      //   $s = new CreativityStudent;
-      //   $s->fit_time_id = $i['fit_time_id'][$key];
-      //   $s->user_id = $value;
-      //   $tempContainer = TempContainer::where('id_user',$value)->where('tipe', 2)->where('fit_time_id',$s->fit_time_id)->get();
-      //   $tempPerformingArt = TempContainer::where('id_user', $value)->where('tipe',1)->where('fit_time_id',$s->fit_time_id)->get();
-      //   $s->no_induk_global = $i['no_induk_siswa_global'][$key];
-      //   $s->nama = $i['nama_lengkap'][$key];
-      //   $s->kelas = $i['kelas'][$key];
-      //   $s->grade = $i['grade'][$key];
-      //   $s->lokasi = $i['lokasi'][$key];
-      //   $s->id_kelas = $i['id_kelas'][$key];
-      //   $s->id_level = $i['id_level'][$key];
-      //   $s->gender = $i['gender'][$key];
-
      
-        
       for ($key =0; $key < count($i); $key++) {
         
         $s = new CreativityStudent;
@@ -183,51 +154,141 @@ class ReportCreativity extends Controller
   }
 
 //   // ga dipake 
-//   public function edit($id)
-//   {
-//     $data = CreativityStudent::find($id);
-//     $kelas = Syskelas::where('kode_kelas','=',$data->id_kelas)->get();
-//     if (empty($data)) {
-//       return redirect()->back()->with('error','Data not found');
-//     }
-//     return view('creativity.edit')->with('d',$data)->with('kelas',$kelas[0]);
-//   }
+  public function edit($id)
+  {
+    $data = CreativityStudent::find($id);
+    $kelas = Syskelas::where('kode_kelas','=',$data->id_kelas)->get();
 
-//   public function update(Request $r)
-//   {
-//     $i = $r->all();
-//     $s = CreativityStudent::find($i['id'][0]);
-//     if (empty($s)) {
-//       return redirect()->back()->with('error','Error Data Contact IT Software for Help');
-//     }
-//     DB::beginTransaction();
-//     try {
-//       $s->fit_time_id = $i['fit_time_id'][0];
-//       $s->user_id = $i['user_id'][0];
-//       $s->no_induk_global = $i['no_induk_siswa_global'][0];
-//       $s->nama = $i['nama_lengkap'][0];
-//       $s->kelas = $i['kelas'][0];
-//       $s->grade = $i['grade'][0];
-//       $s->lokasi = $i['lokasi'][0];
-//       $s->id_kelas = $i['id_kelas'][0];
-//       $s->id_level = $i['id_level'][0];
-//       $s->creativity_1 =  (!empty($i['creativity_1'][0])) ? $i['creativity_1'][0] : "Null" ;
-//       $s->creativity_2 =  (!empty($i['creativity_2'][0])) ? $i['creativity_2'][0] : "Null" ;
-//       $s->creativity_3 =  (!empty($i['creativity_3'][0])) ? $i['creativity_3'][0] : "Null" ;
-//       $s->creativity_4 =  (!empty($i['creativity_4'][0])) ? $i['creativity_4'][0] : "Null" ;
-//       $s->creativity_5 =  (!empty($i['creativity_5'][0])) ? $i['creativity_5'][0] : "Null" ;
-//       $s->creativity_6 =  (!empty($i['creativity_6'][0])) ? $i['creativity_6'][0] : "Null" ;
-//       $s->updated_by = Auth::user()->id;
-//       $s->save();
+    $performing_art = null;
+    $container = null;
+    $performing_art_2 = null;
+    $container_2 = null;
 
-//       DB::commit();
-//       return redirect('rubrick/creativity')->with('success','Berhasil Update Data');
-//     } catch (\Exception $e) {
-//       DB::rollback();
-//       return $e;
-//     }
-//   }
-//  //
+    $performing_art = TempContainer::find($data->performing_art_id);
+    $container = TempContainer::find($data->container_id);
+    $performing_art_2 = TempContainer::find($data->performing_art_id_2);
+    $container_2 = TempContainer::find($data->container_id_2);
+
+    if (empty($data)) {
+      return redirect()->back()->with('error','Data not found');
+    }
+    return view('creativity.edit')->with('d',$data)->with('kelas',$kelas[0])
+              ->with('performing_art', $performing_art)
+              ->with('container', $container)
+              ->with('performing_art_2', $performing_art_2)
+              ->with('container_2', $container_2);
+  }
+
+  public function update(Request $r){
+      $creativity_id = $r->creativity_id;
+      $performing_art_id = $r->performing_art_id;
+      $performing_art_id_2 = $r->performing_art_id_2;
+      $container_id  = $r->container_id;
+      $container_id_2 = $r->container_id_2;
+
+      $grade = $r->grade;
+      $gender = $r->gender;
+      $nama = $r->nama_lengkap;
+      $id_user = $r->id_user;
+      $fit_time_id = $r->fit_time_id;
+      DB::beginTransaction();
+      try{
+          //update temp container
+          if($performing_art_id){
+            $pa = $this->issetNilai($r, 'nilai_pa_');
+            $tmp = $this->DescCreaativity($gender,$pa,$grade,$nama);
+            TempContainer::where('id', $performing_art_id)->update($pa);
+            TempContainer::where('id', $performing_art_id)->update($tmp);
+          }
+
+          if($performing_art_id_2){
+            $pa2 = $this->issetNilai($r, 'nilai_pa2_');
+            $tmp = $this->DescCreaativity($gender,$pa,$grade,$nama);
+            TempContainer::where('id', $performing_art_id_2)->update($pa2);
+            TempContainer::where('id', $performing_art_id_2)->update($tmp);
+          }
+
+          if($container_id){
+            $co = $this->issetNilai($r, 'nilai_c_');
+            $tmp = $this->DescCreaativity($gender,$co,$grade,$nama);
+            TempContainer::where('id', $container_id)->update($co);
+            TempContainer::where('id', $container_id)->update($tmp);
+          }
+
+          if($container_id_2){
+            $co2 = $this->issetNilai($r, 'nilai_c2_');
+            $tmp = $this->DescCreaativity($gender,$co2,$grade,$nama);
+            TempContainer::where('id', $container_id)->update($co2);
+            TempContainer::where('id', $container_id)->update($tmp);
+          }
+
+
+          $tempContainer = TempContainer::where('id_user',$id_user)->where('tipe', 2)->where('fit_time_id',$fit_time_id)->get();
+          $tempPerformingArt = TempContainer::where('id_user', $id_user)->where('tipe',1)->where('fit_time_id',$fit_time_id)->get();
+          $s = CreativityStudent::where('id', $creativity_id)->first();
+          $cek = false;
+
+        
+          if(count($tempContainer) >0){
+            $s->container_id = $tempContainer[0]->id;
+            $s->description_container = $tempContainer[0]->description;
+            $s->level_container = $tempContainer[0]->level;
+            $s->nama_proyek_container = $tempContainer[0]->nama_project;
+            $cek = true;
+
+            if(count($tempContainer) >1){
+              $s->container_id_2 = $tempContainer[1]->id;
+              $s->description_container_2 = $tempContainer[1]->description;
+              $s->level_container_2 = $tempContainer[1]->level;
+              $s->nama_proyek_container_2 = $tempContainer[1]->nama_project;
+            }
+          }
+
+          if(count($tempPerformingArt) > 0){
+            $s->performing_art_id = $tempPerformingArt[0]->id;
+            $s->description_performing_art = $tempPerformingArt[0]->description;
+            $s->level_performing_art = $tempPerformingArt[0]->level;
+            $s->nama_proyek_performing_art = $tempPerformingArt[0]->nama_project;
+            $cek = true;
+
+            if(count($tempPerformingArt) > 1) {
+              $s->performing_art_id_2 = $tempPerformingArt[1]->id;
+              $s->description_performing_art_2 = $tempPerformingArt[1]->description;
+              $s->level_performing_art_2 = $tempPerformingArt[1]->level;
+              $s->nama_proyek_performing_art_2 = $tempPerformingArt[1]->nama_project;
+            }
+          }
+          if($cek){
+            $s->created_by = Auth::user()->id;
+            $s->save();
+            DB::commit();
+            return redirect('rubrick/creativity')->with('success','Berhasil Mengubah Data');
+          }
+      }catch (\Exception $e) {
+        DB::rollback();
+        dd($e);
+      }
+
+  }
+
+
+  function issetNilai($r, $key){
+    $pa = [];
+    for($i=1 ; $i<=6; $i++){
+      $idx = 'nilai_'.$i;
+      $k = $key.$i;
+       if(isset($r[$k])){
+        $pa[$idx] = intval($r[$k]);
+      } else {
+          $pa[$idx] = null;
+      }
+
+    }
+
+    return $pa;
+
+  }
+
 
   public function delete($id)
   {
@@ -279,12 +340,6 @@ class ReportCreativity extends Controller
 
 
   public function store_penilaian(Request $request){
-  //   $data_arr = $request->only(['user_id', 'fit_time_id','grade','arrold', 'lokasi', 'kategori', 'id_kelas','double_project' , 'gender', 'nama_lengkap', 'tipe_project'
-  //  // 'old_pa_proyek1', 'old_pa_proyek2', 'old_c_proyek1', 'old_c_proyek2'
-  // ]);
-
- //  $data_arr = json_decode(stripslashes($request->input('data_item')));
-  // return $request->all();
 
     //return  $data_arr;
     $data_arr = [];
@@ -302,16 +357,7 @@ class ReportCreativity extends Controller
    $data_arr['tipe_project'] = json_decode(stripslashes($request->input('tipe_project')));
     $data_arr['arrold'] = json_decode(stripslashes($request->input('arrold')));
 
-    // return $data_arr;
-    // $data_nama_proyek= $request->input('nama_proyek');
-   
     
-    // $data_nilai_1 = $request->input('nilai_1');
-    // $data_nilai_2 = $request->input('nilai_2');
-    // $data_nilai_3 = $request->input('nilai_3');
-    // $data_nilai_4 = $request->input('nilai_4');
-    // $data_nilai_5 = $request->input('nilai_5');
-    // $data_nilai_6 = $request->input('nilai_6');
 
     $data_nama_proyek = json_decode($request->input('nama_project'));
     $data_nilai_1 = json_decode($request->input('data_nilai_1'));
@@ -595,11 +641,13 @@ class ReportCreativity extends Controller
       $index = 0;
 
       $ctr_level = 0;
-
+      $index2 = 0;
 
       foreach($keterangan as $d){
         if($index == 0){
           $description = $description . " ". $d['cr'];
+          $ctr_level = $ctr_level + intval($d['nilai']);
+          $index2 ++;
         } else {
           if(!empty($d['nilai'])){
             if(intval($d['nilai']) == 2){
@@ -608,15 +656,16 @@ class ReportCreativity extends Controller
              // $level = 1;
               $description = $description. " but ".$genderket." ";
             }
-           
+            $ctr_level = $ctr_level + intval($d['nilai']);
+            $index2 ++;
             $description = $description. $d['cr'];
           }
         }
-        $ctr_level = $ctr_level + $d['nilai'];
+       
         $index++;
       }
 
-      $level = $ctr_level /$index;
+      $level = $ctr_level /$index2;
 
       if($gender ==2){
         $description = str_replace("his/her","her",$description);

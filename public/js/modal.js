@@ -206,6 +206,8 @@ $(document).ready(function() {
           console.log(idinput);
           $('#'+idinput ).val( $('#input'+ctr).val());
         }
+
+        $('#row'+id).css('background-color', 'yellow');
       });
 });
 

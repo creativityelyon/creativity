@@ -17,6 +17,7 @@ Creativity
       <div class="col-sm-12" id="performing_art">
         <div class="card">
           <div class="card-body">
+            <a href='{{url("rubrick/creativity")}}' class="btn btn-info mb-3 mt-2">Back</a>
             <div style="width: 100%;">
               <div class="form-group row">
                 <div class="col-sm-5"><h4>@if ($tipe->tipe == 1)
@@ -276,7 +277,7 @@ Creativity
                       
                         <input type="hidden" name="double_project[]" class="double_project" value="0">
                         <input type="hidden" name="tipe_project[]" value="{{$tipe->tipe}}" id="tipeTmp{{$loop->iteration}}">
-                        <tr>
+                        <tr id="row{{$d->id}}">
                           <td>{{ $loop->iteration }}
                           </td>
                           <td>{{ $d->name }}</td>
@@ -449,6 +450,7 @@ Creativity
         url : url,
         datatype : 'JSON',
         success: function(result) {
+          console.log(result)
           alert(result.msg);
           if(flag == 1){
             if(result.status == 1){
