@@ -318,6 +318,7 @@ Creativity
 @section('scripts')
 <script src="{{ asset('js/modal.js') }}"></script>
 <script>
+  console.log("ASAS");
     function store(flag){
       var kategori = [];
       var user_id = [];
