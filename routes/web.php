@@ -209,6 +209,7 @@ Route::get('/project_tipe/delete/{id}', 'ProjectTipeController@destroy')->middle
 Route::post('rubrick/creativity/store_nilai', 'ReportCreativity@store_penilaian')->middleware(['auth:teacher']);
 Route::get('rubrick/creativity-percent','ReportCreativity@creativity_percent')->middleware(['auth:teacher']);
 Route::get('rubrick/creativity-percent/{time}', 'ReportCreativity@creativity_percent_time')->middleware(['auth:teacher']);
+Route::get('rubrick/creativity/filter', 'ReportCreativity@filter')->middleware(['auth:teacher']);;
 
 //creativity Teacher
 Route::get('rubrick/creativity-teacher/{time}','ReportCreativityTeacher@getData')->middleware(['auth:teacher']);
