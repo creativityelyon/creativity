@@ -195,7 +195,8 @@ Creativity
         </div>
       </div>
   
-      <form class="row" action="{{ url('/creativity/store') }}" method="post">
+     {{-- <form class="row" action="{{ url('/creativity/store') }}" method="post">  --}}
+      <form class="row" id="form" onsubmit=" return false;">
         @csrf
         <div class="col-lg-12">
           <div class="card">
@@ -296,10 +297,11 @@ Creativity
               </div>
               <div class="row">
                 <div class="form-group col-sm-6">
-                  <button type="submit" class="btn-lg btn-primary ">Rekap</button>
+                  {{-- <button type="submit" class="btn-lg btn-info "  onclick="store(1)">Rekap</button> --}}
                 </div>
                 <div class="form-group col-sm-6">
-                  <button type="submit" class="btn-lg btn-primary " style="float:right"    formaction="{{url('/rubrick/creativity/store_nilai')}}">Save</button>
+                  {{-- <button type="submit" class="btn-lg btn-info " style="float:right"    formaction="{{url('/rubrick/creativity/store_nilai')}}">Save</button> --}}
+                  <button type="submit" class="btn-lg btn-info " style="float:right"   onclick="store(0)">Save</button>
                 </div>
               </div>
             </div>
@@ -314,4 +316,149 @@ Creativity
 
 @section('scripts')
 <script src="{{ asset('js/modal.js') }}"></script>
+<script>
+    function store(flag){
+      var kategori = [];
+      var user_id = [];
+      var fit_time_id = [];
+      var nama_lengkap = [];
+      var kelas = [];
+      var grade = [];
+      var lokasi = [];
+      var id_kelas =[];
+      var id_level = [];
+      var gender = [];
+      var no_induk_siswa_global = [];
+      var arrold = [];
+      var nama_proyek = [];
+      var nilai_1 = [];
+      var nilai_2 = [];
+      var nilai_3 = [];
+      var nilai_4 = [];
+      var nilai_5 = [];
+      var nilai_6 = [];
+      var double_project = [];
+      var tipe_project = [];
+      for(let i=0; i< document.getElementsByName('nama_lengkap[]').length; i++){
+        kategori[i] = document.getElementsByName('kategori[]')[i].value;
+        user_id[i] = document.getElementsByName('user_id[]')[i].value;
+        fit_time_id[i] = document.getElementsByName('fit_time_id[]')[i].value;
+      
+        nama_lengkap[i] = document.getElementsByName('nama_lengkap[]')[i].value;
+        kelas[i] = document.getElementsByName('kelas[]')[i].value;
+        grade[i] = document.getElementsByName('grade[]')[i].value;
+        lokasi[i] = document.getElementsByName('lokasi[]')[i].value;
+        id_kelas[i] = document.getElementsByName('id_kelas[]')[i].value;
+        id_level[i] = document.getElementsByName('id_level[]')[i].value;
+        gender[i] = document.getElementsByName('gender[]')[i].value;
+        no_induk_siswa_global[i] = document.getElementsByName('no_induk_siswa_global[]')[i].value;
+        arrold[i] = document.getElementsByName('arrold[]')[i].value;
+       
+
+        nama_proyek[i] = { 'proyek_1' : document.getElementsByName('nama_proyek[proyek_1][]')[i].value, 
+                            'proyek_2' : document.getElementsByName('nama_proyek[proyek_2][]')[i].value};
+        nilai_1[i] = { 'proyek_1' : document.getElementsByName('nilai_1[proyek_1][]')[i].value, 
+        'proyek_2' : document.getElementsByName('nilai_1[proyek_2][]')[i].value};
+        nilai_2[i] = { 'proyek_1' : document.getElementsByName('nilai_2[proyek_1][]')[i].value, 
+        'proyek_2' : document.getElementsByName('nilai_2[proyek_2][]')[i].value};
+        nilai_3[i] = { 'proyek_1' : document.getElementsByName('nilai_3[proyek_1][]')[i].value, 
+        'proyek_2' : document.getElementsByName('nilai_3[proyek_2][]')[i].value};
+        nilai_4[i] = { 'proyek_1' : document.getElementsByName('nilai_4[proyek_1][]')[i].value, 
+        'proyek_2' : document.getElementsByName('nilai_4[proyek_2][]')[i].value};
+        nilai_5[i] = { 'proyek_1' : document.getElementsByName('nilai_5[proyek_1][]')[i].value, 
+        'proyek_2' : document.getElementsByName('nilai_5[proyek_2][]')[i].value};
+        nilai_6[i] = { 'proyek_1' : document.getElementsByName('nilai_6[proyek_1][]')[i].value, 
+        'proyek_2' : document.getElementsByName('nilai_6[proyek_2][]')[i].value};
+
+        double_project[i] = document.getElementsByName('double_project[]')[i].value;
+        tipe_project[i] = document.getElementsByName('tipe_project[]')[i].value;
+      }
+
+      console.log(kategori);
+      // var data_item = JSON.stringify( { 'kategori' : kategori,
+      //     user_id : user_id,
+      //     fit_time_id : fit_time_id,
+      //     nama_lengkap : nama_lengkap,
+      //     kelas : kelas,
+      //     grade : grade,
+      //     lokasi : lokasi,
+      //     id_kelas : id_kelas,
+      //     id_level: id_level,
+      //     gender : gender,
+      //     no_induk_siswa_global : no_induk_siswa_global,
+      //     arrold : arrold,
+      //     double_project : double_project,
+      //     tipe_project : tipe_project
+      //  } );
+
+      var url = '/rubrick/creativity/store_nilai';
+
+      if(flag == 1){
+        url = '/creativity/store';
+      }
+        var kategori = JSON.stringify(kategori);
+        var user_id = JSON.stringify(user_id);
+        var fit_time_id = JSON.stringify(fit_time_id);
+        var nama_lengkap = JSON.stringify(nama_lengkap);
+        var kelas = JSON.stringify(kelas);
+        var grade = JSON.stringify(grade);
+        var lokasi = JSON.stringify(lokasi);
+        var id_kelas = JSON.stringify(id_kelas);
+        var id_level = JSON.stringify(id_level);
+        var gender = JSON.stringify(gender);
+        var no_induk_siswa_global = JSON.stringify(no_induk_siswa_global);
+        var arrold = JSON.stringify(arrold);
+        var double_project = JSON.stringify(double_project);
+        var tipe_project = JSON.stringify(tipe_project);
+      
+        var data_nilai_1 = JSON.stringify(nilai_1);
+        var data_nilai_2 = JSON.stringify(nilai_2);
+        var data_nilai_3 = JSON.stringify(nilai_3);
+        var data_nilai_4 = JSON.stringify(nilai_4);
+        var data_nilai_5 = JSON.stringify(nilai_5);
+        var data_nilai_6 = JSON.stringify(nilai_6);
+       var nama_project = JSON.stringify(nama_proyek);
+
+      $.ajax({
+        method: 'post',
+        data : { 
+          
+          data_nilai_1 : data_nilai_1,
+          data_nilai_2 : data_nilai_2,
+          data_nilai_3 : data_nilai_3,
+          data_nilai_4 : data_nilai_4,
+          data_nilai_5 : data_nilai_5,
+          data_nilai_6 : data_nilai_6,
+          nama_project : nama_project,
+
+          kategori : kategori,
+          user_id : user_id,
+          fit_time_id : fit_time_id,
+          nama_lengkap : nama_lengkap,
+          kelas : kelas,
+          grade : grade,
+          lokasi : lokasi,
+          id_kelas : id_kelas,
+          id_level: id_level,
+          gender : gender,
+          no_induk_siswa_global : no_induk_siswa_global,
+          arrold : arrold,
+          double_project : double_project,
+          tipe_project : tipe_project
+        },
+        url : url,
+        datatype : 'JSON',
+        success: function(result) {
+          alert(result.msg);
+          if(flag == 1){
+            if(result.status == 1){
+              window.location.href = 'rubrick/creativity';
+            }
+          }
+          window.location.reload()
+        },
+
+      })
+    }
+</script>
 @endsection

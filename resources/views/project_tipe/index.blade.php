@@ -29,6 +29,8 @@ Course Tipe (Container / Performing Art)
                       <th>#</th>
                     <th>Nama</th>
                     <th>Tipe</th>
+                    <th>Teacher</th>
+                    <th>Description</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -47,6 +49,15 @@ Course Tipe (Container / Performing Art)
                             echo "Container";
                         }
                       ?></td>
+                      <td><?php 
+                        if($d->teacher_id != null){
+                               $guru = \DB::connection('mysql2')->table('users')->where('id', $d->teacher_id)->first();
+                        
+                        echo $guru->nama_lengkap;
+                        }
+                      
+                      ?></td>
+                      <td>{{$d->description}}</td>
                       <td>
                         <div class="button">
                           <a href="{{ url('/project_tipe/edit',$d->id)}}" class="btn btn-sm btn-success">Edit</a>

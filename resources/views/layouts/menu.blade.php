@@ -130,7 +130,7 @@
 </li>
 
 @if(!empty(auth()->user()->id))
-@if(in_array(auth()->user()->id, [160,68,43,249,136, 100001]))
+@if(Auth::user()->admin_level == 1 ||  in_array(auth()->user()->id, [160,68,43,249,136, 100001]))
 <li class="dropdown">
   <a href="#" class="nav-link has-dropdown {{ Request::is('/master*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master</span></a>
   <ul class="dropdown-menu">
@@ -205,7 +205,7 @@
 </li>
 <!-- akhir ditutup -->
 @if(!empty(auth()->user()->id))
-@if(in_array(auth()->user()->id, [160,68,43,249,136,96,   100001]))
+@if(Auth::user()->admin_level == 1 || in_array(auth()->user()->id, [160,68,43,249,136,96,   100001]))
 
 
 <li class="side-menus {{ Request::is('/final/report*') ? 'active' : '' }}">

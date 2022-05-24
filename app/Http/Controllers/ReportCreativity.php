@@ -21,14 +21,20 @@ class ReportCreativity extends Controller
 
   public function index()
   {
-  //  $cls = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
+   $cls_kelas = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
     $id_user = Auth::user()->id;
-  $cls = ProjectTipe::where('teacher_id', $id_user)->get();
+    $cls = [];
+    if(Auth::user()->admin_level == 5){
+      $cls = ProjectTipe::where('teacher_id', $id_user)->get();
+    } else if (Auth::user()->admin_level == 1){
+      $cls = ProjectTipe::get();
+    }
+ 
   $fit_time = FitTime::get();
     // $data = Custom::getDataCreativity();
     $data = CreativityStudent::get();
    
-    return view('creativity.index')->with('cls',$cls)->with('fit_time',$fit_time)->with('data',$data);
+    return view('creativity.index')->with('cls',$cls)->with('fit_time',$fit_time)->with('data',$data)->with('cls_kelas', $cls_kelas);
   }
 
   public function getData($time,$kelas, $tipe)
@@ -58,28 +64,77 @@ class ReportCreativity extends Controller
 
   public function store(Request $r)
   {
-    $i = $r->all();
+   
+    // //$i = $r->all();
+    // $i = [];
+    // $i['user_id'] = json_decode($r->input('user_id'));
+    // $i['fit_time_id'] = json_decode($r->input('fit_time_id'));
+    // $i['nama_lengkap'] = json_decode($r->input('nama_lengkap'));
+    // $i['no_induk_siswa_global'] = json_decode($r->input('no_induk_siswa_global'));
+    // $i['kelas'] = json_decode($r->input('kelas'));
+    // $i['grade'] = json_decode($r->input('grade'));
+    // $i['lokasi'] = json_decode($r->input('lokasi'));
+    // $i['id_kelas'] = json_decode($r->input('id_kelas'));
+    // $i['id_level'] = json_decode($r->input('id_level'));
+    // $i['gender'] = json_decode($r->input('gender'));
+    $kelas = $r->input('kelas');
+    $time = $r->input('time');
+    $r->validate([
+      'time' => 'required',
+       'kelas' => 'required',
+    ]);
+    $i = [];
+    $check_kelas = Syskelas::find($kelas);
+    if ($check_kelas->lokasi == 'Sutorejo') {
+      $i = Custom::getDataSiswaCreativitySutorejo($time,$kelas);
+    }else {
+      $i = Custom::getDataSiswaCreativity($time,$kelas);
+    }
+
+
     DB::beginTransaction();
     try {
       // dd($i);
-      foreach ($i['user_id'] as $key => $value) {
+      // foreach ($i['user_id'] as $key => $value) {
 
+      //   $s = new CreativityStudent;
+      //   $s->fit_time_id = $i['fit_time_id'][$key];
+      //   $s->user_id = $value;
+      //   $tempContainer = TempContainer::where('id_user',$value)->where('tipe', 2)->where('fit_time_id',$s->fit_time_id)->get();
+      //   $tempPerformingArt = TempContainer::where('id_user', $value)->where('tipe',1)->where('fit_time_id',$s->fit_time_id)->get();
+      //   $s->no_induk_global = $i['no_induk_siswa_global'][$key];
+      //   $s->nama = $i['nama_lengkap'][$key];
+      //   $s->kelas = $i['kelas'][$key];
+      //   $s->grade = $i['grade'][$key];
+      //   $s->lokasi = $i['lokasi'][$key];
+      //   $s->id_kelas = $i['id_kelas'][$key];
+      //   $s->id_level = $i['id_level'][$key];
+      //   $s->gender = $i['gender'][$key];
+
+     
+        
+      for ($key =0; $key < count($i); $key++) {
+        
         $s = new CreativityStudent;
-        $s->fit_time_id = $i['fit_time_id'][$key];
+        $s->fit_time_id = intval($time);
+     
+        $value  = $i[$key]->id;
         $s->user_id = $value;
+     
         $tempContainer = TempContainer::where('id_user',$value)->where('tipe', 2)->where('fit_time_id',$s->fit_time_id)->get();
         $tempPerformingArt = TempContainer::where('id_user', $value)->where('tipe',1)->where('fit_time_id',$s->fit_time_id)->get();
-        $s->no_induk_global = $i['no_induk_siswa_global'][$key];
-        $s->nama = $i['nama_lengkap'][$key];
-        $s->kelas = $i['kelas'][$key];
-        $s->grade = $i['grade'][$key];
-        $s->lokasi = $i['lokasi'][$key];
-        $s->id_kelas = $i['id_kelas'][$key];
-        $s->id_level = $i['id_level'][$key];
-        $s->gender = $i['gender'][$key];
+        $s->no_induk_global = $i[$key]->no_induk_siswa_global;
+        $s->nama = $i[$key]->name;
+        $s->kelas = $i[$key]->kelas;
+        $s->grade = $i[$key]->grade;
+        $s->lokasi = $i[$key]->lokasi;
+        $s->id_kelas = $i[$key]->id_kelas;
+        $s->id_level = $i[$key]->id_level;
+        $s->gender = $i[$key]->gender;
      
         $cek = false;
-     
+
+      
         if(count($tempContainer) >0){
           $s->container_id = $tempContainer[0]->id;
           $s->description_container = $tempContainer[0]->description;
@@ -116,10 +171,12 @@ class ReportCreativity extends Controller
       }
 
       DB::commit();
-      return redirect('rubrick/creativity')->with('success','Berhasil Menambahkan Data');
+     return redirect('rubrick/creativity')->with('success','Berhasil Menambahkan Data');
+     // return ['msg' => 'Berhasil', 'status' => 1];
     } catch (\Exception $e) {
       DB::rollback();
-      return $e;
+      dd($e);
+     // return ['msg' => $e, 'status' => 0];
     }
 
 
@@ -222,25 +279,49 @@ class ReportCreativity extends Controller
 
 
   public function store_penilaian(Request $request){
-    $data_arr = $request->only(['user_id', 'fit_time_id','grade','arrold', 'lokasi', 'kategori', 'id_kelas','double_project' , 'gender', 'nama_lengkap', 'tipe_project'
-   // 'old_pa_proyek1', 'old_pa_proyek2', 'old_c_proyek1', 'old_c_proyek2'
-  ]);
+  //   $data_arr = $request->only(['user_id', 'fit_time_id','grade','arrold', 'lokasi', 'kategori', 'id_kelas','double_project' , 'gender', 'nama_lengkap', 'tipe_project'
+  //  // 'old_pa_proyek1', 'old_pa_proyek2', 'old_c_proyek1', 'old_c_proyek2'
+  // ]);
 
-  
+ //  $data_arr = json_decode(stripslashes($request->input('data_item')));
+  // return $request->all();
 
-    
-    $data_nama_proyek= $request->input('nama_proyek');
+    //return  $data_arr;
+    $data_arr = [];
+    $data_arr['user_id'] = json_decode(stripslashes($request->input('user_id')));
+    $data_arr['fit_time_id'] = json_decode(stripslashes($request->input('fit_time_id')));
+    $data_arr['kelas'] = json_decode(stripslashes($request->input('kelas')));
+     $data_arr['grade'] = json_decode(stripslashes($request->input('grade')));
+    $data_arr['lokasi'] = json_decode(stripslashes($request->input('lokasi')));
+    $data_arr['nama_lengkap'] = json_decode(stripslashes($request->input('nama_lengkap')));
+    $data_arr['kategori'] = json_decode(stripslashes($request->input('kategori')));
+    $data_arr['id_kelas'] = json_decode(stripslashes($request->input('id_kelas')));
+    $data_arr['id_level'] = json_decode(stripslashes($request->input('id_level')));
+    $data_arr['gender'] = json_decode(stripslashes($request->input('gender')));
+    $data_arr['double_project'] = json_decode(stripslashes($request->input('double_project')));
+   $data_arr['tipe_project'] = json_decode(stripslashes($request->input('tipe_project')));
+    $data_arr['arrold'] = json_decode(stripslashes($request->input('arrold')));
+
+    // return $data_arr;
+    // $data_nama_proyek= $request->input('nama_proyek');
    
-
-    $data_nilai_1 = $request->input('nilai_1');
-    $data_nilai_2 = $request->input('nilai_2');
-    $data_nilai_3 = $request->input('nilai_3');
-    $data_nilai_4 = $request->input('nilai_4');
-    $data_nilai_5 = $request->input('nilai_5');
-    $data_nilai_6 = $request->input('nilai_6');
     
-  
+    // $data_nilai_1 = $request->input('nilai_1');
+    // $data_nilai_2 = $request->input('nilai_2');
+    // $data_nilai_3 = $request->input('nilai_3');
+    // $data_nilai_4 = $request->input('nilai_4');
+    // $data_nilai_5 = $request->input('nilai_5');
+    // $data_nilai_6 = $request->input('nilai_6');
 
+    $data_nama_proyek = json_decode($request->input('nama_project'));
+    $data_nilai_1 = json_decode($request->input('data_nilai_1'));
+    $data_nilai_2 = json_decode($request->input('data_nilai_2'));
+    $data_nilai_3 = json_decode($request->input('data_nilai_3'));
+    $data_nilai_4 = json_decode($request->input('data_nilai_4'));
+    $data_nilai_5 = json_decode($request->input('data_nilai_5'));
+    $data_nilai_6 = json_decode($request->input('data_nilai_6'));
+   
+    //return json_decode(stripslashes($_POST['nama_project']));
 //    dd($_POST);
 
     DB::beginTransaction();
@@ -258,78 +339,80 @@ class ReportCreativity extends Controller
           $ctr_nilai = 0;
           $data_nilai = [];
 
-          if($data_nilai_1['proyek_1'][$i] != null){
+          if($data_nilai_1[$i]->proyek_1 != null){
             $ctr_nilai ++;
-            $data_nilai['nilai_1'] = $data_nilai_1['proyek_1'][$i];
-            $data_siswa['nilai_1'] = $data_nilai_1['proyek_1'][$i];
+            $data_nilai['nilai_1'] = $data_nilai_1[$i]->proyek_1;
+            $data_siswa['nilai_1'] = $data_nilai_1[$i]->proyek_1;
           }else{
             $data_nilai['nilai_1'] = null;
             $data_siswa['nilai_1'] = null;
           }
-          if($data_nilai_2['proyek_1'][$i] != null){
+          if($data_nilai_2[$i]->proyek_1 != null){
             $ctr_nilai ++;
-            $data_nilai['nilai_2'] = $data_nilai_2['proyek_1'][$i];
-            $data_siswa['nilai_2'] = $data_nilai_2['proyek_1'][$i];
+            $data_nilai['nilai_2'] = $data_nilai_2[$i]->proyek_1;
+            $data_siswa['nilai_2'] = $data_nilai_2[$i]->proyek_1;
           }else{
             $data_nilai['nilai_2'] = null;
             $data_siswa['nilai_2'] = null;
           }
-          if($data_nilai_3['proyek_1'][$i] != null){
+          if($data_nilai_3[$i]->proyek_1 != null){
             $ctr_nilai ++;
-            $data_nilai['nilai_3'] = $data_nilai_3['proyek_1'][$i];
-            $data_siswa['nilai_3'] = $data_nilai_3['proyek_1'][$i];
+            $data_nilai['nilai_3'] = $data_nilai_3[$i]->proyek_1;
+            $data_siswa['nilai_3'] = $data_nilai_3[$i]->proyek_1;
           }else{
             $data_nilai['nilai_3'] = null;
             $data_siswa['nilai_3'] = null;
           }
-          if($data_nilai_4['proyek_1'][$i] != null){
+          if($data_nilai_4[$i]->proyek_1 != null){
             $ctr_nilai ++;
-            $data_nilai['nilai_4'] = $data_nilai_4['proyek_1'][$i];
-            $data_siswa['nilai_4'] = $data_nilai_4['proyek_1'][$i];
+            $data_nilai['nilai_4'] = $data_nilai_4[$i]->proyek_1;
+            $data_siswa['nilai_4'] = $data_nilai_4[$i]->proyek_1;
           }else{
             $data_nilai['nilai_4'] = null;
             $data_siswa['nilai_4'] = null;
           }
-          if($data_nilai_5['proyek_1'][$i] != null){
+          if($data_nilai_5[$i]->proyek_1 != null){
             $ctr_nilai ++;
-            $data_nilai['nilai_5'] = $data_nilai_5['proyek_1'][$i];
-            $data_siswa['nilai_5'] = $data_nilai_5['proyek_1'][$i];
+            $data_nilai['nilai_5'] = $data_nilai_5[$i]->proyek_1;
+            $data_siswa['nilai_5'] = $data_nilai_5[$i]->proyek_1;
           }else{
             $data_nilai['nilai_5'] = null;
             $data_siswa['nilai_5'] = null;
           }
-          if($data_nilai_6['proyek_1'][$i] != null){
+          if($data_nilai_6[$i]->proyek_1 != null){
             $ctr_nilai ++;
-            $data_nilai['nilai_6'] = $data_nilai_6['proyek_1'][$i];
-            $data_siswa['nilai_6'] = $data_nilai_6['proyek_1'][$i];
+            $data_nilai['nilai_6'] = $data_nilai_6[$i]->proyek_1;
+            $data_siswa['nilai_6'] = $data_nilai_6[$i]->proyek_1;
           }else{
             $data_nilai['nilai_6'] = null;
             $data_siswa['nilai_6'] = null;
           }
           
-          if($data_nama_proyek['proyek_1'][$i] == null){
-            return redirect()->back()->with('error',' Nama Proyek tidka boleh kosong');
+          if($data_nama_proyek[$i]->proyek_1 == null){
+           // return redirect()->back()->with('error',' Nama Proyek tidka boleh kosong');
+           return ['msg' =>'gagal Nama Proyek kosong', 'status' => 0];
           }
     
           if($data_arr['grade'][$i] == 'KGA' || $data_arr['grade'][$i] == 'KGB' || $data_arr['grade'] [$i]== 'PGB'){
             if($ctr_nilai < 2){
-              return redirect()->back()->with('error','Aspek Penilaian Kurang');
+              //return redirect()->back()->with('error','Aspek Penilaian Kurang');
+              return ['msg' => 'aspek penilaian kurang', 'status' => 0];
             }
           }else if(intval($data_arr['grade'][$i]) >= 1 && intval($data_arr['grade'][$i]) <= 6){
             if($ctr_nilai < 2){
-              return redirect()->back()->with('error','Aspek Penilaian Kurang');
-            }
+                //return redirect()->back()->with('error','Aspek Penilaian Kurang');
+                return ['msg' => 'aspek penilaian kurang', 'status' => 0];           }
           }else{
             if($ctr_nilai < 3){
-              return redirect()->back()->with('error','Aspek Penilaian Kurang');
-            }
+                //return redirect()->back()->with('error','Aspek Penilaian Kurang');
+                return ['msg' => 'aspek penilaian kurang', 'status' => 0];           }
           }
 
          
           $tmp = $this->DescCreaativity($data_arr['gender'][$i], $data_nilai ,$data_arr['grade'][$i], $data_arr['nama_lengkap'][$i]);
           $data_siswa['description'] = $tmp['description'];
           $data_siswa['level'] = $tmp['level'];
-          $data_siswa['nama_project'] = $data_nama_proyek['proyek_1'][$i];
+          $data_siswa['nama_project'] = $data_nama_proyek[$i]->proyek_1;
           $data_siswa['master_project_tipe'] = $data_arr['kategori'][$i];
           $data_siswa['tipe'] = $data_arr['tipe_project'][$i];
           $data_siswa['proyek_ke'] = 1;
@@ -345,77 +428,81 @@ class ReportCreativity extends Controller
             $ctr_nilai = 0;
             $data_nilai = [];
 
-            if($data_nilai_1['proyek_2'][$i] != null){
+            if($data_nilai_1[$i]->proyek_2 != null){
               $ctr_nilai ++;
-              $data_nilai['nilai_1'] = $data_nilai_1['proyek_2'][$i];
-              $data_siswa['nilai_1'] = $data_nilai_1['proyek_2'][$i];
+              $data_nilai['nilai_1'] = $data_nilai_1[$i]->proyek_2;
+              $data_siswa['nilai_1'] = $data_nilai_1[$i]->proyek_2;
             }else{
               $data_nilai['nilai_1'] = null;
               $data_siswa['nilai_1'] = null;
             }
-            if($data_nilai_2['proyek_2'][$i] != null){
+            if($data_nilai_2[$i]->proyek_2 != null){
               $ctr_nilai ++;
-              $data_nilai['nilai_2'] = $data_nilai_2['proyek_2'][$i];
-              $data_siswa['nilai_2'] = $data_nilai_2['proyek_2'][$i];
+              $data_nilai['nilai_2'] = $data_nilai_2[$i]->proyek_2;
+              $data_siswa['nilai_2'] = $data_nilai_2[$i]->proyek_2;
             }else{
               $data_nilai['nilai_2'] = null;
               $data_siswa['nilai_2'] = null;
             }
-            if($data_nilai_3['proyek_2'][$i] != null){
+            if($data_nilai_3[$i]->proyek_2 != null){
               $ctr_nilai ++;
-              $data_nilai['nilai_3'] = $data_nilai_3['proyek_2'][$i];
-              $data_siswa['nilai_3'] = $data_nilai_3['proyek_2'][$i];
+              $data_nilai['nilai_3'] = $data_nilai_3[$i]->proyek_2;
+              $data_siswa['nilai_3'] = $data_nilai_3[$i]->proyek_2;
             }else{
               $data_nilai['nilai_3'] = null;
               $data_siswa['nilai_3'] = null;
             }
-            if($data_nilai_4['proyek_2'][$i] != null){
+            if($data_nilai_4[$i]->proyek_2 != null){
               $ctr_nilai ++;
-              $data_nilai['nilai_4'] = $data_nilai_4['proyek_2'][$i];
-              $data_siswa['nilai_4'] = $data_nilai_4['proyek_2'][$i];
+              $data_nilai['nilai_4'] = $data_nilai_4[$i]->proyek_2;
+              $data_siswa['nilai_4'] = $data_nilai_4[$i]->proyek_2;
             }else{
               $data_nilai['nilai_4'] = null;
               $data_siswa['nilai_4'] = null;
             }
-            if($data_nilai_5['proyek_2'][$i] != null){
+            if($data_nilai_5[$i]->proyek_2 != null){
               $ctr_nilai ++;
-              $data_nilai['nilai_5'] = $data_nilai_5['proyek_2'][$i];
-              $data_siswa['nilai_5'] = $data_nilai_5['proyek_2'][$i];
+              $data_nilai['nilai_5'] = $data_nilai_5[$i]->proyek_2;
+              $data_siswa['nilai_5'] = $data_nilai_5[$i]->proyek_2;
             }else{
               $data_nilai['nilai_5'] = null;
               $data_siswa['nilai_5'] = null;
             }
-            if($data_nilai_6['proyek_2'][$i] != null){
+            if($data_nilai_6[$i]->proyek_2 != null){
               $ctr_nilai ++;
-              $data_nilai['nilai_6'] = $data_nilai_6['proyek_2'][$i];
-              $data_siswa['nilai_6'] = $data_nilai_6['proyek_2'][$i];
+              $data_nilai['nilai_6'] = $data_nilai_6[$i]->proyek_2;
+              $data_siswa['nilai_6'] = $data_nilai_6[$i]->proyek_2;
             }else{
               $data_nilai['nilai_6'] = null;
               $data_siswa['nilai_6'] = null;
             }
             
-            if($data_nama_proyek['proyek_2'][$i] == null){
-              return redirect()->back()->with('error',' Nama Proyek tidak boleh kosong');
+            if($data_nama_proyek[$i]->proyek_2 == null){
+              //return redirect()->back()->with('error',' Nama Proyek tidak boleh kosong');
+              return ['msg'=>'nama proyek kosong', 'status' => 0];
             }
       
             if($data_arr['grade'][$i] == 'KGA' || $data_arr['grade'][$i] == 'KGB' || $data_arr['grade'] [$i]== 'PGB'){
               if($ctr_nilai < 2){
-                return redirect()->back()->with('error','Aspek Penilaian Kurang');
+                //return redirect()->back()->with('error','Aspek Penilaian Kurang');
+              return ['msg' => 'aspek penilaian kurang', 'status' => 0];
               }
             }else if(intval($data_arr['grade'][$i]) >= 1 && intval($data_arr['grade'][$i]) <= 6){
               if($ctr_nilai < 2){
-                return redirect()->back()->with('error','Aspek Penilaian Kurang');
+                 //return redirect()->back()->with('error','Aspek Penilaian Kurang');
+              return ['msg' => 'aspek penilaian kurang', 'status' => 0];
               }
             }else{
               if($ctr_nilai < 3){
-                return redirect()->back()->with('error','Aspek Penilaian Kurang');
+                //return redirect()->back()->with('error','Aspek Penilaian Kurang');
+              return ['msg' => 'aspek penilaian kurang', 'status' => 0];
               }
             }
 
             $tmp = $this->DescCreaativity($data_arr['gender'][$i], $data_nilai ,$data_arr['grade'][$i], $data_arr['nama_lengkap'][$i]);
             $data_siswa['description'] = $tmp['description'];
             $data_siswa['level'] = $tmp['level'];
-            $data_siswa['nama_project'] = $data_nama_proyek['proyek_2'][$i];
+            $data_siswa['nama_project'] = $data_nama_proyek[$i]->proyek_2;
             $data_siswa['master_project_tipe'] = $data_arr['kategori'][$i];
             $data_siswa['tipe'] = $data_arr['tipe_project'][$i];
             $data_siswa['proyek_ke'] = 2;
@@ -431,9 +518,10 @@ class ReportCreativity extends Controller
      
     }
     DB::commit();
-    return redirect()->back()->with('success','Berhasil di Input');
+    // return redirect()->back()->with('success','Berhasil di Input');
+    return ['msg'=>'berhasil', 'status' => 1];
     } catch(\Exception $e){
-      dd($e);
+      
       DB::rollback();
       return $e;
       
@@ -505,6 +593,10 @@ class ReportCreativity extends Controller
   
       $description = $nama;
       $index = 0;
+
+      $ctr_level = 0;
+
+
       foreach($keterangan as $d){
         if($index == 0){
           $description = $description . " ". $d['cr'];
@@ -513,17 +605,19 @@ class ReportCreativity extends Controller
             if(intval($d['nilai']) == 2){
               $description = $description. " and ".$genderket." ";
             }else{
-              $level = 1;
+             // $level = 1;
               $description = $description. " but ".$genderket." ";
             }
-  
+           
             $description = $description. $d['cr'];
           }
         }
-  
+        $ctr_level = $ctr_level + $d['nilai'];
         $index++;
       }
-  
+
+      $level = $ctr_level /$index;
+
       if($gender ==2){
         $description = str_replace("his/her","her",$description);
       }else{

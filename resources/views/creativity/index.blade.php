@@ -31,8 +31,39 @@ Creativity
 
     <div class="row">
       <div class="col-lg-12">
+
         <div class="card">
           <div class="card-body">
+            <h4>Rekap</h4>
+            <div class="form-group col-md-6">
+              <form action="{{url('/creativity/store')}}" method="POST">
+                @csrf
+              <select class="kelas select form-input" name="kelas" >
+                <option value="">Select Class</option>
+                @foreach($cls_kelas as $d )
+                <option value="{{$d->id}}">{{$d->grade}} - {{$d->paralel}} - {{$d->lokasi}}</option>
+                @endforeach
+              </select>
+
+              <select class="time select form-input" name="time">
+                <option value="">Select Fit Time Period</option>
+                @foreach($fit_time as $f )
+                <option value="{{$f->id}}">{{$f->keterangan}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <button type="submit" class="btn btn-md btn-primary btn-select" style="color:white;">Rekap </button>
+            </div>
+          </form>
+          </div>
+        </div>
+
+
+
+        <div class="card">
+          <div class="card-body">
+            <h4> Insert data</h4>
             <div class="form-group col-md-6">
               {{-- <select class="kelas select form-input" name="kelas" id="kelas">
                 <option value="">Select Class</option>
@@ -42,7 +73,7 @@ Creativity
               </select> --}}
 
               <select class="kelas select form-input" name="kelas" id="kelas">
-                <option value="">Select Class</option>
+                <option value="">Select Course</option>
                 @foreach($cls as $d )
                 <option value="{{$d->id}}" tipe="{{$d->tipe}}">{{$d->nama}}  - {{$d->description}} </option>
                 @endforeach

@@ -38,8 +38,10 @@ class ExportStudentController extends Controller
     DB::beginTransaction();
 
     try {
-      Excel::import(new FitImportCreativity, request()->file('attendance_file'));
-
+      foreach(request()->file('attendance_file') as $file)
+      {
+      Excel::import(new FitImportCreativity,  $file);
+      }
     } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
       DB::rollBack();
       return redirect()->back()->with('error', 'Not a valid xls or csv files. ');

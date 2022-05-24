@@ -21,7 +21,7 @@ Export Student
                 <label for="attendance_file" class="col-sm-2 col-form-label">Add Student Course PA/ Container</label>
                 <div class="col-sm-10">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input @error('attendance_file') is-invalid @enderror" id="customFile" name="attendance_file" required>
+                    <input type="file" class="custom-file-input @error('attendance_file') is-invalid @enderror" id="customFile" name="attendance_file[]" required multiple>
                     <label class="custom-file-label" for="customFile">Choose file</label>
                   </div>
                   @error('attendance_file')
