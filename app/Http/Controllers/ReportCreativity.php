@@ -39,23 +39,27 @@ class ReportCreativity extends Controller
 
   public function filter()
   {
-    $kelas = Syskelas::where('id', $_GET['kelas'])->first();
+    if($_GET['kelas'] != null){
+      $kelas = Syskelas::where('id', $_GET['kelas'])->first();
 
+      
+      $cls_kelas = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
+      $id_user = Auth::user()->id;
+      $cls = [];
+      if(Auth::user()->admin_level == 5){
+        $cls = ProjectTipe::where('teacher_id', $id_user)->get();
+      } else if (Auth::user()->admin_level == 1){
+        $cls = ProjectTipe::get();
+      }
+      
+      $fit_time = FitTime::get();
+      // $data = Custom::getDataCreativity();
+      $data = CreativityStudent::where('id_kelas', $kelas->kode_kelas)->get();
     
-    $cls_kelas = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
-    $id_user = Auth::user()->id;
-    $cls = [];
-    if(Auth::user()->admin_level == 5){
-      $cls = ProjectTipe::where('teacher_id', $id_user)->get();
-    } else if (Auth::user()->admin_level == 1){
-      $cls = ProjectTipe::get();
+      return view('creativity.index')->with('cls',$cls)->with('fit_time',$fit_time)->with('data',$data)->with('cls_kelas', $cls_kelas);
+    } else{
+      return redirect('rubrick/creativity');
     }
-    
-    $fit_time = FitTime::get();
-    // $data = Custom::getDataCreativity();
-    $data = CreativityStudent::where('id_kelas', $kelas->kode_kelas)->get();
-   
-    return view('creativity.index')->with('cls',$cls)->with('fit_time',$fit_time)->with('data',$data)->with('cls_kelas', $cls_kelas);
   }
 
   public function getData($time,$kelas, $tipe)

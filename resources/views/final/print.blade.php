@@ -7,9 +7,8 @@ Final Report
 @endsection
 @section('content')
 <section class="section">
-  <h1>Report Creativity and Corpus Fitness</h1>
+      <h1>Report of Corpus Fitness and Creativity </h1>
   <div class="section-header">
-    
     <table>
       <thead>
         <th></th>
@@ -48,7 +47,7 @@ Final Report
                   <thead>
                     <tr>
                       <th>Aspect</th>
-                      <th>Level</th>
+                      <th>Level</th></th>
                       <th>Description</th>
                     </tr>
                   </thead>
@@ -94,7 +93,8 @@ Final Report
           </div>
         </div>
       </div>
-
+    </div>
+    
       @if( $creativity != null)
       <div class="col-lg-12">
         <div class="card">
@@ -126,11 +126,13 @@ Final Report
                             echo "Performing Art";
                           } else if(intval($creativity->grade)<= 4 && intval($creativity->grade) >= 1 && $creativity->lokasi == "Sutorejo" ){
                             echo "Music";
-                          } else if(intval($creativity->grade)<= 5 && intval($creativity->grade) >= 6 && $creativity->lokasi == "Sutorejo" ){
+                          } else if(intval($creativity->grade)>= 5 && intval($creativity->grade) <= 6 && $creativity->lokasi == "Sutorejo" ){
                             echo "Performing Art";
+                          }else{
+                              echo $proj->nama;
                           }
                          
-                           echo $proj->nama;
+                           
                         
                         ?></td>
                         <td>
@@ -140,7 +142,9 @@ Final Report
                         </td>
                         <td>
                           @php 
-                            if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                            if($tmp->level != null){
+                              if($tmp->level >= 1.5) echo "Emerging"; else if($tmp->level < 1.5) echo "Novice";
+                            }
                         @endphp
                         </td>
                         <td>
@@ -159,7 +163,18 @@ Final Report
                        <td><?php 
                            $tmp = \DB::table('temp_container')->where('id',$creativity->performing_art_id_2)->first();
                           $proj= \DB::table('project_tipe')->where('id', $tmp->master_project_tipe)->first();
-                          echo $proj->nama;
+                           if($creativity->grade == 'KGA' || $creativity->grade == "KGB" || $creativity->grade== 'PGB'){
+                            echo "Performing Art";
+                          }else
+                          if(intval($creativity->grade) <= 6 && intval($creativity->grade) >= 1 && $creativity->lokasi == "Sukomanunggal" ){
+                            echo "Performing Art";
+                          } else if(intval($creativity->grade)<= 4 && intval($creativity->grade) >= 1 && $creativity->lokasi == "Sutorejo" ){
+                            echo "Music";
+                          } else if(intval($creativity->grade)>= 5 && intval($creativity->grade) <= 6 && $creativity->lokasi == "Sutorejo" ){
+                            echo "Performing Art";
+                          }else{
+                              echo $proj->nama;
+                          }
                        
                        ?></td>
                        <td>
@@ -169,7 +184,9 @@ Final Report
                        </td>
                        <td>
                          @php 
-                           if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                            if($tmp->level != null){
+                              if($tmp->level >= 1.5) echo "Emerging"; else if($tmp->level < 1.5) echo "Novice";
+                            }
                        @endphp
                        </td>
                        <td>
@@ -200,7 +217,9 @@ Final Report
                        </td>
                        <td>
                          @php 
-                           if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                             if($tmp->level != null){
+                              if($tmp->level >= 1.5) echo "Emerging"; else if($tmp->level < 1.5) echo "Novice";
+                            }
                        @endphp
                        </td>
                        <td>
@@ -232,7 +251,9 @@ Final Report
                        </td>
                        <td>
                          @php 
-                           if($tmp->level == 2) echo "Emerging"; else if($tmp->level == 1) echo "Novice";
+                             if($tmp->level != null){
+                              if($tmp->level >= 1.5) echo "Emerging"; else if($tmp->level < 1.5) echo "Novice";
+                            }
                        @endphp
                        </td>
                        <td>
@@ -250,7 +271,24 @@ Final Report
         </div>
       </div>
       @endif
+    
+     <div class="row">
+        <div class="col-12">
+            <div style="float:right">
+                <h5>Sincerly</h5>
+                <?php 
+                
+              
+                if($tt_kepsek != null && count($tt_kepsek) > 0){ ?>
+                <img src="../../img/{{$tt_kepsek[0]['tt_kepala_sekolah']}}" alt="" height="90">
+                <h5>{{$tt_kepsek[0]['nama_kepala_sekolah']}}</h5>
+                <?php } ?>
+            </div>
+        </div>
     </div>
+    
+    <h1>Lampiran</h1>
+    <br>
 
     <div class="row">
       <h3>WEEKLY EXERCISE REPORT</h3>
@@ -259,9 +297,9 @@ Final Report
           <div class="card-body">
             <div class="">
               <ul>
-              @foreach($exercise as $c)
+           {{--   @foreach($exercise as $c)
                 <li>Week {{ $loop->iteration }} - ({{ date('d-m-Y',strtotime($c->start_date)) }} - {{ date('d-m-Y',strtotime($c->end_date)) }} )</li>
-              @endforeach
+              @endforeach --}}
             </ul>
             </div>
             <div style="width: 100%;">
@@ -287,16 +325,7 @@ Final Report
         </div>
       </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div style="float:right">
-                <h5>Sincerly</h5>
-
-                <img src="../../img/{{$tt_kepsek[0]['tt_kepala_sekolah']}}" alt="" height="90">
-                <h5>{{$tt_kepsek[0]['nama_kepala_sekolah']}}</h5>
-            </div>
-        </div>
-    </div>
+   
   </div>
 </section>
 @endsection
