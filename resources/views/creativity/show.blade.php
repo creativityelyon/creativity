@@ -209,9 +209,10 @@ Creativity
 
                       <tr>
                         <th>#</th>
-                        <th>Nama Murid</th>
-                        <th>Kelas</th>
-                        <th>Aksi</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Score</th>
+                        <th>Average</th>
                       </tr>
                   
                     </thead>
@@ -287,8 +288,12 @@ Creativity
                               $kelas_tmp =\DB::connection('mysql')->table('syskelas')->where('kode_kelas', $d->id_kelas)->first();
                             ?>
                             <button type="button" id="open{{$d->id}}" name="Performing Art" class="btn btn-primary" value="{{$d->id}}" data-kelas="{{$kelas_tmp->id}}" data-toggle="modal" data-target="#exampleModal">
-                              Nilai
+                              Score
                             </button>
+                          </td>
+                          <td>
+                            Project 1 : <input type="text" name="" id="" style="width:4%"> 
+                            Project 2 : <input type="text" name="" id="" style="width:4%">
                           </td>
                         </tr>
                       @endforeach                      
