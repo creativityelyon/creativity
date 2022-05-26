@@ -12,7 +12,12 @@ Final Report
       <img src="{{ asset('images/logo-raport.png') }}" alt="" style="width: 100%">
     </div>
   </div>
-      <h1>Report of Corpus Fitness and Creativity </h1>
+  <div class="row  mt-4">      
+      <div class="col-12 text-center">
+        <h1>Report of Corpus Fitness and Creativity </h1>
+      </div>
+  </div>
+  <hr>
   <div class="section-header">
     <table>
       <thead>
