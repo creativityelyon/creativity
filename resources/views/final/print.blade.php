@@ -35,7 +35,7 @@ Final Report
         </tr>
       
         <tr>
-          <td>Units :</td>
+          <td>Unit :</td>
           <?php 
             $cls = DB::connection('mysql')->table('syskelas')->where('kode_kelas', $data->id_kelas)->first();
             $units = "";

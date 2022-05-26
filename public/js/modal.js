@@ -148,9 +148,13 @@ $(document).ready(function() {
              }
 
              average_project2 = average_project2 /click_asspect2
-            
-             $('#valpr'+ tmp).val(average_project1);
-             $('#valpr2'+tmp).val(average_project2);
+             if(!isNaN(average_project1)){
+                 $('#valpr'+ tmp).val(average_project1);
+             }
+
+             if(!isNaN(average_project2)){
+                 $('#valpr2'+tmp).val(average_project2);
+             }
         }
     }
 
