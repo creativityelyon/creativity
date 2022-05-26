@@ -28,10 +28,24 @@ Final Report
           <td>Class :</td>
           <td>{{ $data->kelas }}</td>
         </tr>
-        <?php dd($data); ?>
+      
         <tr>
-          <td>Lokasi :</td>
-          <td>{{ $data->lokasi }}</td>
+          <td>Units :</td>
+          <?php 
+            $cls = DB::connection('mysql')->table('syskelas')->where('kode_kelas', $data->id_kelas)->first();
+            $units = "";
+            if($cls->grade == 'KGA' || $cls->grade == "KGB" || $cls->grade== 'PGB'){
+              $units = $cls->grade;
+            }else
+            if(intval($cls->grade) <= 6 && intval($cls->grade) >= 1 ){
+              $units = "Primary";
+            } else if(intval($cls->grade)<= 9 && intval($creativity->grade) >= 7 ){
+             $units = "Secondary";
+            } else if(intval($cls->grade)>= 10 && intval($cls->grade) <= 12 ){
+              $units =  "High School";
+            }
+          ?>
+          <td>{{$units}} - {{ $data->lokasi }}</td>
         </tr>
       </tbody>
     </table>
