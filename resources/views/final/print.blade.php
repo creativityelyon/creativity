@@ -7,6 +7,11 @@ Final Report
 @endsection
 @section('content')
 <section class="section">
+  <div class="row">
+    <div class="col-12">
+      <img src="{{ asset('images/logo-raport.png') }}" alt="" style="width: 100%">
+    </div>
+  </div>
       <h1>Report of Corpus Fitness and Creativity </h1>
   <div class="section-header">
     <table>
@@ -20,13 +25,10 @@ Final Report
           <td>{{ $data->nama }}</td>
         </tr>
         <tr>
-          <td>NIK :</td>
-          <td>{{ $data->nik }}</td>
-        </tr>
-        <tr>
-          <td>Kelas :</td>
+          <td>Class :</td>
           <td>{{ $data->kelas }}</td>
         </tr>
+        <?php dd($data); ?>
         <tr>
           <td>Lokasi :</td>
           <td>{{ $data->lokasi }}</td>

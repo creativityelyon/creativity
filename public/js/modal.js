@@ -14,6 +14,10 @@ $(document).ready(function() {
     var currentURL = window.location.href;
     var splitUrl = currentURL.split('/');
     var kelas = JSON.parse($("input:hidden[name=zyx]").val());
+
+    var click_asspect = 0;
+    var click_asspect2 = 0;
+   
     
     $("div#container").hide();
     $("div#form2").hide();
@@ -55,8 +59,16 @@ $(document).ready(function() {
         if(nilai_tmp[i] != null){
             $("#"+(i+1)).prop('checked', true);
             checked[i] = 1;
+            if(i+1> 6){
+                click_asspect2 ++;
+            }
+            else{
+                click_asspect ++;
+            }
         }
     }
+
+    calculate_average();
 
    
     if(bool_dual){
@@ -91,13 +103,56 @@ $(document).ready(function() {
             $("#input"+id).attr('disabled',false);
             checked[id-1] = 1;
             $('.nilai'+(id)).val(2);
+            if(id > 6){
+                click_asspect2 ++;
+            } else{
+                click_asspect ++;
+            }
+
+            calculate_average();
         }
         else if($(this).is(":not(:checked)")){
             $("#input"+id).attr('disabled',true);
             checked[id-1] = 0;
             $('.nilai'+(id)).val('');
+           if(id > 6){
+               click_asspect2 --;
+           }else{
+               click_asspect -- ;
+           }
+           calculate_average();
         }
     });
+
+    function calculate_average(){
+        var id_siswa = $('.id_siswa');
+        console.log(click_asspect);
+        for(let i =0; i< id_siswa.length; i++){
+            var tmp = (id_siswa[i]).value;
+            var average_project1 = 0;
+            var average_project2 = 0;
+             for(let x =1; x<=6; x++){
+                 var num = $('#dmodal_' + x + '_'+tmp).val();
+                if(num != ''){
+                    average_project1 = average_project1 +parseInt(num);
+                }
+             }
+             console.log(average_project1);
+             average_project1 = average_project1 / click_asspect;
+
+             for(x = 7; x<=12; x++){
+                 var num2 = $('#dmodal_'+x+'_'+tmp).val()
+                 if(num2 != ''){
+                     average_project2 = average_project2 + parseInt($('#dmodal_'+x+'_'+tmp).val());
+                 }
+             }
+
+             average_project2 = average_project2 /click_asspect2
+            
+             $('#valpr'+ tmp).val(average_project1);
+             $('#valpr2'+tmp).val(average_project2);
+        }
+    }
 
     $("input#addForm").click(function(){
        
@@ -115,8 +170,10 @@ $(document).ready(function() {
       
         if($('.double_project').val() == "1"){
             $('.double_project').val("");
+            $('.pr2_average').css('display','none');
         } else{
             $('.double_project').val("1");
+            $('.pr2_average').css('display','block');
         }
     });
 
@@ -208,6 +265,7 @@ $(document).ready(function() {
         }
 
         $('#row'+id).css('background-color', 'yellow');
+        calculate_average();
       });
 });
 

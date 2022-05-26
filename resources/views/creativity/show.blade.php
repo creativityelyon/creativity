@@ -209,17 +209,17 @@ Creativity
 
                       <tr>
                         <th>#</th>
-                        <th>Student Name</th>
+                        <th style="width: 50%">Student Name</th>
                         <th>Class</th>
                         <th>Score</th>
-                        <th>Average</th>
+                        <th style="widows: 10%">Average</th>
                       </tr>
                   
                     </thead>
                     <tbody>
                       @foreach($data as $d)
                       <input type="hidden" name="kategori[]" value="{{$kategori}}" id="kategori{{$loop->iteration}}">
-                        <input type="hidden" name="user_id[]" value="{{ $d->id}}">
+                        <input type="hidden" name="user_id[]" value="{{ $d->id}}" class="id_siswa">
                         <input type="hidden" name="fit_time_id[]" value="{{ $fit_time }}">
                         <input type="hidden" name="nama_lengkap[]" value="{{ $d->name}}">
                         <input type="hidden" name="kelas[]" value="{{ $d->kelas}}">
@@ -292,8 +292,8 @@ Creativity
                             </button>
                           </td>
                           <td>
-                            Project 1 : <input type="text" name="" id="" style="width:4%"> 
-                            Project 2 : <input type="text" name="" id="" style="width:4%">
+                           <div id="pr{{$d->id}}">Project 1 : <input type="text" name="" id="valpr{{$d->id}}" style="width:10%" class="valpr" disabled> </div> 
+                            <div id="pr2{{$d->id}}" style="display: none" class="pr2_average">Project 2 : <input type="text" name="" id="valpr2{{$d->id}}" class="valpr2" style="width:10%" disabled></div>
                           </td>
                         </tr>
                       @endforeach                      

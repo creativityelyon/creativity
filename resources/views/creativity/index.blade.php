@@ -6,7 +6,7 @@ Creativity
 <style>
 
 .cell {
-  max-width: 200; /* tweak me please */
+  max-width: 200;
   white-space : wrap;
   overflow : hidden;
 }
@@ -18,7 +18,9 @@ Creativity
 
 .expand-maximum-on-hover:hover {
   max-width : initial;
-}
+} 
+
+
 
 </style>
 @endsection
