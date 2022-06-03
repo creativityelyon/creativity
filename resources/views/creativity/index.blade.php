@@ -35,20 +35,21 @@ Creativity
     <div class="row">
       <div class="col-lg-12">
 
+        @if(Auth::user()->admin_level == 1 )
         <div class="card">
           <div class="card-body">
             <h4>Rekap</h4>
             <div class="form-group col-md-6">
               <form action="{{url('/creativity/store')}}" method="POST">
                 @csrf
-                <select class="kelas select form-input" name="kelas" >
+                <select class="kelas select form-input" name="kelas" id = "rekap_kelas">
                   <option value="">Select Class</option>
                   @foreach($cls_kelas as $d )
                   <option value="{{$d->id}}">{{$d->grade}} - {{$d->paralel}} - {{$d->lokasi}}</option>
                   @endforeach
                 </select>
 
-                <select class="time select form-input" name="time">
+                <select class="time select form-input" name="time" id="rekap_time">
                   <option value="">Select Fit Time Period</option>
                   @foreach($fit_time as $f )
                   <option value="{{$f->id}}">{{$f->keterangan}}</option>
@@ -56,12 +57,21 @@ Creativity
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-md btn-primary btn-select" style="color:white;">Rekap </button>
+                <button type="submit" style="display:none" class="btn btn-md btn-primary btn-select" style="color:white;" id="rekap">Rekap </button>
               </div>
+              
+              <div id="yang_belum" style="color: red; display:none">
+              
+            
+              </div>
+
+
+
+            
             </form>
           </div>
         </div>
-
+         @endif
 
 
         <div class="card">
@@ -91,13 +101,15 @@ Creativity
               </select>
             </div>
             <div class="form-group col-md-6">
-              <a class="btn btn-md btn-primary btn-select" style="color:white;">Select Data</a>
+              <a class="btn btn-md btn-primary btn-select" style="color:white;" id="btn-select">Select Data</a>
             </div>
+
+         
 
             @section('scripts')
             <script>
-            $('.btn-select').click(function(){
-           
+            $('#btn-select').click(function(){
+              alert()
               if ($('#time').val() == '' || $('#time').val() == 'null' || $('#time').val() == 'undefined') {
                 $('#time').focus();
               }else if ($('#kelas').val() == '' || $('#kelas').val() == 'null' || $('#kelas').val() == 'undefined') {
@@ -106,6 +118,40 @@ Creativity
                 window.location.href = "{{ url('rubrick/creativity') }}/"+$('#time').val()+"/"+$('#kelas').val()+"/"+$("#kelas").find(':selected').attr('tipe');
               }
             });
+
+
+            function cekRekap(){
+                var rekap_time = $('#rekap_time').val();
+                var rekap_kelas = $('#rekap_kelas').val();
+                $.ajax({ 
+                  method : 'POST',
+                  data : {
+                    rekap_time : rekap_time,
+                    rekap_kelas : rekap_kelas
+                  },
+                  url : '/creativity/cekRekap',
+                  success: function(result) {
+                    console.log(result)
+                    if(result == true){
+                      $('#rekap').show();
+                      $('#yang_belum').hide();
+                      $('#yang_belum').html('');
+                    } else{
+                      $('#rekap').hide();
+                      $('#yang_belum').html(result);
+                      $('#yang_belum').show();
+                    }
+                  }
+                });
+              }
+
+              $('#rekap_time').on('change', function(){
+                  cekRekap();
+              });
+
+              $('#rekap_kelas').on('change', function(){
+                  cekRekap();
+              })
 
             </script>
             @endsection

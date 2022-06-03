@@ -215,3 +215,7 @@ Route::get('rubrick/creativity/filter', 'ReportCreativity@filter')->middleware([
 Route::get('rubrick/creativity-teacher/{time}','ReportCreativityTeacher@getData')->middleware(['auth:teacher']);
 
 Route::get('project_tipe/getTeacherId', 'ProjectTipeController@getTeacherId');
+
+
+
+Route::post('creativity/cekRekap','ReportCreativity@cekRekap')->middleware(['auth:teacher']);

@@ -741,4 +741,62 @@ class ReportCreativity extends Controller
 
 
 
+  public function cekRekap(Request $request){
+    $rekap_time = $request->input('rekap_time');
+    $rekap_kelas = $request->input('rekap_kelas');
+   
+    $kelas = Syskelas::find($rekap_kelas);
+    $murid = [];
+    if ($kelas->lokasi == 'Sutorejo') {
+      $murid = ActiveStudentSuto::where('id_kelas', $kelas->kode_kelas)->get();
+    }else {
+      $murid = ActiveStudent::where('id_kelas', $kelas->kode_kelas)->get();
+    }
+    $cek = true;
+    $data_project = [];
+    //return json_encode($murid);
+    $ctr = 0;
+    for($i=0; $i<count($murid); $i++){
+      // if($kelas->grade == "KGA" || $kelas->grade == "KGB" || $kelas->grade == "PGA" || $kelas->grade == "PGB" || ($kelas->grade>= 1 &&  $kelas->grade <= 6)){
+        $tmp = null;
+        $tmp = TempContainer::where('id_user', $murid[$i]->id)->where('fit_time_id', $rekap_time)->where('tipe',1 )->get();
+        if(count($tmp) == 0 || $tmp== null){
+         
+          $cek = false;
+          if($murid[$i]->project_course_id){
+            $nama_project = ProjectTipe::find($murid[$i]->project_course_id);
+            $data_project[$ctr] = $nama_project->nama;
+            $ctr++;
+          }
+
+        } 
+
+      
+      // }
+     
+      if(intval($kelas->grade)>= 7 &&  intval($kelas->grade )<= 12){
+        $tmp = null;
+        $tmp = TempContainer::where('id_user', $murid[$i]->id)->where('fit_time_id', $rekap_time)->where('tipe',2 )->get();
+        if(count($tmp) == 0 || $tmp== null){
+          $cek = false;
+          if($murid[$i]->project_container_id){
+            $nama_project = ProjectTipe::find($murid[$i]->project_container_id);
+            $data_project[$ctr] = $nama_project->nama;
+            $ctr++;
+          }    
+        } 
+      }
+    }
+
+    if($cek == false){
+      $cek = json_encode($data_project);
+    }
+
+    return $cek;
+
+
+
+  }
+
+
 }

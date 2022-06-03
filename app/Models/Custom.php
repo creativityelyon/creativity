@@ -414,17 +414,17 @@ class Custom extends Model
 
 
   public static function getDataUnionCreativity($time, $kelas){
-    return DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
-    where fit_time_id = ? and deleted_at is null and no_induk_global is not null)) UNION
-    (select * from active_student_sutorejo where project_course_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
-    where fit_time_id = ? and deleted_at is null and no_induk_global is not null));",array($kelas,$time, $kelas, $time));
+    return DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE project_course_id = ? and deleted_at is null  and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null )) UNION
+    (select * from active_student_sutorejo where project_course_id = ? and deleted_at is null  and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null ));",array($kelas,$time, $kelas, $time));
   }
 
   public static function getDataUnionCreativityContainer($time, $kelas){
-    return DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE project_container_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
-    where fit_time_id = ? and deleted_at is null and no_induk_global is not null)) UNION
-    (select * from active_student_sutorejo where project_container_id = ?  and no_induk_siswa_global not in (select no_induk_global from creativity_student
-    where fit_time_id = ? and deleted_at is null and no_induk_global is not null));",array($kelas,$time, $kelas, $time));
+    return DB::connection('mysql')->select("(SELECT * FROM `active_student` WHERE project_container_id = ? and deleted_at is null  and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null )) UNION
+    (select * from active_student_sutorejo where project_container_id = ?  and deleted_at is null and no_induk_siswa_global not in (select no_induk_global from creativity_student
+    where fit_time_id = ? and deleted_at is null and no_induk_global is not null ));",array($kelas,$time, $kelas, $time));
   }
 
 
