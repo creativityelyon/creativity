@@ -171,6 +171,12 @@
       </a>
     </li>
 
+    <li class="side-menus {{ Request::is('/role*') ? 'active' : '' }}">
+      <a class="nav-link" href="/role">
+        <i class=" fas fa-building"></i><span>Master Role</span>
+      </a>
+    </li>
+
   </ul>
 </li>
 @endif

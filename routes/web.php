@@ -205,6 +205,13 @@ Route::get('/project_tipe/edit/{id}', 'ProjectTipeController@edit') ->middleware
 Route::post('/project_tipe/update', 'ProjectTipeController@update')->middleware(['auth:teacher']);
 Route::get('/project_tipe/delete/{id}', 'ProjectTipeController@destroy')->middleware(['auth:teacher']);
 
+//role
+Route::get('/role', 'MasterRoleController@index')->middleware(['auth:teacher']);
+Route::get('/role/setting_role', 'MasterRoleController@create')->middleware(['auth:teacher']);
+Route::get('/role/setting_role/{id}', 'MasterRoleController@create')->middleware(['auth:teacher']);
+Route::post('/role/store', 'MasterRoleController@store')->middleware(['auth:teacher']);
+Route::get('/role/delete/{id}', 'MasterRoleController@destroy')->middleware(['auth:teacher']);
+
 //
 Route::post('rubrick/creativity/store_nilai', 'ReportCreativity@store_penilaian')->middleware(['auth:teacher']);
 Route::get('rubrick/creativity-percent','ReportCreativity@creativity_percent')->middleware(['auth:teacher']);
@@ -219,3 +226,4 @@ Route::get('project_tipe/getTeacherId', 'ProjectTipeController@getTeacherId');
 
 
 Route::post('creativity/cekRekap','ReportCreativity@cekRekap')->middleware(['auth:teacher']);
+Route::get('role/getTeacherId', 'ProjectTipeController@getTeacherId');
