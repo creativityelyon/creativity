@@ -57,7 +57,7 @@ Role
                       </td>
                       <td>
                         <div class="button">
-                          <a href="{{ url('/setting_role',$d->user_id)}}" class="btn btn-sm btn-success">Edit</a>
+                          <a href="{{ url('/role/setting_role',$d->user_id)}}" class="btn btn-sm btn-success">Edit</a>
                           <a href="{{ url('/role/delete',$d->user_id)}}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" onclick="return confirm('Delete This Data ?');"><i class="fas fa-trash"></i></a>
                         </div>
                       </td>

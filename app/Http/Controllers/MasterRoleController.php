@@ -18,30 +18,33 @@ class MasterRoleController extends Controller
         $cls_kelas = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
         if($id){
             $old_data = Role::where('user_id', $id)->get();
-            //dd($old_data);
-            return view('role.create')->with('cls_kelas', $cls_kelas, 'old_data', $old_data);
+            return view('role.create')->with('cls_kelas', $cls_kelas)->with('old_data', $old_data);
         }
-        return view('role.create')->with('cls_kelas', $cls_kelas, 'old_data', null);
+        return view('role.create')->with('cls_kelas', $cls_kelas);
     }
 
     public function store(Request $r){
         $input = $r->all();
         $teacher = $input['teacher'];
         $kelas = $input['kelas'];
-        //dd($input);
-        for($i=0; $i<count($kelas); $i++){
-            // $check = Role::where('kelas_id',$kelas[$i])->first();
-            // //dd($check);
-            // if (!empty($check)) {
-            //     return redirect('/role/create')->with('error','Kelas sudah terdaftar');
-            // }   
-            Role::create([
-                'user_id' => $teacher,
-                'kelas_id' => $kelas[$i]
-            ]);
+        if($input['teacher'] == -1){
+            for($i=0; $i<count($kelas); $i++){
+                Role::create([
+                    'user_id' => $teacher,
+                    'kelas_id' => $kelas[$i]
+                ]);
+            }
+            return redirect('/role')->with('success','Berhasil Menambahkan Data');
+        }else{
+            $d = Role::where('user_id', $teacher)->delete();
+            for($i=0; $i<count($kelas); $i++){
+                Role::create([
+                    'user_id' => $teacher,
+                    'kelas_id' => $kelas[$i]
+                ]);
+            }
+            return redirect('/role')->with('success','Berhasil Mengubah Data');
         }
-      
-        return redirect('/role')->with('success','Berhasil Menambahkan Data');
     }
 
     public function destroy($id)

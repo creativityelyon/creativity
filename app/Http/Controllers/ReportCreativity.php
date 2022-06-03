@@ -11,6 +11,7 @@ use App\Models\Custom;
 use App\Models\CreativityStudent;
 use App\Models\CreativityType;
 use App\Models\ProjectTipe;
+use App\Models\Role;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TempContainer;
@@ -21,7 +22,7 @@ class ReportCreativity extends Controller
 
   public function index()
   {
-   $cls_kelas = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
+    $cls_kelas = Syskelas::orderBy('lokasi', 'DESC')->orderBy('grade', 'asc')->where('tahun_ajaran','=','2021 - 2022')->get();
     $id_user = Auth::user()->id;
     $cls = [];
     if(Auth::user()->admin_level == 5){
@@ -29,12 +30,21 @@ class ReportCreativity extends Controller
     } else if (Auth::user()->admin_level == 1){
       $cls = ProjectTipe::get();
     }
- 
+
+    $role_rekap = Role::where('user_id', $id_user)->get();
     $fit_time = FitTime::get();
     // $data = Custom::getDataCreativity();
     $data = CreativityStudent::get();
    
-    return view('creativity.index')->with('cls',$cls)->with('fit_time',$fit_time)->with('data',$data)->with('cls_kelas', $cls_kelas);
+    return view('creativity.index')->with('cls',$cls)->with('fit_time',$fit_time)
+    ->with('data',$data)->with('cls_kelas', $cls_kelas)->with('role_rekap', $role_rekap);
+  }
+
+  public function checkRoleRekap()
+  {
+    $id_user = Auth::user()->id;
+    $role = Role::where('user_id', $id_user)->where('kelas_id', $_POST['id_kelas'])->get();
+    return $role;
   }
 
   public function filter()

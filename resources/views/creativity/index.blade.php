@@ -34,8 +34,7 @@ Creativity
 
     <div class="row">
       <div class="col-lg-12">
-
-        @if(Auth::user()->admin_level == 1 )
+        @if(Auth::user()->admin_level == 1 || count($role_rekap) > 0)
         <div class="card">
           <div class="card-body">
             <h4>Rekap</h4>
@@ -44,8 +43,12 @@ Creativity
                 @csrf
                 <select class="kelas select form-input" name="kelas" id = "rekap_kelas">
                   <option value="">Select Class</option>
-                  @foreach($cls_kelas as $d )
-                  <option value="{{$d->id}}">{{$d->grade}} - {{$d->paralel}} - {{$d->lokasi}}</option>
+                  @foreach($role_rekap as $d )
+                  <option value="{{$d->kelas_id}}">
+                  @php
+                      $kelas = \DB::connection('mysql')->table('syskelas')->where('id', $d->kelas_id)->first();
+                            echo $kelas->grade ."-". $kelas->paralel ."-". $kelas->lokasi . "<br>";
+                  @endphp</option>
                   @endforeach
                 </select>
 
@@ -57,7 +60,7 @@ Creativity
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <button type="submit" style="display:none" class="btn btn-md btn-primary btn-select" style="color:white;" id="rekap">Rekap </button>
+                <button type="submit" class="btn btn-md btn-primary btn-select" style="color:white;" id="rekap">Rekap </button>
               </div>
               
               <div id="yang_belum" style="color: red; display:none">
@@ -85,7 +88,7 @@ Creativity
                 @endforeach
               </select> --}}
 
-              <select class="kelas select form-input" name="kelas" id="kelas">
+              <select class="kelas select form-input" name="kelas" id="kelas" required>
                 <option value="">Select Course</option>
                 @foreach($cls as $d)
                 <option value="{{$d->id}}" tipe="{{$d->tipe}}">{{$d->nama}}  - {{$d->description}} </option>
@@ -93,7 +96,7 @@ Creativity
               </select>
               
 
-              <select class="time select form-input" name="time" id="time">
+              <select class="time select form-input" name="time" id="time" required>
                 <option value="">Select Fit Time Period</option>
                 @foreach($fit_time as $f )
                 <option value="{{$f->id}}">{{$f->keterangan}}</option>
@@ -109,7 +112,6 @@ Creativity
             @section('scripts')
             <script>
             $('#btn-select').click(function(){
-              alert()
               if ($('#time').val() == '' || $('#time').val() == 'null' || $('#time').val() == 'undefined') {
                 $('#time').focus();
               }else if ($('#kelas').val() == '' || $('#kelas').val() == 'null' || $('#kelas').val() == 'undefined') {
@@ -163,16 +165,19 @@ Creativity
           <div class="card-body">
             <form action="{{url('/rubrick/creativity/filter')}}" method="GET">
               @csrf
-              <div class="form-group col-md-6">
+              <div class="form-grtn-selectoup col-md-6">
                 <select class="kelas select form-input" name="kelas">
                   <option value="">Select Class</option>
                   @foreach($cls_kelas as $d )
-                  <option value="{{$d->id}}">{{$d->grade}} - {{$d->paralel}} - {{$d->lokasi}}</option>
+                  <option value="{{$d->id}}" @if (isset($_GET['kelas']) && $_GET['kelas'] == $d->id) selected @endif>{{$d->grade}} - {{$d->paralel}} - {{$d->lokasi}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-md btn-primary btn-select" style="color:white;" onclick="filter()">Filter </button>
+                <button type="submit" class="btn btn-md btn-primary btn-select" style="color:white;">Filter </button>
+                @if (isset($_GET['kelas']))
+                  <a href="{{url('/rubrick/creativity')}}" class="btn btn-md btn-danger btn-select" style="color:white;">Reset </a>
+                @endif
               </div>
             </form>
 
@@ -254,4 +259,3 @@ Creativity
  
 </section>
 @endsection
-
